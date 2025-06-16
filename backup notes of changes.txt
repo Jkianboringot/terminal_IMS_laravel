@@ -1,0 +1,3 @@
+*if i got error probly because i miss up by undoing so go back to the vid in 30  to 45 mins
+
+*change app.scss to @use instead of @import
