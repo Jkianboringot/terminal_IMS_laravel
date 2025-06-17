@@ -1,0 +1,11 @@
+# if i got error probly because i miss up by undoing so go back to the vid in 30  to 45 mins
+    - migth have problem with navigation
+    
+# change app.scss to @use instead of @import
+
+# change app.scss cause vite manifiest
+
+# change this line 15 in welcome.blade
+     <!-- Styles / Scripts -->
+        @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
+            @vite(['resources/sass/app.scss', 'resources/js/app.js'])
