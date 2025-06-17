@@ -9,3 +9,5 @@
      <!-- Styles / Scripts -->
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
             @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+# config/jetstream.php feature is not working even if i change shit probably has somehting to do with other file
