@@ -2,9 +2,30 @@
 
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
-
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
 // Variables
 @import 'variables';
 
 // Custom
 @import "custom";
+
+
+.bg-inv-primary{
+background-color: #af1763;
+}
+
+.bg-inv-secondary{
+    background-color: #1e1e2c;
+}
+
+.text-inv-primary{
+color: #191c24 ;
+}
+
+.text-inv-secondary{
+    color:  #af1763;
+}
+
+body{
+    font-family: "Lexend", serif !important;
+}
