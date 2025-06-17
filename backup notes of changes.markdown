@@ -14,3 +14,5 @@
 
 
 # i need to becarefull with git becuase it automatically pulls when i change branch
+
+# sign out for navigation its not working ✔✔✔ this is fix i just need to change the web.php route to redirect dashboard
