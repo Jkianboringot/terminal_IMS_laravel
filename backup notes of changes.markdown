@@ -75,4 +75,3 @@ php artisan make:model Invoice -m
     -ok the new add is not the problems maybe even later than that is
     - look at the inspect fo that guy is he has 45 errors becuase i do and maybe thats the reason
 
-# dont know what happen but app.scss is not working anymore 
