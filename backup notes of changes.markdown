@@ -19,3 +19,53 @@
 
 
 # there is something wrong with the image profile and its not the size i think its anout rendering
+
+# shut donw mylaptop now the login is broken even know it work before didnt change anything✔✔✔
+    - never mind fix now i just have to wait, probably the config is not set yet so maybe thats why
+
+# if something broke in the backen probably because of this database design which i did kinda worng where products has no s and i just rename it with one
+
+database design: refine it more 
+php artisan make:model Role -m
+php artisan make:model User -m
+php artisan make:model Bank -m
+php artisan make:model Client -m
+php artisan make:model Supplier -m
+php artisan make:model Brands -m
+php artisan make:model Unit -m
+php artisan make:model ProductCategory -m
+php artisan make:model Product -m
+php artisan make:model Purchase -m
+
+
+php artisan make:model Sales -m
+php artisan make:migration CreateProductSaleTable
+php artisan make:model Quotation -m
+php artisan make:model Order -m
+php artisan make:model DeliveryNote -m
+php artisan make:model CreditNote -m
+php artisan make:model Invoice -m
+
+
+mine:
+php artisan make:model Role -m
+php artisan make:model User -m  
+php artisan make:model Bank -m
+php artisan make:model Client -m
+php artisan make:model Supplier -m
+php artisan make:model Brands -m
+php artisan make:model Unit -m
+php artisan make:model ProductCategory -m
+php artisan make:model Product -m
+php artisan make:model Purchase -m
+php artisan make:migration CreateProductTable
+php artisan make:model Sales -m
+php artisan make:migration CreateSalesTable
+php artisan make:model Warehouses -m
+php artisan make:model Order -m
+php artisan make:model DeliveryNote -m
+php artisan make:model Product_Stock	 -m
+php artisan make:model Invoice -m
+
+
+

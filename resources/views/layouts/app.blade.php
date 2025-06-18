@@ -41,14 +41,17 @@
     @livewireStyles
 </head>
 
-<body class="layout-fixed sidebar-expand-lg bg-body-tertiary"> <!--begin::App Wrapper-->
+<body class="layout-fixed sidebar-expand-lg  bg-body-tertiary"> <!--begin::App Wrapper-->
     <div class="app-wrapper"> <!--begin::Header-->
         @livewire('navigation-menu') <!--end::Header--> <!--begin::Sidebar-->
         <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark"> <!--begin::Sidebar Brand-->
-            <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="./index.html" class="brand-link">
-                    <!--begin::Brand Image--> <img src="admin-lte/assets/img/AdminLTELogo.png" alt="AdminLTE Logo"
-                        class="brand-image opacity-75 shadow"> <!--end::Brand Image--> <!--begin::Brand Text--> <span
-                        class="brand-text fw-light">Ego Inventory System</span> <!--end::Brand Text--> </a> <!--end::Brand Link-->
+            <div class="sidebar-brand"> <!--begin::Brand Link--> 
+                <a href="/" class="brand-link">
+                    <!--begin::Brand Image-->
+                     <!-- <img src="public/admin-lte/assets/img/ego profile.jpg" alt="ENTP"
+                        class="brand-image opacity-75 shadow"> -->
+                         <!--end::Brand Image--> <!--begin::Brand Text--> <span
+                        class="brand-text fw-light ">Ego Ent Inventory </span> <!--end::Brand Text--> </a> <!--end::Brand Link-->
             </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
 
             <x-sidebar-navigation/>
