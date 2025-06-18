@@ -72,3 +72,4 @@ php artisan make:model Invoice -m
 # the layouts like hover and change background of text does not work maybe i just need to wait before it work like last time with the profile and delete acc but one thing the bg_secondary does not work even though it work before when i plau with it so something is wrong that i did back then
 
 # something definetely gone wrong as even the background dissapear for some reason, i thinks its becuse of the new shit i put i will try getting rid of it and puuitng it back but i will commmit first
+    -ok the new add is not the problems maybe even later than that is
