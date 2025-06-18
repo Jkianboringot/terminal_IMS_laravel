@@ -2,7 +2,7 @@
 
 <div>
       <li class="nav-item {{ request()->routeIs($route)||$active ? 'menu open':'' }}">
-         <a href="{{ $route }}" class="nav-link active"> 
+         <a wire:navigate href="{{ route($route) }}" class="nav-link {{ request()->routeIs()||$active?'active':'' }}" > 
         @if ($bi_icon)
         <i class="nav-icon bi {{ $bi_icon }}"></i>
         @endif

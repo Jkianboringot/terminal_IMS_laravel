@@ -22,12 +22,7 @@ return new class extends Migration
                 'title'=>'SuperAdminstrator',
                 'created_at'=>now()->toDateTimeString()
             ],
-            [
-                'id'=>2,
-                'title'=>'Normal User',
-                'created_at'=>now()->toDateTimeString()
-            ],
-          
+         
         ]);
     }
 

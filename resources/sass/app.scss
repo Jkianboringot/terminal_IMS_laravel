@@ -16,6 +16,18 @@ background-color: #af1763;
 
 .bg-inv-secondary{
     background-color: #1e1e2c;
+        .nav-item{
+            color: lighten($color:#1e1e2c, $amount:40%) !important;
+            :hover{
+                color: white !important;
+            }
+            .active{
+                color: white !important;
+            }
+        }
+        .nav-link.active{
+            background-color: #79052a7a !important;
+        }
 }
 
 .text-inv-primary{

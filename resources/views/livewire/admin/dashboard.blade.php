@@ -1,3 +1,9 @@
 <div>
-    {{-- The whole world belongs to you. --}}
+  <x-slot name="header">
+  
+            {{ __('Dashboard') }}
+ 
+    </x-slot>
+
+    <x-welcome />
 </div>

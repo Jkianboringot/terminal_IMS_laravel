@@ -13,10 +13,23 @@ return new class extends Migration
     {
         Schema::create('role_user', function (Blueprint $table) {
             $table->foreignId('role_id')->constrained();
-            $table->foreignId('user _id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->primary(['role_id','user_id']);
             $table->timestamps();
         });
+        DB::table('users')->insert([
+            'id'=>1,    
+            'name'=>"Administrator",
+            'email'=>env('ADMIN_EMAIL'),
+            'password'=>Hash::make(env('ADMIN_PASSWORD'))
+
+        ]);
+          DB::table('role_user')->insert([
+            'role_id'=>1,
+            'user_id'=>1,
+
+
+          ]);
     }
 
     /**

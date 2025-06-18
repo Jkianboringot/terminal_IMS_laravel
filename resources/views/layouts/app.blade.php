@@ -48,9 +48,10 @@
             <div class="sidebar-brand"> <!--begin::Brand Link--> 
                 <a href="/" class="brand-link">
                     <!--begin::Brand Image-->
-                     <!-- <img src="public/admin-lte/assets/img/ego profile.jpg" alt="ENTP"
-                        class="brand-image opacity-75 shadow"> -->
-                         <!--end::Brand Image--> <!--begin::Brand Text--> <span
+                     <img src="{{asset('admin-lte/assets/img/ego-profile.jpg')}}" alt="" 
+                        class="brand-image opacity-75 shadow"> 
+                         <!--end::Brand Image--> <!--begin::Brand Text-->
+                          <span
                         class="brand-text fw-light ">Ego Ent Inventory </span> <!--end::Brand Text--> </a> <!--end::Brand Link-->
             </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
 
@@ -62,13 +63,13 @@
                 <div class="container-fluid"> <!--begin::Row-->
                     <div class="row">
                         <div class="col-sm-6">
-                            <h3 class="mb-0">{{ $header }}</h3>
+                            <h3 class="mb-0">{{  $header??'' }}</h3>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-end">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    {{ $header }}
+                                    {{ $header??'' }}
                                 </li>
                             </ol>
                         </div>
