@@ -74,4 +74,5 @@ php artisan make:model Invoice -m
 # something definetely gone wrong as even the background dissapear for some reason, i thinks its becuse of the new shit i put i will try getting rid of it and puuitng it back but i will commmit first
     -ok the new add is not the problems maybe even later than that is
     - look at the inspect fo that guy is he has 45 errors becuase i do and maybe thats the reason
+    - idk what happen even when i go abck the thing is still broken evn the font is broken figure this out for one hour tommorow if cant fix forget about it the ui is not that important look at other system in real life its shit but funcitonal
 
