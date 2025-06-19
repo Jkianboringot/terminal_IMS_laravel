@@ -1,3 +1,45 @@
 <div>
-    {{-- Success is as dangerous as failure. --}}
+   <x-slot:head>Users</x-slot:head>
+
+    
+  <div class="card table-responsive">
+    <table class="table table-hover ">
+    <thead class="thead-inverse">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th class="text-center">Actions</th>
+
+        </tr>
+        </thead>
+        <tbody>
+           @foreach($users as $user)
+ <tr>
+                <td scope="row">{{ $user->id }}</td>
+                <td>{{ $user->name }}</td>
+                <td>{{ $user->email }}</td>
+                <td>@foreach($user->roles as $role)
+                    <li>{{ $role->title }}</li>
+                    @endforeach
+                </td>
+                <td class="text-center">
+                    <a wire:navigate href="{{ route('admin.users.edit',$user->id) }}" class="btn btn btn-secondary">
+                   <i class="bi bi-pencil-square"></i>
+
+                    </a>
+                    <a href="{{ route('admin.users.edit',$user->id) }}" class="btn btn btn-secondary">
+                   <i class="bi bi-trash3-fill"></i>
+
+                    </a>
+                </td>
+             
+            </tr>   
+           @endforeach
+           
+        </tbody>
+  </table>
+  </div>
+
 </div>

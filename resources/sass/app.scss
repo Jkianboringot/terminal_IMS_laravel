@@ -12,11 +12,11 @@
 
 // --- Color Utilities ---
 .bg-inv-primary {
-  background-color: #af1763;
+  background-color: #1e1e2c;
 }
 
 .bg-inv-secondary {
-  background-color: #1e1e2c;
+  background-color:  #af1763;
 
   .nav-item {
     color: lighten($color: #1e1e2c, $amount: 40%) !important;

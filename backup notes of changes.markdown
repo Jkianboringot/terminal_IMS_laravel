@@ -76,3 +76,7 @@ php artisan make:model Invoice -m
     - look at the inspect fo that guy is he has 45 errors becuase i do and maybe thats the reason
     - idk what happen even when i go abck the thing is still broken evn the font is broken figure this out for one hour tommorow if cant fix forget about it the ui is not that important look at other system in real life its shit but funcitonal
 
+    this problem can actually be solve by doing npm run dev and watch the terminal show what happend and double saving becuase the app does not allow you to run it when you have outdated dependencies
+
+
+# later on if i encounter a problem trace it backt o me change branch because maybe i did something in the ui_fix branch that i did not save in this smallchanges but it should not be the case since i commited the process of my saving but am jsut confuse becuase i already fix the migration now its back to whtn it was before saving just letting you know that the latest if this break woulf be ui_fix and vid time stamp for is 3:40 to 4 thats wehre it left of so start their if this fuck up

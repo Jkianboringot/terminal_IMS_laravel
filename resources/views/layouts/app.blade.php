@@ -45,17 +45,17 @@
     <div class="app-wrapper"> <!--begin::Header-->
         @livewire('navigation-menu') <!--end::Header--> <!--begin::Sidebar-->
         <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark"> <!--begin::Sidebar Brand-->
-            <div class="sidebar-brand"> <!--begin::Brand Link--> 
+            <div class="sidebar-brand"> <!--begin::Brand Link-->
                 <a href="/" class="brand-link">
                     <!--begin::Brand Image-->
-                     <img src="{{asset('admin-lte/assets/img/ego-profile.jpg')}}" alt="" 
-                        class="brand-image opacity-75 shadow"> 
-                         <!--end::Brand Image--> <!--begin::Brand Text-->
-                          <span
-                        class="brand-text fw-light ">Ego Ent Inventory </span> <!--end::Brand Text--> </a> <!--end::Brand Link-->
+                    <img src="{{asset('admin-lte/assets/img/ego-profile.jpg')}}" alt=""
+                        class="brand-image opacity-75 shadow">
+                    <!--end::Brand Image--> <!--begin::Brand Text-->
+                    <span class="brand-text fw-light ">Ego Ent Inventory </span> <!--end::Brand Text--> </a>
+                <!--end::Brand Link-->
             </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
 
-            <x-sidebar-navigation/>
+            <x-sidebar-navigation />
 
         </aside> <!--end::Sidebar--> <!--begin::App Main-->
         <main class="app-main"> <!--begin::App Content Header-->
@@ -63,13 +63,13 @@
                 <div class="container-fluid"> <!--begin::Row-->
                     <div class="row">
                         <div class="col-sm-6">
-                            <h3 class="mb-0">{{  $header??'' }}</h3>
+                            <h3 class="mb-0">{{  $header ?? '' }}</h3>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-end">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    {{ $header??'' }}
+                                    {{ $header ?? '' }}
                                 </li>
                             </ol>
                         </div>
@@ -83,7 +83,7 @@
             </div> <!--end::App Content-->
         </main> <!--end::App Main--> <!--begin::Footer-->
         <footer class="app-footer"> <!--begin::To the end-->
-            <!-- <div class="float-end d-none d-sm-inline">Anything you want</div> <!--end::To the end-->
+            <!-- <div class="float-end d-none d-sm-inline">Anything you want</div> end::To the end-->
             <!--begin::Copyright--> <strong>
                 <!-- Copyright &copy; 2014-2024&nbsp; -->
                 <!-- <a href="https://adminlte.io" class="text-decoration-none">AdminLTE.io</a>. -->
@@ -327,6 +327,50 @@
     @livewireScripts
 
     @stack('scripts')
+
+    <!-- @vite('resources/js/app.js') -->
+
+    <script>
+        document.addEventListener('livewire::init', () => {
+            Livewire.on('done', (e) => {
+                if (e.success) {
+                    Toast.fire({
+                        icon: 'success',
+                        text: e.success
+                    }
+                    )
+                }
+                if (e.warning) {
+                    Toast.fire({
+                        icon: 'warning',
+                        text: e.warning
+                    }
+                    )
+                }
+                if (e.info) {
+                    Toast.fire({
+                        icon: 'info',
+                        text: e.info
+                    }
+                    )
+                }
+                if (e.error) {
+                    Toast.fire({
+                        icon: 'error',
+                        text: e.error
+                    }
+                    )
+                }
+                if (e.question) {
+                    Toast.fire({
+                        icon: 'question',
+                        text: e.question
+                    }
+                    )
+                }
+            })
+        })
+    </script>
 </body>
 
 </html>
