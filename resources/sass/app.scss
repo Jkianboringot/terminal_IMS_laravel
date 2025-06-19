@@ -3,45 +3,81 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+
 // Variables
 @import 'variables';
 
 // Custom
 @import "custom";
 
-
-.bg-inv-primary{
-background-color: #af1763;
+// --- Color Utilities ---
+.bg-inv-primary {
+  background-color: #af1763;
 }
 
-.bg-inv-secondary{
-    background-color: #1e1e2c;
-        .nav-item{
-            color: lighten($color:#1e1e2c, $amount:40%) !important;
-            :hover{
-                color: white !important;
-            }
-            .active{
-                color: white !important;
-            }
-        }
-        .nav-link.active{
-            background-color: #7a057c7a !important;
-        }
+.bg-inv-secondary {
+  background-color: #1e1e2c;
+
+  .nav-item {
+    color: lighten($color: #1e1e2c, $amount: 40%) !important;
+
+    &:hover {
+      color: white !important;
+    }
+
+    .active {
+      color: white !important;
+    }
+  }
+
+  .nav-link.active {
+    background-color: rgba(242, 136, 189, 0.48) !important;
+    color: white !important;
+  }
 }
 
-.text-inv-primary{
-color: #191c24 ;
+.text-inv-primary {
+  color: #191c24;
 }
 
-.text-inv-secondary{
-    color:  #af1763;
+.text-inv-secondary {
+  color: #af1763;
 }
 
-body{
-    font-family: "Lexend", serif !important;
+body {
+  font-family: "Lexend", serif !important;
+  background-color: #f8f9fa;
 }
 
-.bg-body-secondary{
-    background-color: #1e1e2c !important;
+.bg-body-secondary {
+  background-color: #1e1e2c !important;
+}
+
+// --- Sidebar Active State Fix ---
+.sidebar-wrapper {
+  .sidebar-menu {
+    .nav-link {
+      background-color: transparent;
+      color: lighten($color: #1e1e2c, $amount: 40%) !important;
+
+      &:hover {
+        background-color: rgba(52, 51, 60, 0.809);
+        color: white !important;
+      }
+
+      &.active {
+        background-color: rgba(56, 32, 91, 0.48) !important;
+        color: white !important;
+      }
+    }
+
+    .nav-item.menu-open > .nav-link {
+      background-color: rgba(56, 32, 91, 0.48) !important;
+      color: white !important;
+    }
+
+    .nav-item:not(.menu-open) > .nav-treeview {
+      display: none;
+    }
+  }
 }
