@@ -80,3 +80,7 @@ php artisan make:model Invoice -m
 
 
 # later on if i encounter a problem trace it backt o me change branch because maybe i did something in the ui_fix branch that i did not save in this smallchanges but it should not be the case since i commited the process of my saving but am jsut confuse becuase i already fix the migration now its back to whtn it was before saving just letting you know that the latest if this break woulf be ui_fix and vid time stamp for is 3:40 to 4 thats wehre it left of so start their if this fuck up
+
+
+
+# the mail trap is broken dont know exactly why but i know that its not the mailtrap fault so may in the code i can send a email thourgh tinker but not ui 

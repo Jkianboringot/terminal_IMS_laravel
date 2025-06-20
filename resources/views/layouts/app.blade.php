@@ -371,6 +371,12 @@
             })
         })
     </script>
+    <script>
+    Livewire.on('done', ({ message, error }) => {
+        alert(message || error || 'Something happened');
+    });
+</script>
+
 </body>
 
 </html>

@@ -16,9 +16,11 @@ class UserCreatedMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public $user, $password;
+    public function __construct($user, $password)
     {
-        //
+        $this->user = $user;
+        $this->password = $password;
     }
 
     /**
@@ -38,6 +40,7 @@ class UserCreatedMail extends Mailable
     {
         return new Content(
             view: 'doc.user-created',
+            
         );
     }
 
