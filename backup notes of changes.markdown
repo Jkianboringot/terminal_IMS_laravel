@@ -85,4 +85,11 @@ php artisan make:model Invoice -m
 
 # the mail trap is broken dont know exactly why but i know that its not the mailtrap fault so may in the code i can send a email thourgh tinker but not ui 
     -problem was the import i need it not import and the .evn password was wrong was not suppose to have*** just number
-    - i also git rid of the change made by gpt ,and validate() was not the one that cause problem since it work now may it was and i jst change something by accident but it work not and the cause probably was .evn
+    - i also git rid of the change made by gpt ,and validate() was not the one that cause problem since it work now may it was and i jst change something by accident but it work not and the cause probably was .evn✔✔
+    -everyhting work even new user log in of created✔✔✔✔
+
+# email ui not showing it show create instead but fix not the backend edit.php was rendering view for create not edit
+    public function render()
+    {
+        return view('livewire.admin.users.edit');->was create before
+    }

@@ -2,7 +2,11 @@
    <x-slot:head>Users</x-slot:head>
 
     
-  <div class="card table-responsive">
+ <div class="card">
+    <div class="card-header bg-inv-primary text-inv-secondary border-0">
+        <h5>Users List</h5>
+    </div>
+     <div class="card-body table-responsive">
     <table class="table table-hover ">
     <thead class="thead-inverse">
         <tr>
@@ -29,8 +33,8 @@
                    <i class="bi bi-pencil-square"></i>
 
                     </a>
-                    <a href="{{ route('admin.users.edit',$user->id) }}" class="btn btn btn-secondary">
-                   <i class="bi bi-trash3-fill"></i>
+                    <a href="{{ route('admin.users.create',$user->id) }}" class="btn btn btn-secondary">
+                   <i class="bi bi-trash-fill"></i>
 
                     </a>
                 </td>
@@ -41,5 +45,6 @@
         </tbody>
   </table>
   </div>
+ </div>
 
 </div>
