@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Livewire\Admin\Users;
-
 use App\Mail\UserCreatedMail;
 use App\Models\Role;
 use App\Models\User;
@@ -12,58 +11,40 @@ use Illuminate\Support\Str;
 
 class Create extends Component
 {
+
     public User $user;
-    public $selectedRoles = [];
 
-    function rules()
-    {
-        return [
-            'user.name' => "required",
-            'selectedRoles' => "required",
-            'user.email' => "required|unique:users,email",
-        ];
+    function rules(){
+            return [
+                'user.name'=>'required',
+                'user.email'=>'required|unique:users,email',
+
+
+            ];
+    }
+    function mount(){
+            $this->user = new User();
     }
 
-    function mount()
-    {
-        $this->user = new User();
+    function updated(){
+ $this->validate() ; 
     }
 
-    function updated()
-    {
-        $this->validate();
+    function save(){
+  $this->validate();
+        try {
+            $password= Str::random(12   );
+            $this->user->password= Hash::make($password);
+             $this->user->save();
+            Mail::to($this->user->email)->send(new UserCreatedMail($this->user,$password));
+                // this is to send info to mailtrap to to get password↑ if you dont have it nothing will be send to mailtrap but acc is created
+             return redirect()->route('admin.users.index');
+            } catch (\Throwable $th) {
+                $this->dispatch('done',error:'Something went wrong: '.$th->getMessage());
+            }
     }
-function save()
-{
- 
-
-    try {
-        $this->dispatch('done', message: "step 1: starting");
-
-        $password = Str::random(12);
-        $this->dispatch('done', message: "step 2: password generated");
-
-        $this->user->password = Hash::make($password);
-        $this->dispatch('done', message: "step 3: password hashed");
-
-        $this->user->save();
-        $this->dispatch('done', message: "step 4: user saved");
-
-        $this->user->roles()->attach($this->selectedRoles);
-        $this->dispatch('done', message: "step 5: roles attached");
-
-        Mail::to($this->user->email)->send(new \App\Mail\UserCreatedMail($this->user, $password));
-        $this->dispatch('done', message: "step 6: mail sent");
-
-        return redirect()->route('admin.users.index');
-    } catch (\Throwable $th) {
-        $this->dispatch('done', error: "ERROR: " . $th->getMessage());
+    public function render()
+    {
+        return view('livewire.admin.users.create');
     }
 }
-
-
-
-
-}
-
-// this is correct
