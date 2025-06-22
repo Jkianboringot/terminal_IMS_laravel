@@ -9,7 +9,7 @@
         <div class="card-body">
                     <div class="mb-3">
                         <label for="name" class="form-label"> Role Title</label>
-                        <input wire:model.Live='role.title' type="text" class="form-control" name="name" id="name" aria-describedby=""
+                        <input wire:model.live='role.title' type="text" class="form-control" name="name" id="name" aria-describedby=""
                             placeholder="Enter your Role Title" />
                         @error('role.title')
                             <small id="" class="form-text text-danger">{{ $message }}</small>

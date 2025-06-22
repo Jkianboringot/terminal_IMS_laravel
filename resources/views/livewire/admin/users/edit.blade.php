@@ -12,7 +12,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input wire:model.Live='user.name' type="text" class="form-control" name="name" id="name" aria-describedby=""
+                        <input wire:model.live='user.name' type="text" class="form-control" name="name" id="name" aria-describedby=""
                             placeholder="Enter your User's Name" />
                         @error('user.name')
                             <small id="" class="form-text text-danger">{{ $message }}</small>
@@ -24,7 +24,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input wire:model.Live='user.email' type="email" class="form-control" name="email" id="email"
+                        <input wire:model.live='user.email' type="email" class="form-control" name="email" id="email"
                             aria-describedby="" placeholder="Enter your User's Email Address" />
                         @error('user.email')
                             <small id="" class="form-text text-danger">{{ $message }}</small>

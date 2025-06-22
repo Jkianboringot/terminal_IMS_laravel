@@ -24,21 +24,21 @@
                             <td scope="row">{{ $client->id }}</td>
                             <td>
                                 <h6> {{ $client->name }}</p>
-                                    <small> {{ $client->email }}</small>
+                                    <small> {{ $client->email }}</small><br>
                                     <small> {{ $client->number }}</small>
 
                             </td>
                             <td>{{ $client->address }}</td>
                             <td>
-                                <small><strong>TAX ID:</strong>{{ $client->tax_id }}</small>
+                                <small><strong>TAX ID:</strong>{{ $client->tax_id }}</small><br>
                                 <small><strong>Reg NO :</strong>{{ $client->registration_number??'N/A' }}</small>
                             </td>
                              <td>
-                                <small><strong>Bank:</strong>{{ $client->bank->name }}</small>
+                                <small><strong>Bank:</strong>{{ $client->bank->name }}</small><br>
                                 <small><strong>A/c NO:</strong>{{ $client->account_number }}</small>
                             </td>
                             <td class="text-center">
-                                <a wire:navigate href="{{ route('admin.banks.edit', $client->id) }}"
+                                <a wire:navigate href="{{ route('admin.clients.edit', $client->id) }}"
                                     class="btn btn btn-secondary">
                                     <i class="bi bi-pencil-square"></i>
 

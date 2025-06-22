@@ -11,7 +11,7 @@
                 <div class="col-md-4 cole-12">
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input wire:model.Live='bank.name' type="text" class="form-control" name="name" id="name"
+                        <input wire:model.live='bank.name' type="text" class="form-control" name="name" id="name"
                             aria-describedby="" placeholder="Enter Bank Name" />
                         @error('bank.name')
                             <small id="" class="form-text text-danger">{{ $message }}</small>
@@ -24,7 +24,7 @@
 
                     <div class="mb-3">
                         <label for="name" class="form-label">Short Name</label>
-                        <input wire:model.Live='bank.short_name' type="text" class="form-control" name="name" id="name"
+                        <input wire:model.live='bank.short_name' type="text" class="form-control" name="name" id="name"
                             aria-describedby="" placeholder="Enter Bank Short Name" />
                         @error('bank.short_name')
                             <small id="" class="form-text text-danger">{{ $message }}</small>
@@ -36,7 +36,7 @@
 
                     <div class="mb-3">
                         <label for="name" class="form-label">Code</label>
-                        <input wire:model.Live='bank.sort_code' type="text" class="form-control" name="name" id="name"
+                        <input wire:model.live='bank.sort_code' type="text" class="form-control" name="name" id="name"
                             aria-describedby="" placeholder="Enter Bank Sort Code" />
                         @error('bank.sort_code')
                             <small id="" class="form-text text-danger">{{ $message }}</small>

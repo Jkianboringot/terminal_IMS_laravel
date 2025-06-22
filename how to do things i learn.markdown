@@ -68,3 +68,19 @@ php artisan make:livewire Admin/CreditNotes/Edit
 php artisan make:livewire Admin/Invoices/Index
 php artisan make:livewire Admin/Invoices/Create
 php artisan make:livewire Admin/Invoices/Edit
+
+
+after all this make sure to fix this type of thing      
+ <div class="col-md-6 col-12">
+                    <div class="mb-3">
+                        <label for="tax_id" class="form-label">Tax ID</label>
+                        <input wire:model.live='client.tax_id' type="text" class="form-control" name="tax_id"
+                            id="tax_id" aria-describedby="" placeholder="Enter Tax ID" />
+                        @error('client.tax_id')
+                            <small id="" class="form-text text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+
+                all that name tax_id was name i needs to be tax_id becuase itmight cause bag or in my case a minor problem were thigns that are thier are not their
+                    thing that is suppose to be thier are not their
