@@ -106,3 +106,8 @@ in the config file system   to this   'public' => [
             'report' => false,
         ],
         not like that before if the problem cam back check public if it has a brands folder if it does thats probabbly the cause so delete it
+
+# product categories stop working for some reason even though it was workign just before i create products
+    - i will fix this first before deling with product bit for now acutally do the product first becuase i wan to see if ther are connected somehow to learn i guess
+    -i need to fix categories because it cant confirm wheteer products is correct or not if its broken so fix it probelm is in routing 
+    it work before but when i implemented products it break for some reason

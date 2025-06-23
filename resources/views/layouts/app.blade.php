@@ -328,53 +328,52 @@
 
     @stack('scripts')
 
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- @vite('resources/js/app.js') -->
 
+  
     <script>
-        document.addEventListener('livewire::init', () => {
-            Livewire.on('done', (e) => {
-                if (e.success) {
-                    Toast.fire({
-                        icon: 'success',
-                        text: e.success
-                    }
-                    )
-                }
-                if (e.warning) {
-                    Toast.fire({
-                        icon: 'warning',
-                        text: e.warning
-                    }
-                    )
-                }
-                if (e.info) {
-                    Toast.fire({
-                        icon: 'info',
-                        text: e.info
-                    }
-                    )
-                }
-                if (e.error) {
-                    Toast.fire({
-                        icon: 'error',
-                        text: e.error
-                    }
-                    )
-                }
-                if (e.question) {
-                    Toast.fire({
-                        icon: 'question',
-                        text: e.question
-                    }
-                    )
-                }
-            })
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-right',
+            timer: 7500,
+            timerProgressBar: true,
+        });
+
+        Livewire.on('done', (e) => {
+            if (e.success) {
+                Toast.fire({
+                    icon: 'success',
+                    text: e.success
+                })
+            }
+            if (e.warning) {
+                Toast.fire({
+                    icon: 'warning',
+                    text: e.warning
+                })
+            }
+            if (e.info) {
+                Toast.fire({
+                    icon: 'info',
+                    text: e.info
+                })
+            }
+            if (e.error) {
+                Toast.fire({
+                    icon: 'error',
+                    text: e.error
+                })
+            }
+            if (e.question) {
+                Toast.fire({
+                    icon: 'question',
+                    text: e.question
+                })
+            }
         })
     </script>
-    <script>
    
-</script>
-
 </body>
 
 </html>
