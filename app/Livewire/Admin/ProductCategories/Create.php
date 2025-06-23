@@ -33,7 +33,7 @@ class Create extends Component
              $this->category->save(); 
           
           
-             return redirect()->route('admin.product-categories.index');
+             return redirect()->route('admin.productcategories.index');
             } catch (\Throwable $th) {
                 $this->dispatch('done',error:'Something went wrong: '.$th->getMessage());
             }

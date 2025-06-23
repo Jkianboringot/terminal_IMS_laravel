@@ -27,7 +27,7 @@
                             <td> {{ count($category->products) }}</td>
                             
                             <td class="text-center">
-                                <a wire:navigate href="{{ route('admin.product-categories.edit', $category->id) }}"
+                                <a wire:navigate href="{{ route('admin.productcategories.edit', $category->id) }}"
                                     class="btn btn btn-secondary">
                                     <i class="bi bi-pencil-square"></i>
 

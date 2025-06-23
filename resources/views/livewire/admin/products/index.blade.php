@@ -12,7 +12,7 @@
                         <th>ID</th>
                         <th>Product Details</th>
                         <th>Category</th>
-                        <th>Measurement</th>
+                   
                         <th>Inventory Balance</th>
                         <th class="text-center">Actions</th>
                     </tr>
@@ -25,7 +25,7 @@
                                 <h6>{{ $product->name }}</h6>
                                 <small>{{ $product->description }}</small>
                             </td>
-                            <td>{{ $product->category->name }}</td>
+                         
                             <td>
                                 {{ $product->quantity . ' ' . $product->unit->name }}
                             </td>
