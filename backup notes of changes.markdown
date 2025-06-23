@@ -93,3 +93,16 @@ php artisan make:model Invoice -m
     {
         return view('livewire.admin.users.edit');->was create before
     }
+
+
+# had a problem with brand logo not appearing and saing brands/ request not found but fix it myself it was just a naming conflict 
+so change to point it to brands_logo/logos instead of brands/logos which laravel confuse brands to the brands/index.php since i chnage 
+in the config file system   to this   'public' => [
+            'driver' => 'local',
+            'root' => public_path(),
+            'url' => env('APP_URL'),
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+        not like that before if the problem cam back check public if it has a brands folder if it does thats probabbly the cause so delete it

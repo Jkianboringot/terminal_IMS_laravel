@@ -25,10 +25,10 @@
                             <td>
                                 <h6> {{ $client->name }}</p>
                                     <small> {{ $client->email }}</small><br>
-                                    <small> {{ $client->number }}</small>
+                                    <small> {{ $client->number??'N/A' }}</small>
 
                             </td>
-                            <td>{{ $client->address }}</td>
+                            <td>{{ $client->address??'N/A' }}</td>
                             <td>
                                 <small><strong>TAX ID:</strong>{{ $client->tax_id }}</small><br>
                                 <small><strong>Reg NO :</strong>{{ $client->registration_number??'N/A' }}</small>

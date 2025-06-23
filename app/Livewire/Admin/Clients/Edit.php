@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Clients;
 
+use App\Models\Bank;
 use App\Models\Client;
 use Livewire\Component;
 
