@@ -84,3 +84,5 @@ after all this make sure to fix this type of thing
 
                 all that name tax_id was name i needs to be tax_id becuase itmight cause bag or in my case a minor problem were thigns that are thier are not their
                     thing that is suppose to be thier are not their
+
+# turn the delete button to butotn to turn it red

@@ -33,8 +33,10 @@
                    <i class="bi bi-pencil-square"></i>
 
                     </a>
-                    <a href="{{ route('admin.users.create',$user->id) }}" class="btn btn btn-secondary">
-                   <i class="bi bi-trash-fill"></i>
+                 <button onclick="confirm('Are you sure you wish to DELETE this product?')||event.stopImmediatePropagation()" class="btn btn-danger">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+
 
                     </a>
                 </td>

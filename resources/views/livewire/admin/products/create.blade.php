@@ -2,7 +2,7 @@
     <x-slot:header>Products</x-slot:header>
 
     <div class="card">
-        <div class="card-header bg-inv-secondary text-inv-primary border-0">
+        <div class="card-header bg-inv-primary text-inv-secondary border-0">
             <h5>Create a new Product</h5>
         </div>
         <div class="card-body">
