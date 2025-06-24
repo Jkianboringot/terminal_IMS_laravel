@@ -1,9 +1,8 @@
-
 <div>
     <x-slot:header>Purchases</x-slot:header>
     <div class="row justify-content-center">
         <div class="col-md-4 col-6 @if (!$productList)
-        w-50
+            w-50
         @endif">
             <div class="card">
                 <div class="card-header  bg-inv-primary text-inv-secondary border-0">
@@ -55,7 +54,7 @@
                                         {{ $product->name }} - {{ $product->quantity}} - {{$product->unit->name}}
                                     </li>
                                 </ul>
-                            @endforeach 
+                            @endforeach
                         @endif
 
                     </div>
@@ -92,70 +91,84 @@
         @if ($productList)
             <div class="col-md-8 col-6">
                 <div class="card shadow">
-                <div class="card-header  bg-inv-secondary text-inv-primary border-0">
+                    <div class="card-header  bg-inv-secondary text-inv-primary border-0">
 
-                    <h5 class="text-center text-uppercase">Cart</h5>
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Product Name</th>
-                                <th>Product Quantity</th>
-                                <th>Unit Price</th>
-                                <th>Total Price</th>
-                                <th class="text-center">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if ($productList)
-                            @php
-                            $total=0;
-                            @endphp
-                            @foreach ($productList as $key=> $listItem )
-                            <tr>
-                                <td scope="row">{{ App\Models\Product::find($listItem['product_id'])->id }}</td>
-                                <td>
-                                {{ App\Models\Product::find($listItem['product_id'])->name }} <br>
-                                <small class="text-muted">{{ App\Models\Product::find($listItem['product_id'])->quantity. App\Models\Product::find($listItem['product_id'])->unit->name }}</small>
-                            </td>
-                                <td>{{ $listItem['quantity'] }}</td>
-                                <td>PISO{{ number_format($listItem['price'],2) }}</td>
-                                <td>PISO{{ number_format($listItem['quantity']*$listItem['price'],2) }}</td>
-                                 <td class="text-center">
-                               
-                                <button wire:click='deleteCartItem({{ $key }})' onclick="confirm('Are you sure you wish to DELETE this product?')||event.stopImmediatePropagation()" class="btn btn-danger" >
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
+                        <h5 class="text-center text-uppercase">Cart</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Product Name</th>
+                                    <th>Product Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Total Price</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if ($productList)
+                                    @php
+                                        $total = 0;
+                                    @endphp
+                                    @foreach ($productList as $key => $listItem)
+                                        <tr>
+                                            <td scope="row">{{ App\Models\Product::find($listItem['product_id'])->id }}</td>
+                                            <td>
+                                                {{ App\Models\Product::find($listItem['product_id'])->name }} <br>
+                                                <small
+                                                    class="text-muted">{{ App\Models\Product::find($listItem['product_id'])->quantity . App\Models\Product::find($listItem['product_id'])->unit->name }}</small>
+                                            </td>
+                                            <td>{{ $listItem['quantity'] }}</td>
+                                            <td>PISO{{ number_format($listItem['price'], 2) }}</td>
+                                            <td>PISO{{ number_format($listItem['quantity'] * $listItem['price'], 2) }}</td>
+                                            <td class="text-center">
 
-                            </td>
-                             
-                            </tr>
-                            
-                            @php
-                                    $total+=$listItem['quantity']*$listItem['price'];
-                            @endphp
-                            
-                            @endforeach
-                            <tr>
-                                <td colspan="2" style='font-size:18px'>
-                                     <strong>TOTAL</strong>
-                                </td>
-                                <td></td>
-                                <td></td>
-                                <td style='font-size:18px'>
-                                    <strong>PISO {{ number_format($total,2) }}</strong>
-                                </td>
-                                <td></td>
-                            </tr>
-                            @endif
-                          
-                          
-                        </tbody>
-                    </table>
+                                                @if ($listItem['quantity']>1)
+                                                <button wire:click='subtractQuantity({{ $key }})' class="btn btn-danger">
+                                                    <i class="bi bi-dash"></i>
+                                                </button>
+                                                @endif
+                                              
+                                               
+                                                
+                                                 <button wire:click='addQuantity({{ $key }})' class="btn btn-success">
+                                                    <i class="bi bi-plus"></i>
+                                                </button>
+                                                
+                                                  <button   onclick="confirm('Are you sure you want to delete this Purchase')||event.stopImmediatePropagation()"  wire:click='deleteCartItem({{ $key }})' 
+                                                  class="btn btn-danger">
+                                                    <i class="bi bi-trash-fill"></i>
+                                                </button>
+
+                                            </td>
+
+                                        </tr>
+
+                                        @php
+                                            $total += $listItem['quantity'] * $listItem['price'];
+                                        @endphp
+
+                                    @endforeach
+                                    <tr>
+                                        <td colspan="2" style='font-size:18px'>
+                                            <strong>TOTAL</strong>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td style='font-size:18px'>
+                                            <strong>PISO {{ number_format($total, 2) }}</strong>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                @endif
+
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
             </div>
 
         @endif

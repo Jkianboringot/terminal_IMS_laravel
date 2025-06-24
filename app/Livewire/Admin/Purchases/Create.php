@@ -29,6 +29,15 @@ class Create extends Component
         $this->purchase = new Purchase();
     }
 
+
+      function addQuantity($key)
+    {
+        $this->productList[$key]['quantity']++;
+    }
+      function subtractQuantity($key)
+    {
+         $this->productList[$key]['quantity']--;
+    }
     function deleteCartItem($key){
         array_splice($this->productList,$key,1);
     }
