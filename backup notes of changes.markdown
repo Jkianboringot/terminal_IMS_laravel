@@ -111,3 +111,6 @@ in the config file system   to this   'public' => [
     - i will fix this first before deling with product bit for now acutally do the product first becuase i wan to see if ther are connected somehow to learn i guess
     -i need to fix categories because it cant confirm wheteer products is correct or not if its broken so fix it probelm is in routing 
     it work before but when i implemented products it break for some reason
+
+
+# navigation problem when ip is like this i cant move to toher menu http://127.0.0.1:8000/users/create but when its http://127.0.0.1:8000/users i can go other side so maybe something to do with navigation fix that

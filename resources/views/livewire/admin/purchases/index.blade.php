@@ -23,12 +23,11 @@
                         <tr>
                             <td scope="row">{{ $purchase->id }}</td>
                             <td>
-                                <h6>{{ $purchase->supplier_id }}</h6>
-                                <small>{{ $purchase->supplier->name }}</small><br>
-                                <small>KES{{ number_format($purchase-> total_amount,2)}}</small>
+                                <h6>{{Carbon\Carbon::parse($purchase->supplier_id)->format('JS F,Y') }}</h6>
                             </td>
+                            <td>{{ $purchase->supplier->name }}</td>
+                            <td> <small>PISO {{ number_format($purchase-> total_amount,2)}}</small></td>
                             <td></td>
-
                             <td class="text-center">
                                 <a wire:navigate href="{{ route('admin.purchases.edit', $purchase->id) }}"
                                     class="btn btn-secondary">

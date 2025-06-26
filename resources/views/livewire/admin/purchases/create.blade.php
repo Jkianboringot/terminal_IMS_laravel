@@ -11,7 +11,7 @@
                 <div class="card-body ">
                     <div class="mb-3">
                         <label for="" class="form-label">Date of Purchase</label>
-                        <input type="date" class="form-control" />
+                        <input wire:model.live="purchase.purchase_date" type="date" class="form-control" />
                         @error('purchase.purchase_date')
                             <small id="helpId" class="form-text text-danger">{{ $message }} </small>
                         @enderror
@@ -20,11 +20,14 @@
                     <div class="mb-3">
                         <label for="" class="form-label">Supplier Search</label>
                         <input type="text" wire:model.live="supplierSearch" class="form-control" />
+                          @error('purchase.supplier_id')
+                            <small id="helpId" class="form-text text-danger">{{ $message }} </small>
+                        @enderror
                         @if ($supplierSearch != '')
                             @foreach ($suppliers as $supplier)
                                 <ul class="list-group mt-2 w-100">
                                     <li wire:click="selectSupplier({{ $supplier->id }})"
-                                        class="list-group-item {{ $supplier->id == $selectedSupplierId ? 'active' : '' }}">
+                                        class="list-group-item {{ $supplier->id == $purchase->supplier_id ? 'active' : '' }}">
                                         {{ $supplier->name }}
                                     </li>
                                 </ul>
@@ -45,7 +48,7 @@
                 <div class="card-body ">
                     <div class="mb-3">
                         <label for="" class="form-label">Product Search</label>
-                        <input type="text" wire:model.live="productSearch" class="form-control" />
+                        <input type="text" wire:model.live="productSearch" class="form-control" /> 
                         @if ($productSearch != '')
                             @foreach ($products as $product)
                                 <ul class="list-group mt-2 w-100">
@@ -167,6 +170,11 @@
 
                             </tbody>
                         </table>
+                 
+                            <button
+                        onclick="confirm('Are you sure you wish to make the Purchase')||event.stopImmediatePropagation()"
+                        wire:click='makePurchase' class="btn btn-dark text-inv-secondary w-100">Purchase</button>
+                      
                     </div>
                 </div>
             </div>
@@ -176,3 +184,6 @@
 </div>
 
 </div>
+
+
+<!-- after this make the supplier id and product a drop down and search because its annoying just being able to searcjh -->
