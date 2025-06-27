@@ -124,8 +124,8 @@
                                                     class="text-muted">{{ App\Models\Product::find($listItem['product_id'])->quantity . App\Models\Product::find($listItem['product_id'])->unit->name }}</small>
                                             </td>
                                             <td>{{ $listItem['quantity'] }}</td>
-                                            <td>PISO{{ number_format($listItem['price'], 2) }}</td>
-                                            <td>PISO{{ number_format($listItem['quantity'] * $listItem['price'], 2) }}</td>
+                                            <td>PISO {{ number_format($listItem['price'], 2) }}</td>
+                                            <td>PISO {{ number_format($listItem['quantity'] * $listItem['price'], 2) }}</td>
                                             <td class="text-center">
 
                                                 @if ($listItem['quantity']>1)

@@ -1,0 +1,11 @@
+1.the pruchase ui and how it fucntions need to be change
+2.the delete fucntions like how ti delete base on even number id or not needs to  be acutally base on it is 
+paid or not
+3.the minus part where it go over negative zero which is not suppose to do that it need to stop as soon as it hit one 
+but for some reason it can go beyon that i thing its in the larvel way of doing this is the problem like it still 
+register past click and the program process it the click first before the fucniton for stoping it at one apply
+4.fix ui enconsistency like kes is suppose to be piso  the grammar and just the writing 
+
+
+what has been corrected:
+    3. has been correct in the backend just need a simple guard

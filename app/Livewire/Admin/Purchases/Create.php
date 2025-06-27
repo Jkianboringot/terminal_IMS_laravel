@@ -41,10 +41,15 @@ class Create extends Component
     {
         $this->productList[$key]['quantity']++;
     }
-      function subtractQuantity($key)
+    function subtractQuantity($key)
     {
-         $this->productList[$key]['quantity']--;
+            if ( $this->productList[$key]['quantity'] > 1) {
+                 $this->productList[$key]['quantity']--;
+            }
+         
+       
     }
+
     function deleteCartItem($key){
         array_splice($this->productList,$key,1);
     }

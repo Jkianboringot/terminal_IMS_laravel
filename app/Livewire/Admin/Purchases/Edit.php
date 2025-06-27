@@ -58,9 +58,13 @@ class Edit extends Component
     {
         $this->productList[$key]['quantity']++;
     }
-    function subtractQuantity($key)
+   function subtractQuantity($key)
     {
-        $this->productList[$key]['quantity']--;
+            if ( $this->productList[$key]['quantity'] > 1) {
+                 $this->productList[$key]['quantity']--;
+            }
+         
+       
     }
 
 
@@ -115,7 +119,7 @@ class Edit extends Component
 
         try {
             $this->validate();
-            $this->purchase->save();
+            $this->purchase->update();
             $this->purchase->products()->detach();
             foreach ($this->productList as $listItem) {
                 $this->purchase->products()->attach($listItem['product_id'], [

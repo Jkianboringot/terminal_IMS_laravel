@@ -26,6 +26,8 @@ class Purchase extends Model
         });
     }
    
-
+        function getIsPaidAttribute(){
+            return $this->id % 2==0;
+        }
 
 }

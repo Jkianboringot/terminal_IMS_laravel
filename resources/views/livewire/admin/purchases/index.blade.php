@@ -2,7 +2,7 @@
     <x-slot:header>Purchases</x-slot:header>
 
     <div class="card">
-        <div class="card-header bg-inv-secondary text-inv-primary border-0">
+        <div class="card-header bg-inv-primary text-inv-secondary border-0">
             <h5>Purchases' list</h5>
         </div>
         <div class="card-body table-responsive">
@@ -14,8 +14,8 @@
                         <th>Supplier</th>
                         <th>Total Amount</th>
                         <th>Status</th>
-                       
-                 <th class="text-center">Actions</th>
+
+                        <th class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,11 +23,14 @@
                         <tr>
                             <td scope="row">{{ $purchase->id }}</td>
                             <td>
-                                <h6>{{Carbon\Carbon::parse($purchase->supplier_id)->format('JS F,Y') }}</h6>
+                                <h6>{{Carbon\Carbon::parse($purchase->supplier_id)->format('jS F,Y') }}</h6>
                             </td>
                             <td>{{ $purchase->supplier->name }}</td>
-                            <td> <small>PISO {{ number_format($purchase-> total_amount,2)}}</small></td>
-                            <td></td>
+                            <td> <small>PISO {{ number_format($purchase->total_amount, 2)}}</small></td>
+                            <td>
+                                <span class={{ $purchase->is_paid ? 'text-success' : 'text-danger' }} style="font: bold">
+                                {{ $purchase->is_paid ? 'Paid' : 'Not Paid' }}</span>
+                            </td>
                             <td class="text-center">
                                 <a wire:navigate href="{{ route('admin.purchases.edit', $purchase->id) }}"
                                     class="btn btn-secondary">

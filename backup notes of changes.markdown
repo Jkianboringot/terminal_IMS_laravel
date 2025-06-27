@@ -114,3 +114,6 @@ in the config file system   to this   'public' => [
 
 
 # navigation problem when ip is like this i cant move to toher menu http://127.0.0.1:8000/users/create but when its http://127.0.0.1:8000/users i can go other side so maybe something to do with navigation fix that
+
+
+# the brand image is broken agian i think its becase of the quality yhe higher px it has the most likely it will not appear
