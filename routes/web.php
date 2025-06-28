@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\Quotation;
 use \Barryvdh\DomPDF\Facade\PDF;
@@ -16,6 +17,7 @@ Route::middleware([
     'verified',
 ])->name('admin.')->group(function () {
 
+    // order download
     Route::get('/{id}/order', function ($id) {
         $order = Order::find($id);
 
@@ -25,7 +27,7 @@ Route::middleware([
         // ->download('Order - #' . sprintf('%04d', $order->id) . 'pdf')
     })->name('order-download');
 
-
+    // quotation download
     Route::get('/{id}/quotation', function ($id) {
         $quotation = Quotation::find($id);
 
@@ -34,6 +36,17 @@ Route::middleware([
         ])->stream();
         // ->download('Order - #' . sprintf('%04d', $order->id) . 'pdf')
     })->name('quotation-download');
+
+
+ // invoice download
+    Route::get('/{id}/invoice', function ($id) {
+        $invoice = Invoice::find($id);
+
+        return PDF::loadView('pdf.invoice', [
+            'invoice' => $invoice
+        ])->stream();
+        // ->download('Order - #' . sprintf('%04d', $order->id) . 'pdf')
+    })->name('invoice-download');
 
 
     Route::get('/dashboard', Admin\Dashboard::class)->name('dashboard');

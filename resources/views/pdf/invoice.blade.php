@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quotation</title>
+    <title>Invoice</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
@@ -107,18 +107,18 @@
     <div class="container">
         <div class="header">
             <img src="{{ public_path('EgoEntlogo/company-logo.jpg') }}" alt="Ego ENT">
-            <h1>Quotation</h1>
-            <p><strong>Quotation Date:</strong> {{ Carbon\Carbon::parse($quotation->quotation_date)->format('D jS F, Y') }}</p>
-            <p><strong>Quotation Number:</strong> #{{ sprintf('%04d', $quotation->id) }}</p>
+            <h1>Invoice</h1>
+            <p><strong>Invoice Date:</strong> {{ Carbon\Carbon::parse($invoice->invoice_date)->format('D jS F, Y') }}</p>
+            <p><strong>Invoice Number:</strong> #{{ sprintf('%04d', $invoice->id) }}</p>
         </div>
 
         <div class="details">
             <div>
                 <h3>Client Details</h3>
-                <p><strong>Name:</strong> {{ $quotation->client->name }}</p>
-                <p><strong>Address:</strong> {{ $quotation->client->address }}</p>
-                <p><strong>Email:</strong> {{ $quotation->client->email }}</p>
-                <p><strong>Phone:</strong> {{ $quotation->client->phone_number }}</p>
+                <p><strong>Name:</strong> {{ $invoice->client->name }}</p>
+                <p><strong>Address:</strong> {{ $invoice->client->address }}</p>
+                <p><strong>Email:</strong> {{ $invoice->client->email }}</p>
+                <p><strong>Phone:</strong> {{ $invoice->client->phone_number }}</p>
             </div>
 
             <div style="margin-left:auto">
@@ -143,7 +143,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($quotation->products as $key => $product)
+                @foreach ($invoice->products as $key => $product)
                     <tr>
                         <td>{{ $key + 1 }}</td>
                         <td>
@@ -162,7 +162,7 @@
         </table>
 
         <p class="total">Grand Total: <span style="font-size:10px">PISO </span>
-            {{ number_format($quotation->total_amount, 2) }}</p>
+            {{ number_format($invoice->total_amount, 2) }}</p>
 
         <div class="footer">
             <p>Thank you for your business!</p>
