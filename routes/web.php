@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Order;
+use App\Models\Quotation;
 use \Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin;
@@ -15,14 +16,26 @@ Route::middleware([
     'verified',
 ])->name('admin.')->group(function () {
 
-    Route::get('/{id}/orders', function ($id) {
+    Route::get('/{id}/order', function ($id) {
         $order = Order::find($id);
 
         return PDF::loadView('pdf.purchase-order', [
             'order' => $order
         ])->stream();
-// ->download('Order - #' . sprintf('%04d', $order->id) . 'pdf')
+        // ->download('Order - #' . sprintf('%04d', $order->id) . 'pdf')
     })->name('order-download');
+
+
+    Route::get('/{id}/quotation', function ($id) {
+        $quotation = Quotation::find($id);
+
+        return PDF::loadView('pdf.quotation', [
+            'quotation' => $quotation
+        ])->stream();
+        // ->download('Order - #' . sprintf('%04d', $order->id) . 'pdf')
+    })->name('quotation-download');
+
+
     Route::get('/dashboard', Admin\Dashboard::class)->name('dashboard');
 
     Route::prefix('users')->name('users.')->group(function () {

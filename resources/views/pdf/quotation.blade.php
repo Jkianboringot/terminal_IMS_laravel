@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Purchase Order</title>
+    <title>Purchase Quotation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
@@ -24,8 +24,8 @@
             height: 95%;
             margin: 0 auto;
             padding: 20px;
-            border: 1px solid rgb(5, 2, 8);
-            border-radius: 5px;
+            bquotation: 1px solid rgb(5, 2, 8);
+            bquotation-radius: 5px;
         }
 
         .header {
@@ -72,13 +72,13 @@
 
         table {
             width: 100%;
-            border-collapse: collapse;
+            bquotation-collapse: collapse;
             margin-bottom: 30px;
         }
 
         table th,
         table td {
-            border: 1px solid #ddd;
+            bquotation: 1px solid #ddd;
             padding: 8px;
             text-align: left;
         }
@@ -107,22 +107,22 @@
     <div class="container">
         <div class="header">
             <img src="{{ public_path('EgoEntlogo/company-logo.jpg') }}" alt="Ego ENT">
-            <h1>Purchase Order</h1>
-            <p><strong>Order Date:</strong> {{ Carbon\Carbon::parse($order->order_date)->format('D jS F, Y') }}</p>
-            <p><strong>Order Number:</strong> #{{ sprintf('%04d', $order->id) }}</p>
+            <h1>Quotation</h1>
+            <p><strong>Quotation Date:</strong> {{ Carbon\Carbon::parse($quotation->quotation_date)->format('D jS F, Y') }}</p>
+            <p><strong>Quotation Number:</strong> #{{ sprintf('%04d', $quotation->id) }}</p>
         </div>
 
         <div class="details">
             <div>
-                <h3>Supplier Details</h3>
-                <p><strong>Name:</strong> {{ $order->supplier->name }}</p>
-                <p><strong>Address:</strong> {{ $order->supplier->address }}</p>
-                <p><strong>Email:</strong> {{ $order->supplier->email }}</p>
-                <p><strong>Phone:</strong> {{ $order->supplier->phone_number }}</p>
+                <h3>Client Details</h3>
+                <p><strong>Name:</strong> {{ $quotation->client->name }}</p>
+                <p><strong>Address:</strong> {{ $quotation->client->address }}</p>
+                <p><strong>Email:</strong> {{ $quotation->client->email }}</p>
+                <p><strong>Phone:</strong> {{ $quotation->client->phone_number }}</p>
             </div>
 
             <div style="margin-left:auto">
-                <h3>Buyer Details</h3>
+                <h3>Saler Details</h3>
                 <p><strong>Name:</strong> {{ env('COMPANY_NAME') }}</p>
                 <p><strong>Address:</strong> {{ env('COMPANY_ADDRESS') }}</p>
                 <p><strong>Email:</strong> {{ env('COMPANY_EMAIL') }}</p>
@@ -143,7 +143,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($order->products as $key => $product)
+                @foreach ($quotation->products as $key => $product)
                     <tr>
                         <td>{{ $key + 1 }}</td>
                         <td>
@@ -162,7 +162,7 @@
         </table>
 
         <p class="total">Grand Total: <span style="font-size:10px">PISO </span>
-            {{ number_format($order->total_amount, 2) }}</p>
+            {{ number_format($quotation->total_amount, 2) }}</p>
 
         <div class="footer">
             <p>Thank you for your business!</p>
