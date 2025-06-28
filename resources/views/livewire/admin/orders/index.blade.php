@@ -36,10 +36,10 @@
                                     class="btn btn-secondary">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
-                                <button
-                                    class="btn btn-primary" wire:click='downloadOrder({{ $order->id }})'>
+                                <a target="_blank" href="{{ route('admin.order-download',$order->id) }}"
+                                    class="btn btn-primary" >
                                     <i class="bi bi-file-earmark-arrow-down "></i>
-                                </button>
+                                </a>
       <button
                                     onclick="confirm('Are you sure you wish to DELETE this Order?')||event.stopImmediatePropagation()"
                                     class="btn btn-danger" wire:click='delete({{ $order->id }})'>

@@ -11,18 +11,6 @@ class Index extends Component
 
     
     
-         function downloadOrder($id)
-    {
-        try {
-            $order = Order::findOrFail($id);
-
-            $pdf=Pdf::loadView('pdf.invoice',$data);
-            $this->dispatch('done', success: "Successfully Deleted this Order");
-        } catch (\Throwable $th) {
-            //throw $th;
-            $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
-        }
-    }
 
 
 
