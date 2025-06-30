@@ -119,3 +119,5 @@ in the config file system   to this   'public' => [
 # the brand image is broken agian i think its becase of the quality yhe higher px it has the most likely it will not appear
 
 # quotation was broken but fix now dont know why 
+
+# sales count is broken but other is completely fine for some reason figure it out tommorow redo the vid

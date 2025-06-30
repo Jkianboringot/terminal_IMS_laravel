@@ -6,43 +6,82 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-       function brand(){
+
+    protected $appends=[
+        'total_purchase_value',
+        'total_sales_value',
+        'inventory_balance',
+    ];
+    function brand()
+    {
         return $this->belongsTo(Brand::class);
     }
 
-     function unit(){
+    function unit()
+    {
         return $this->belongsTo(Unit::class);
     }
 
-     function category(){
-        return $this->belongsTo(ProductCategory::class,'product_category_id');
+    function category()
+    {
+        return $this->belongsTo(ProductCategory::class, 'product_category_id');
     }
 
-     function sales(){
-        return $this->belongsToMany(Sale::class, 'product_sale');
-    }
-    
-     function purchases(){
-        return $this->belongsToMany(Purchase::class, 'product_purchase');
+    function sales()
+    {
+        return $this->belongsToMany(Sale::class, 'product_sale')->withPivot(['quantity', 'unit_price']);
     }
 
-     function quotations(){
-        return $this->belongsToMany(Quotation::class, 'product_quotation');
+    function purchases()
+    {
+        return $this->belongsToMany(Purchase::class, 'product_purchase')->withPivot(['quantity', 'unit_price']);
     }
- function deliveryNotes(){
+
+    function quotations()
+    {
+        return $this->belongsToMany(Quotation::class, 'product_quotation')->withPivot(['quantity', 'unit_price']);
+    }
+    function deliveryNotes()
+    {
         return $this->belongsToMany(DeliveryNote::class, 'delivery_note_product');
-    }       
-    
-    function orders(){
-        return $this->belongsToMany(Order::class, 'order_product');
-    }      
+    }
 
-    function creditNotes(){
+    function orders()
+    {
+        return $this->belongsToMany(Order::class, 'order_product')->withPivot(['quantity', 'unit_price']);
+    }
+
+    function creditNotes()
+    {
         return $this->belongsToMany(CreditNote::class, 'credit_note_product');
-    }      
+    }
 
-      function invoices(){
-        return $this->belongsToMany(Invoice::class, 'invoice_product');
-    }      
+    function invoices()
+    {
+        return $this->belongsToMany(Invoice::class, 'invoice_product')->withPivot(['quantity', 'unit_price']);
+    }
 
+    function getTotalPurchaseValueAttribute()
+    {
+        $amount = 0;
+        foreach ($this->purchases as $purchase) {
+            $amount += ($purchase->pivot->quantity  );
+
+        }
+        return $amount;
+    }
+
+    function getTotalSaleValueAttribute()
+    {
+        $amount = 0;
+        foreach ($this->sales as $sale) {
+            $amount += ($sale->pivot->quantity );
+        }
+        return $amount;
+    }
+
+    function getInventoryBalanceAttribute()
+    {
+        return $this->total_purchase_value - $this->total_sale_value;
+    }
 }

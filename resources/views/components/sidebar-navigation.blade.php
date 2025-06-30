@@ -59,6 +59,7 @@
 
           <li class="nav-header">Accounting & Inventory</li>
 
+          <x-new-nav-link title="OverView" bi_icon="bi-wallet" route="admin.accounts-summary" />
           
             <x-new-nav-link-dropdown title="Purchases" bi_icon="bi-bag-check" route="admin.purchases*">
                 <x-new-nav-link title="Purchase List" bi_icon="" route="admin.purchases.index" />

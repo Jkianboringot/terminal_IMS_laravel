@@ -50,6 +50,7 @@ Route::middleware([
 
 
     Route::get('/dashboard', Admin\Dashboard::class)->name('dashboard');
+    Route::get('/accounts-summary', Admin\AccountsSummary::class)->name('accounts-summary');
 
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('/', Admin\Users\Index::class)->name('index');
