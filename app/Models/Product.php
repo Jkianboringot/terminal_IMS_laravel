@@ -8,8 +8,8 @@ class Product extends Model
 {
 
     protected $appends=[
-        'total_purchase_value',
-        'total_sales_value',
+        'total_purchase_count',
+        'total_sales_count',
         'inventory_balance',
     ];
     function brand()
@@ -71,7 +71,7 @@ class Product extends Model
         return $amount;
     }
 
-    function getTotalSalesValueAttribute()
+    function getTotalSalesCountAttribute()
     {
         $amount = 0;
         foreach ($this->sales as $sale) {
@@ -82,6 +82,6 @@ class Product extends Model
 
     function getInventoryBalanceAttribute()
     {
-        return $this->total_purchase_value - $this->total_sales_value;
+        return $this->total_purchase_count - $this->total_sales_count;
     }
 }

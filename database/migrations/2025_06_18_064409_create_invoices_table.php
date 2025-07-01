@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
              $table->id();
+             $table->date('invoice_date');
             $table->foreignId('client_id')->constrained();
             $table->timestamps();
         });

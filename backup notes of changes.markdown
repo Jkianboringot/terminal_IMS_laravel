@@ -123,3 +123,6 @@ in the config file system   to this   'public' => [
 # sales count is broken but other is completely fine for some reason figure it out tommorow redo the vid
 
 # sales update is broken for some reason so i will go bavk  a commit to see what happens
+
+
+# something was wrong with the migration sales but its works though its just that i all defauldt to zero fro some reason
