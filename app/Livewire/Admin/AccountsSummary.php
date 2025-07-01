@@ -19,7 +19,7 @@ class AccountsSummary extends Component
 
         foreach (Product::all() as $key => $product) {
             $this->stock_value += $product->inventory_balance*$product->purchase_price;
-            $this->sales_count = $product->total_sale_value;
+            $this->sales_count += $product->total_sales_value;
         }
 
          foreach (Sale::all() as $key => $sale) {

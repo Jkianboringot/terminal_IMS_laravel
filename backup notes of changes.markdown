@@ -121,3 +121,5 @@ in the config file system   to this   'public' => [
 # quotation was broken but fix now dont know why 
 
 # sales count is broken but other is completely fine for some reason figure it out tommorow redo the vid
+
+# sales update is broken for some reason so i will go bavk  a commit to see what happens

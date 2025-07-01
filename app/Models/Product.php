@@ -71,7 +71,7 @@ class Product extends Model
         return $amount;
     }
 
-    function getTotalSaleValueAttribute()
+    function getTotalSalesValueAttribute()
     {
         $amount = 0;
         foreach ($this->sales as $sale) {
@@ -82,6 +82,6 @@ class Product extends Model
 
     function getInventoryBalanceAttribute()
     {
-        return $this->total_purchase_value - $this->total_sale_value;
+        return $this->total_purchase_value - $this->total_sales_value;
     }
 }
