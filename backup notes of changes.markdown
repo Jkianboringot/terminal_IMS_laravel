@@ -126,3 +126,11 @@ in the config file system   to this   'public' => [
 
 
 # something was wrong with the migration sales but its works though its just that i all defauldt to zero fro some reason
+
+
+# roles is broken i need to do this before being able to do anything $role = \App\Models\Role::find(1);
+$role->permissions = json_encode(['manage users', 'manage roles']); // or whatever the correct list is
+$role->save();
+ because it sets the permissions as null automatically
+
+        --- cause of prblem mugth have been in the name of config.permission in named it permission no (sgit )

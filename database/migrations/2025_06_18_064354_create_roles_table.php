@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -14,15 +15,17 @@ return new class extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->json('permissions')->nullable();
             $table->timestamps();
         });
+
         DB::table('roles')->insert([
             [
-                'id'=>1,
-                'title'=>'SuperAdminstrator',
-                'created_at'=>now()->toDateTimeString()
+                'id' => 1,
+                'title' => "Super Administrator",
+                'permissions'=> json_encode(config('permissions.permissions')),
+                'created_at' => now()->toDateTimeString(),
             ],
-         
         ]);
     }
 

@@ -4,12 +4,14 @@
             <li class="nav-header">Initialization</li>
 
             <x-new-nav-link title="Dashboard" bi_icon="bi-speedometer" route="admin.dashboard" />
-
+            @if (auth()->user()->hasPermission('manage roles'))
+            
             <x-new-nav-link-dropdown title="Roles" bi_icon="bi-shield-lock" route="admin.roles*">
                 <x-new-nav-link title="Role List" bi_icon="" route="admin.roles.index" />
                 <x-new-nav-link title="Create Role" bi_icon="" route="admin.roles.create" />
             </x-new-nav-link-dropdown>
 
+            @endif
           
             <x-new-nav-link-dropdown title="Users" bi_icon="bi-people" route="admin.users*">
                 <x-new-nav-link title="User List" bi_icon="" route="admin.users.index" />

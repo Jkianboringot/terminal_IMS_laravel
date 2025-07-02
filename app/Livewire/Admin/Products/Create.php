@@ -16,6 +16,7 @@ class Create extends Component
     {
         return [
             'product.name' => 'required',
+            'product.brand_id' => 'required',
         
             'product.description' => 'required',
             'product.unit_id' => 'required',

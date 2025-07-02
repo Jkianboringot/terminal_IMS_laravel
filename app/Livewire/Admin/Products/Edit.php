@@ -16,6 +16,7 @@ class Edit extends Component
     {
         return [
             'product.name' => 'required',
+            'product.brand_id' => 'required',
            
             'product.description' => 'required',
             'product.unit_id' => 'required',
@@ -53,6 +54,7 @@ class Edit extends Component
         return view('livewire.admin.products.edit', [
             'productCategories' => ProductCategory::all(),
             'units' => Unit::all(),
+            'brands' => Brand::all(),
         
         ]);
     }

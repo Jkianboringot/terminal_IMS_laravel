@@ -2,8 +2,8 @@
     <x-slot:header>Products</x-slot:header>
 
     <div class="card">
-        <div class="card-header bg-inv-secondary text-inv-primary border-0">
-            <h5>Edit this Product</h5>
+        <div class="card-header bg-inv-primary text-inv-secondary border-0">
+            <h5>Edit Product</h5>
         </div>
         <div class="card-body">
 
@@ -11,8 +11,7 @@
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
                         <label for="" class="form-label">Product Category</label>
-                        <select wire:model.live='product.product_category_id' class="form-select " name=""
-                            id="">
+                        <select wire:model.live='product.product_category_id' class="form-select " name="" id="">
                             <option selected>Select your Product Category</option>
                             @foreach ($productCategories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -23,18 +22,34 @@
                         @enderror
                     </div>
                 </div>
-              
+
+                <div class="col-md-6 col-12">
+                    <div class="mb-3">
+                        <label for="" class="form-label">Product Brand</label>
+                        <select wire:model.live='product.brand_id' class="form-select " name="" id="">
+                            <option selected>Select your Product Brand</option>
+                            @foreach ($brands as $brand)
+                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('product.brand_id')
+                            <small id="" class="form-text text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
-                    <input wire:model.live='product.name' type="text" class="form-control" name="name"
-                        id="name" aria-describedby="name" placeholder="Enter your Product's Name" />
+                    <input wire:model.live='product.name' type="text" class="form-control" name="name" id="name"
+                        aria-describedby="name" placeholder="Enter your Product's Name" />
                     @error('product.name')
                         <small id="" class="form-text text-danger">{{ $message }}</small>
                     @enderror
                 </div>
                 <div class="mb-3">
                     <label for="" class="form-label">Product Description</label>
-                    <textarea wire:model.live='product.description' class="form-control" name="" id="" rows="3"></textarea>
+                    <textarea wire:model.live='product.description' class="form-control" name="" id=""
+                        rows="3"></textarea>
                     @error('product.description')
                         <small id="" class="form-text text-danger">{{ $message }}</small>
                     @enderror
@@ -57,8 +72,8 @@
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
                         <label for="name" class="form-label">Quantity</label>
-                        <input wire:model.live='product.quantity' type="number" min="0" step="0.1"
-                            class="form-control" name="quantity" id="name" aria-describedby="quantity"
+                        <input wire:model.live='product.quantity' type="number" min="0" step="0.1" class="form-control"
+                            name="quantity" id="name" aria-describedby="quantity"
                             placeholder="Enter your Product's quantity per unit" />
                         @error('product.quantity')
                             <small id="" class="form-text text-danger">{{ $message }}</small>
@@ -96,7 +111,7 @@
 
 
 
-            <button onclick="confirm('Are you sure you wish to update this Product')||event.stopImmediatePropagation()"
+            <button onclick="confirm('Are you sure you wish to create this Product')||event.stopImmediatePropagation()"
                 wire:click='save' class="btn btn-dark text-inv-primary">Save</button>
         </div>
     </div>
