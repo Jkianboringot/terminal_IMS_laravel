@@ -61,7 +61,7 @@ class Product extends Model
         return $this->belongsToMany(Invoice::class, 'invoice_product')->withPivot(['quantity', 'unit_price']);
     }
 
-    function getTotalPurchaseValueAttribute()
+    function getTotalPurchaseCountAttribute()
     {
         $amount = 0;
         foreach ($this->purchases as $purchase) {

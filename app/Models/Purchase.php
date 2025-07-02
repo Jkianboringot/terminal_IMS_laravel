@@ -25,6 +25,12 @@ class Purchase extends Model
             return $product->pivot->quantity * $product->pivot->unit_price;
         });
     }
+       public function getTotalQuantityAttribute()
+    {
+        return $this->products()->get()->sum(function ($product) {
+            return $product->pivot->quantity ;
+        });
+    }
    
         function getIsPaidAttribute(){
             return $this->id % 2==0;

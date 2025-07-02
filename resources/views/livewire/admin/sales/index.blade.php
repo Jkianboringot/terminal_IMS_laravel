@@ -12,6 +12,7 @@
                         <th>ID</th>
                         <th>Sale Date</th>
                         <th>Client</th>
+                        <th>No. of Unit Sold</th>
                         <th>Total Amount</th>
                         <th>Status</th>
 
@@ -26,7 +27,9 @@
                                 <h6>{{Carbon\Carbon::parse($sale->client_id)->format('jS F,Y') }}</h6>
                             </td>
                             <td>{{ $sale->client->name }}</td>
+                               <td> <small> {{ number_format($sale->total_quantity, 2)}}</small></td>
                             <td> <small>PISO {{ number_format($sale->total_amount, 2)}}</small></td>
+                          
                             <td>
                                 <span class={{ $sale->is_paid ? 'text-success' : 'text-danger' }} style="font: bold">
                                 {{ $sale->is_paid ? 'Paid' : 'Not Paid' }}</span>
@@ -45,6 +48,17 @@
                             </td>
                         </tr>
                     @endforeach
+                    <tr>
+                        <td><strong>TOTALS</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>{{ number_format($sales->sum(function($sale){
+                                return $sale->total_quantity;})) }}</strong></td>
+                        <td><strong> PISO {{ number_format($sales->sum(function($sale){
+                                return $sale->total_amount;})) }}</strong></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                 </tbody>
             </table>
         </div>

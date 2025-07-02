@@ -37,10 +37,11 @@
                    <i class="bi bi-pencil-square"></i>
 
                     </a>
-                    <a class="btn btn btn-secondary">
-                   <i class="bi bi-trash-fill"></i>
-
-                    </a>
+                  <button
+                                    onclick="confirm('Are you sure you wish to DELETE this Bank?')||event.stopImmediatePropagation()"
+                                    class="btn btn-danger" wire:click='delete({{ $bank->id }})'>
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
                 </td>
              
             </tr>   

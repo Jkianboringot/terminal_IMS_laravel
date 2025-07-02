@@ -36,9 +36,11 @@
                                    class="btn btn btn-secondary">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
-                                <a class="btn btn btn-secondary">
+                               <button
+                                    onclick="confirm('Are you sure you wish to DELETE this Brand?')||event.stopImmediatePropagation()"
+                                    class="btn btn-danger" wire:click='delete({{ $brand->id }})'>
                                     <i class="bi bi-trash-fill"></i>
-                                </a>
+                                </button>
                             </td>
                         </tr>
                     @endforeach

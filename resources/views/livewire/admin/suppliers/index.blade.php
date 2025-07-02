@@ -1,57 +1,73 @@
 <div>
-    <x-slot:header>Suppliers</x-slot:header>
+    <x-slot:head>Suppliers</x-slot:head>
+
 
     <div class="card">
-        <div class="card-header bg-inv-secondary text-inv-primary border-0">
-            <h5>Suppliers' list</h5>
+        <div class="card-header bg-inv-primary text-inv-secondary border-0">
+            <h5>Suppliers List</h5>
         </div>
         <div class="card-body table-responsive">
-            <table class="table table-hover  ">
+            <table class="table table-hover ">
                 <thead class="thead-inverse">
                     <tr>
                         <th>ID</th>
                         <th>Basic Details</th>
                         <th>Address</th>
                         <th>Business Details</th>
-                        <th>Account Details</th>
-                                                <th class="text-center">Actions</th>
+                        <th>Accounts Details</th>
+                        <th>Purchases Made</th>
+                           <th>Total Purchases Value</th>
+                        <th class="text-center">Actions</th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($suppliers as $supplier)
+                    @foreach($suppliers as $supplier)
                         <tr>
                             <td scope="row">{{ $supplier->id }}</td>
                             <td>
-                                <h6>{{ $supplier->name }}</h6>
-                                <small>{{ $supplier->email }}</small><br>
-                                <small>{{ $supplier->phone_number }}</small>
+                                <h6> {{ $supplier->name }}</p>
+                                    <small> {{ $supplier->email }}</small>  <br>
+                                    <small> {{ $supplier->number??'N/A' }}</small>
+
                             </td>
-                            <td>{{ $supplier->address }}</td>
+                            <td>{{ $supplier->address??'N/A' }}</td>
                             <td>
-                                <small><strong>Tax ID:</strong> {{ $supplier->tax_id }}</small><br>
-                                <small><strong>Reg No:</strong> {{ $supplier->registration_number ?? 'N/A' }}</small>
+                                <small><strong>TAX ID:</strong>{{ $supplier->tax_id }}</small><br>
+                                <small><strong>Reg NO :</strong>{{ $supplier->registration_number??'N/A' }}</small>
+                            </td>
+                             <td>
+                                <small><strong>Bank:</strong>{{ $supplier->bank->name }}</small><br>
+                                <small><strong>A/c NO:</strong>{{ $supplier->account_number }}</small>
                             </td>
                             <td>
-                                <small><strong>Bank:</strong> {{ $supplier->bank->name }}</small><br>
-                                <small><strong>A/c No:</strong> {{ $supplier->account_number }}</small>
+                                {{ $supplier->purchases->count() }}
                             </td>
-                           
+                              <td>
+                               <small>PISO </small>{{ number_format($supplier->purchases->sum(function($purchase){return $purchase->total_amount;})) }}
+                            </td>
                             <td class="text-center">
                                 <a wire:navigate href="{{ route('admin.suppliers.edit', $supplier->id) }}"
-                                    class="btn btn-secondary">
+                                    class="btn btn btn-secondary">
                                     <i class="bi bi-pencil-square"></i>
+
                                 </a>
-                                <button
+                               <button
                                     onclick="confirm('Are you sure you wish to DELETE this Supplier?')||event.stopImmediatePropagation()"
                                     class="btn btn-danger" wire:click='delete({{ $supplier->id }})'>
                                     <i class="bi bi-trash-fill"></i>
                                 </button>
-
                             </td>
+
                         </tr>
                     @endforeach
                 </tbody>
+             
+
             </table>
+     {{ $suppliers->links('pagination::bootstrap-5') }}
+
         </div>
     </div>
+
 </div>

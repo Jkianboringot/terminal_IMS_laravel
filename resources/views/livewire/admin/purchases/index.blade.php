@@ -12,6 +12,7 @@
                         <th>ID</th>
                         <th>Purchase Date</th>
                         <th>Supplier</th>
+                        <th>No. of Unit Bought</th>
                         <th>Total Amount</th>
                         <th>Status</th>
 
@@ -26,7 +27,9 @@
                                 <h6>{{Carbon\Carbon::parse($purchase->supplier_id)->format('jS F,Y') }}</h6>
                             </td>
                             <td>{{ $purchase->supplier->name }}</td>
+                              <td> <small>{{ number_format($purchase->total_quantity, 2)}}</small></td>
                             <td> <small>PISO {{ number_format($purchase->total_amount, 2)}}</small></td>
+                           
                             <td>
                                 <span class={{ $purchase->is_paid ? 'text-success' : 'text-danger' }} style="font: bold">
                                 {{ $purchase->is_paid ? 'Paid' : 'Not Paid' }}</span>
@@ -45,6 +48,17 @@
                             </td>
                         </tr>
                     @endforeach
+                       <tr>
+                        <td><strong>TOTALS</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>{{ number_format($purchases->sum(function($purchase){
+                                return $purchase->total_quantity;})) }}</strong></td>
+                        <td><strong> PISO {{ number_format($purchases->sum(function($purchase){
+                                return $purchase->total_amount;})) }}</strong></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                 </tbody>
             </table>
         </div>

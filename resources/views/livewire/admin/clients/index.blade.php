@@ -14,6 +14,9 @@
                         <th>Basic Details</th>
                         <th>Address</th>
                         <th>Business Details</th>
+                        <th>Accounts Details</th>
+                        <th>Purchases Made</th>
+                           <th>Total Purchases Value</th>
                         <th class="text-center">Actions</th>
 
                     </tr>
@@ -37,23 +40,33 @@
                                 <small><strong>Bank:</strong>{{ $client->bank->name }}</small><br>
                                 <small><strong>A/c NO:</strong>{{ $client->account_number }}</small>
                             </td>
+                            <td>
+                                {{ $client->sales->count() }}
+                            </td>
+                              <td>
+                               <small>PISO </small>{{ number_format($client->sales->sum(function($sale){return $sale->total_amount;})) }}
+                            </td>
                             <td class="text-center">
                                 <a wire:navigate href="{{ route('admin.clients.edit', $client->id) }}"
                                     class="btn btn btn-secondary">
                                     <i class="bi bi-pencil-square"></i>
 
                                 </a>
-                                <a  class="btn btn btn-secondary">
+                               <button
+                                    onclick="confirm('Are you sure you wish to DELETE this Client?')||event.stopImmediatePropagation()"
+                                    class="btn btn-danger" wire:click='delete({{ $client->id }})'>
                                     <i class="bi bi-trash-fill"></i>
-
-                                </a>
+                                </button>
                             </td>
 
                         </tr>
                     @endforeach
-
                 </tbody>
+             
+
             </table>
+     {{ $clients->links('pagination::bootstrap-5') }}
+
         </div>
     </div>
 

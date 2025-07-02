@@ -23,7 +23,7 @@
                 <div class="card-body">
                     <i class="bi bi-currency-exchange display-4 text-inv-primary"></i>
                     <h5 class="card-title mt-2">Sales Count</h5>
-                    <p class="fs-3 fw-bold"> {{$sales_count }}</p>
+                    <p class="fs-3 fw-bold"> {{number_format($sales_count) }} Items</p>
                 
                 </div>
             </div>

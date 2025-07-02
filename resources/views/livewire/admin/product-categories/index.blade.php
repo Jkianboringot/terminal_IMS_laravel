@@ -32,10 +32,11 @@
                                     <i class="bi bi-pencil-square"></i>
 
                                 </a>
-                                <a  class="btn btn btn-secondary">
+                                <button
+                                    onclick="confirm('Are you sure you wish to DELETE this Category?')||event.stopImmediatePropagation()"
+                                    class="btn btn-danger" wire:click='delete({{ $category->id }})'>
                                     <i class="bi bi-trash-fill"></i>
-
-                                </a>
+                                </button>
                             </td>
 
                         </tr>

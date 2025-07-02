@@ -12,7 +12,9 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        
+                        <th>Symbol</th>
+                        <th>No. of Products </th>
+
                         <th class="text-center">Actions</th>
 
                     </tr>
@@ -22,25 +24,31 @@
                         <tr>
                             <td scope="row">{{ $unit->id }}</td>
                             <td>
-                                <h6> {{ $unit->name }}</p>
-                            
+                                {{ $unit->name }}
+                            </td>
+                            <td> {{ $unit->symbol }}</td>
+                            <td> {{ $unit->products->count() }}</td>
+
                             <td class="text-center">
                                 <a wire:navigate href="{{ route('admin.units.edit', $unit->id) }}"
                                     class="btn btn btn-secondary">
                                     <i class="bi bi-pencil-square"></i>
 
                                 </a>
-                                <a  class="btn btn btn-secondary">
+                                <button
+                                    onclick="confirm('Are you sure you wish to DELETE this Unit?')||event.stopImmediatePropagation()"
+                                    class="btn btn-danger" wire:click='delete({{ $unit->id }})'>
                                     <i class="bi bi-trash-fill"></i>
-
-                                </a>
+                                </button>
                             </td>
 
                         </tr>
                     @endforeach
 
                 </tbody>
+              
             </table>
+             {{ $units->links('pagination::bootstrap-5') }}
         </div>
     </div>
 
