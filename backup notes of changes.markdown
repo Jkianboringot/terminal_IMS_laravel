@@ -134,3 +134,4 @@ $role->save();
  because it sets the permissions as null automatically
 
         --- cause of prblem mugth have been in the name of config.permission in named it permission no (sgit )
+# fix git email dont waste time and not show what you done in github so fix that shit delete bigblackcock acocunt
