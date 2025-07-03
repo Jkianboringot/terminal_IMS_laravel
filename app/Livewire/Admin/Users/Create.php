@@ -13,11 +13,14 @@ class Create extends Component
 {
 
     public User $user;
+    public  $selectedRoles=[];
+
 
     function rules(){
             return [
                 'user.name'=>'required',
                 'user.email'=>'required|unique:users,email',
+                'selectedRoles'=>'required',
 
 
             ];
@@ -36,6 +39,8 @@ class Create extends Component
             $password= Str::random(12   );
             $this->user->password= Hash::make($password);
              $this->user->save();
+
+             $this->user->roles()->attach($this->selectedRoles);
             Mail::to($this->user->email)->send(new UserCreatedMail($this->user,$password));
                 // this is to send info to mailtrap to to get password↑ if you dont have it nothing will be send to mailtrap but acc is created
              return redirect()->route('admin.users.index');
@@ -45,6 +50,9 @@ class Create extends Component
     }
     public function render()
     {
-        return view('livewire.admin.users.create');
+        return view('livewire.admin.users.create',
+    [
+        'roles'=>Role::all()
+    ]);
     }
 }

@@ -17,6 +17,7 @@ class Index extends Component
                 throw new \Exception("Permission denied: Cant delete Admin user", 1);
             }
 
+            $user->roles()->detach();
        
             $user->delete();
 

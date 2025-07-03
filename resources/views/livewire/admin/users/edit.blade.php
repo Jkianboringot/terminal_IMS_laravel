@@ -32,6 +32,26 @@
                     </div>
 
                 </div>
+                <div class="col-md-6 col-12">
+                    <div class="form-group mb-3">
+                        <label for="Roles" class="form-label">Roles</label>
+                        <select
+                        wire:model="selectedRoles"
+                            multiple
+                            class="form-select form-select-lg"
+                            name=""
+                            id=""
+                        >
+                       
+                            @foreach ($roles as $role )
+                               <option value="{{ $role->id }}">{{$role->title}}</option>
+                            @endforeach
+                         
+                          
+                        </select>
+                    </div>
+                    
+                </div>
             </div>
             <button onclick="confirm('Are you sure you want to Create this user')||event.stopImmediatePropagation()" wire:click="save" class="btn btn-dark text-inv-secondary">Save</button>
         </div>

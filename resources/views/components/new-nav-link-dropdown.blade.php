@@ -12,7 +12,7 @@
                                     <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview" style="{{ request()->routeIs($route) || $active ?'display:block':'display:none' }}">
+                            <ul class="nav nav-treeview" >
                     {{ $slot }}
       </ul>
                 </li>
