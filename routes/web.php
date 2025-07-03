@@ -52,97 +52,97 @@ Route::middleware([
     Route::get('/dashboard', Admin\Dashboard::class)->name('dashboard');
     Route::get('/accounts-summary', Admin\AccountsSummary::class)->name('accounts-summary');
 
-    Route::prefix('users')->name('users.')->group(function () {
+    Route::prefix('users')->middleware('permission:manage users')->name('users.')->group(function () {
         Route::get('/', Admin\Users\Index::class)->name('index');
         Route::get('/create', Admin\Users\Create::class)->name('create');
         Route::get('{id}/edit', Admin\Users\Edit::class)->name('edit');
     });
 
-    Route::prefix('banks')->name('banks.')->group(function () {
+    Route::prefix('banks')->middleware('permission:manage banks')->name('banks.')->group(function () {
         Route::get('/', Admin\Banks\Index::class)->name('index');
         Route::get('/create', Admin\Banks\Create::class)->name('create');
         Route::get('{id}/edit', Admin\Banks\Edit::class)->name('edit');
     });
 
-    Route::prefix('brands')->name('brands.')->group(function () {
+    Route::prefix('brands')->middleware('permission:manage brands')->name('brands.')->group(function () {
         Route::get('/', Admin\Brands\Index::class)->name('index');
         Route::get('/create', Admin\Brands\Create::class)->name('create');
         Route::get('{id}/edit', Admin\Brands\Edit::class)->name('edit');
     });
 
-    Route::prefix('clients')->name('clients.')->group(function () {
+    Route::prefix('clients')->middleware('permission:manage clients')->name('clients.')->group(function () {
         Route::get('/', Admin\Clients\Index::class)->name('index');
         Route::get('/create', Admin\Clients\Create::class)->name('create');
         Route::get('{id}/edit', Admin\Clients\Edit::class)->name('edit');
     });
 
-    Route::prefix('credit-notes')->name('creditnotes.')->group(function () {
+    Route::prefix('credit-notes')->middleware('permission:manage credit notes')->name('creditnotes.')->group(function () {
         Route::get('/', Admin\CreditNotes\Index::class)->name('index');
         Route::get('/create', Admin\CreditNotes\Create::class)->name('create');
         Route::get('{id}/edit', Admin\CreditNotes\Edit::class)->name('edit');
     });
 
-    Route::prefix('delivery-notes')->name('deliverynotes.')->group(function () {
+    Route::prefix('delivery-notes')->middleware('permission:manage delivery notes')->name('deliverynotes.')->group(function () {
         Route::get('/', Admin\DeliveryNotes\Index::class)->name('index');
         Route::get('/create', Admin\DeliveryNotes\Create::class)->name('create');
         Route::get('{id}/edit', Admin\DeliveryNotes\Edit::class)->name('edit');
     });
 
-    Route::prefix('invoices')->name('invoices.')->group(function () {
+    Route::prefix('invoices')->middleware('permission:manage invoices')->name('invoices.')->group(function () {
         Route::get('/', Admin\Invoices\Index::class)->name('index');
         Route::get('/create', Admin\Invoices\Create::class)->name('create');
         Route::get('{id}/edit', Admin\Invoices\Edit::class)->name('edit');
     });
 
-    Route::prefix('orders')->name('orders.')->group(function () {
+    Route::prefix('orders')->middleware('permission:manage orders')->name('orders.')->group(function () {
         Route::get('/', Admin\Orders\Index::class)->name('index');
         Route::get('/create', Admin\Orders\Create::class)->name('create');
         Route::get('{id}/edit', Admin\Orders\Edit::class)->name('edit');
     });
 
-    Route::prefix('product-categories')->name('productcategories.')->group(function () {
+    Route::prefix('product-categories')->middleware('permission:manage product categories')->name('productcategories.')->group(function () {
         Route::get('/', Admin\ProductCategories\Index::class)->name('index');
         Route::get('/create', Admin\ProductCategories\Create::class)->name('create');
         Route::get('{id}/edit', Admin\ProductCategories\Edit::class)->name('edit');
     });
 
-    Route::prefix('products')->name('products.')->group(function () {
+    Route::prefix('products')->middleware('permission:manage products')->name('products.')->group(function () {
         Route::get('/', Admin\Products\Index::class)->name('index');
         Route::get('/create', Admin\Products\Create::class)->name('create');
         Route::get('{id}/edit', Admin\Products\Edit::class)->name('edit');
     });
 
-    Route::prefix('purchases')->name('purchases.')->group(function () {
+    Route::prefix('purchases')->middleware('permission:manage purchases')->name('purchases.')->group(function () {
         Route::get('/', Admin\Purchases\Index::class)->name('index');
         Route::get('/create', Admin\Purchases\Create::class)->name('create');
         Route::get('{id}/edit', Admin\Purchases\Edit::class)->name('edit');
     });
 
-    Route::prefix('quotations')->name('quotations.')->group(function () {
+    Route::prefix('quotations')->middleware('permission:manage quotations')->name('quotations.')->group(function () {
         Route::get('/', Admin\Quotations\Index::class)->name('index');
         Route::get('/create', Admin\Quotations\Create::class)->name('create');
         Route::get('{id}/edit', Admin\Quotations\Edit::class)->name('edit');
     });
 
-    Route::prefix('roles')->name('roles.')->group(function () {
+    Route::prefix('roles')->middleware('permission:manage roles')->name('roles.')->group(function () {
         Route::get('/', Admin\Roles\Index::class)->name('index');
         Route::get('/create', Admin\Roles\Create::class)->name('create');
         Route::get('{id}/edit', Admin\Roles\Edit::class)->name('edit');
     });
 
-    Route::prefix('sales')->name('sales.')->group(function () {
+    Route::prefix('sales')->middleware('permission:manage sales')->name('sales.')->group(function () {
         Route::get('/', Admin\Sales\Index::class)->name('index');
         Route::get('/create', Admin\Sales\Create::class)->name('create');
         Route::get('{id}/edit', Admin\Sales\Edit::class)->name('edit');
     });
 
-    Route::prefix('suppliers')->name('suppliers.')->group(function () {
+    Route::prefix('suppliers')->middleware('permission:manage suppliers')->name('suppliers.')->group(function () {
         Route::get('/', Admin\Suppliers\Index::class)->name('index');
         Route::get('/create', Admin\Suppliers\Create::class)->name('create');
         Route::get('{id}/edit', Admin\Suppliers\Edit::class)->name('edit');
     });
 
-    Route::prefix('units')->name('units.')->group(function () {
+    Route::prefix('units')->middleware('permission:manage units')->name('units.')->group(function () {
         Route::get('/', Admin\Units\Index::class)->name('index');
         Route::get('/create', Admin\Units\Create::class)->name('create');
         Route::get('{id}/edit', Admin\Units\Edit::class)->name('edit');

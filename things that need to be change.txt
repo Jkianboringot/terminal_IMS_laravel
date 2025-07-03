@@ -7,6 +7,8 @@ register past click and the program process it the click first before the fucnit
 4.fix ui enconsistency like kes is suppose to be piso  the grammar and just the writing 
 5.database from mysql to postgresql
 6.change ui for create puchase or sales to selectable not what every that was
+7.make ui for conformation that user has been created
+8.make the permisison in sidebar onliner
 
 what has been corrected:
     3. has been correct in the backend just need a simple guard
