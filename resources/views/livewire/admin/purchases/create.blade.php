@@ -17,19 +17,20 @@
                         @enderror
                     </div>
 
+                 
                     <div class="mb-3">
                         <label for="" class="form-label">Supplier Search</label>
-                        <input type="text" wire:model.live="supplierSearch" class="form-control" />
-                          @error('purchase.supplier_id')
-                            <small id="helpId" class="form-text text-danger">{{ $message }} </small>
+                        <input type="text" wire:model.live='supplierSearch' class="form-control" />
+                        @error('purchase.supplier_id')
+                            <small id="helpId" class="form-text text-danger">{{ $message }}</small>
                         @enderror
-                        @if ($supplierSearch != '')
-                            @foreach ($suppliers as $supplier)
-                              <x-supplier-list-item :supplier="$supplier" :purchase="$purchase"/>
-                         
-                            @endforeach
-                        @endif
-
+                        <ul class="list-group mt-2 w-100">
+                            @if ($supplierSearch != '')
+                                @foreach ($suppliers as $supplier)
+                                    <x-supplier-list-item :supplier="$supplier" :purchase="$purchase"/>
+                                @endforeach
+                            @endif
+                        </ul>
                     </div>
 
                 </div>
@@ -42,20 +43,16 @@
                 </div>
 
                 <div class="card-body ">
-                    <div class="mb-3">
+                        <div class="mb-3">
                         <label for="" class="form-label">Product Search</label>
-                        <input type="text" wire:model.live="productSearch" class="form-control" /> 
-                        @if ($productSearch != '')
-                            @foreach ($products as $product)
-                                <ul class="list-group mt-2 w-100">
-                                    <li wire:click="selectProduct({{ $product->id }})"
-                                        class="list-group-item {{ $product->id == $selectedProductId ? 'active' : '' }}">
-                                        {{ $product->name }} - {{ $product->quantity}} - {{$product->unit->name}}
-                                    </li>
-                                </ul>
-                            @endforeach
-                        @endif
-
+                        <input type="text" wire:model.live='productSearch' class="form-control" />
+                        <ul class="list-group mt-2 w-100">
+                            @if ($productSearch != '')
+                                @foreach ($products as $product)
+                                    <x-product-list-item :product="$product" :selectedProductId="$selectedProductId"/>
+                                @endforeach
+                            @endif
+                        </ul>
                     </div>
                     <div class="row">
                         <div class="col-md-6">

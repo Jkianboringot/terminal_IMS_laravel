@@ -23,17 +23,14 @@
                           @error('sale.client_id')
                             <small id="helpId" class="form-text text-danger">{{ $message }} </small>
                         @enderror
+                          <ul class="list-group mt-2 w-100">
                         @if ($clientSearch != '')
                             @foreach ($clients as $client)
-                                <ul class="list-group mt-2 w-100">
-                                    <li wire:click="selectClient({{ $client->id }})"
-                                        class="list-group-item {{ $client->id == $sale->client_id ? 'active' : '' }}">
-                                        {{ $client->name }}
-                                    </li>
-                                </ul>
+                                     <x-client-list-item :client="$client" :sale="$sale"/>
                             @endforeach
                         @endif
-
+                        
+</ul>
                     </div>
 
                 </div>
@@ -48,17 +45,15 @@
                 <div class="card-body ">
                     <div class="mb-3">
                         <label for="" class="form-label">Product Search</label>
-                        <input type="text" wire:model.live="productSearch" class="form-control" /> 
-                        @if ($productSearch != '')
-                            @foreach ($products as $product)
-                                <ul class="list-group mt-2 w-100">
-                                    <li wire:click="selectProduct({{ $product->id }})"
-                                        class="list-group-item {{ $product->id == $selectedProductId ? 'active' : '' }}">
-                                        {{ $product->name }} - {{ $product->quantity}} - {{$product->unit->name}}
-                                    </li>
-                                </ul>
-                            @endforeach
-                        @endif
+                        <input type="text" wire:model.live='productSearch' class="form-control" />
+                        <ul class="list-group mt-2 w-100">
+                            @if ($productSearch != '')
+                                @foreach ($products as $product)
+                                    <x-product-list-item :product="$product" :selectedProductId="$selectedProductId"/>
+                                @endforeach
+                            @endif
+                        </ul>
+                    </div>
 
                     </div>
                     <div class="row">
@@ -172,8 +167,8 @@
                         </table>
                  
                             <button
-                        onclick="confirm('Are you sure you wish to Update the Sale')||event.stopImmediatePropagation()"
-                        wire:click='makeSale' class="btn btn-dark text-inv-secondary w-100">Update Sale</button>
+                        onclick="confirm('Are you sure you wish to make the Sale')||event.stopImmediatePropagation()"
+                        wire:click='makeSale' class="btn btn-dark text-inv-secondary w-100">Sale</button>
                       
                     </div>
                 </div>

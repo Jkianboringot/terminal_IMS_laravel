@@ -112,7 +112,7 @@ Route::middleware([
         Route::get('{id}/edit', Admin\Products\Edit::class)->name('edit');
     });
 
-    Route::prefix('purchases')->middleware('permission:manage purchases')->name('purchases.')->group(function () {
+    Route::prefix('purchases')->middleware('permission:manage product purchases')->name('purchases.')->group(function () {
         Route::get('/', Admin\Purchases\Index::class)->name('index');
         Route::get('/create', Admin\Purchases\Create::class)->name('create');
         Route::get('{id}/edit', Admin\Purchases\Edit::class)->name('edit');

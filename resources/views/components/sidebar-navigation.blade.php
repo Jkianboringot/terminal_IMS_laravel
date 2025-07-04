@@ -80,8 +80,9 @@
           <li class="nav-header">Accounting & Inventory</li>
 
           <x-new-nav-link title="OverView" bi_icon="bi-wallet" route="admin.accounts-summary" />
-                      @if (auth()->user()->hasPermission('manage purchases')  )
           
+            @if (auth()->user()->hasPermission('manage product purchases')  ) 
+            <!-- this manage product purchase is suppose to be just amnage product -->
             <x-new-nav-link-dropdown title="Purchases" bi_icon="bi-bag-check" route="admin.purchases*">
                 <x-new-nav-link title="Purchase List" bi_icon="" route="admin.purchases.index" />
                 <x-new-nav-link title="Create Purchase" bi_icon="" route="admin.purchases.create" />

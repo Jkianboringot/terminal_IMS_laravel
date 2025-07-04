@@ -17,23 +17,20 @@
                         @enderror
                     </div>
 
+                 
                     <div class="mb-3">
                         <label for="" class="form-label">Supplier Search</label>
-                        <input type="text" wire:model.live="supplierSearch" class="form-control" />
-                          @error('purchase.supplier_id')
-                            <small id="helpId" class="form-text text-danger">{{ $message }} </small>
+                        <input type="text" wire:model.live='supplierSearch' class="form-control" />
+                        @error('purchase.supplier_id')
+                            <small id="helpId" class="form-text text-danger">{{ $message }}</small>
                         @enderror
-                        @if ($supplierSearch != '')
-                            @foreach ($suppliers as $supplier)
-                                <ul class="list-group mt-2 w-100">
-                                    <li wire:click="selectSupplier({{ $supplier->id }})"
-                                        class="list-group-item {{ $supplier->id == $purchase->supplier_id ? 'active' : '' }}">
-                                        {{ $supplier->name }}
-                                    </li>
-                                </ul>
-                            @endforeach
-                        @endif
-
+                        <ul class="list-group mt-2 w-100">
+                            @if ($supplierSearch != '')
+                                @foreach ($suppliers as $supplier)
+                                    <x-supplier-list-item :supplier="$supplier" :purchase="$purchase"/>
+                                @endforeach
+                            @endif
+                        </ul>
                     </div>
 
                 </div>
@@ -48,19 +45,16 @@
                 <div class="card-body ">
                     <div class="mb-3">
                         <label for="" class="form-label">Product Search</label>
-                        <input type="text" wire:model.live="productSearch" class="form-control" /> 
-                        @if ($productSearch != '')
-                            @foreach ($products as $product)
-                                <ul class="list-group mt-2 w-100">
-                                    <li wire:click="selectProduct({{ $product->id }})"
-                                        class="list-group-item {{ $product->id == $selectedProductId ? 'active' : '' }}">
-                                        {{ $product->name }} - {{ $product->quantity}} - {{$product->unit->name}}
-                                    </li>
-                                </ul>
-                            @endforeach
-                        @endif
-
+                        <input type="text" wire:model.live='productSearch' class="form-control" />
+                        <ul class="list-group mt-2 w-100">
+                            @if ($productSearch != '')
+                                @foreach ($products as $product)
+                                    <x-product-list-item :product="$product" :selectedProductId="$selectedProductId"/>
+                                @endforeach
+                            @endif
+                        </ul>
                     </div>
+                    
                     <div class="row">
                         <div class="col-md-6">
 
@@ -172,8 +166,8 @@
                         </table>
                  
                             <button
-                        onclick="confirm('Are you sure you wish to Update the Purchase')||event.stopImmediatePropagation()"
-                        wire:click='makePurchase' class="btn btn-dark text-inv-secondary w-100">Update Purchase</button>
+                        onclick="confirm('Are you sure you wish to make the Purchase')||event.stopImmediatePropagation()"
+                        wire:click='makePurchase' class="btn btn-dark text-inv-secondary w-100">Purchase</button>
                       
                     </div>
                 </div>
