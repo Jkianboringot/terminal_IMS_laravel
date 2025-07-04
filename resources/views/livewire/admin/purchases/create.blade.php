@@ -25,12 +25,8 @@
                         @enderror
                         @if ($supplierSearch != '')
                             @foreach ($suppliers as $supplier)
-                                <ul class="list-group mt-2 w-100">
-                                    <li wire:click="selectSupplier({{ $supplier->id }})"
-                                        class="list-group-item {{ $supplier->id == $purchase->supplier_id ? 'active' : '' }}">
-                                        {{ $supplier->name }}
-                                    </li>
-                                </ul>
+                              <x-supplier-list-item :supplier="$supplier" :purchase="$purchase"/>
+                         
                             @endforeach
                         @endif
 
