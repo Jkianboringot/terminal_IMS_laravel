@@ -35,4 +35,8 @@ class Sale extends Model
         function getIsPaidAttribute(){
             return $this->id % 2==0;
         }
+
+          function payments(){
+        return $this->belongsToMany(SalesPayment::class,'purchase_purchase_payment');
+    }
 }

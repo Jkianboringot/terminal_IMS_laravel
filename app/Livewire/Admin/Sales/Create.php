@@ -12,7 +12,7 @@ class Create extends Component
 
     public $clientSearch;
     public $productSearch;
-    
+
     public $selectedProductId;
 
     public $quantity;
@@ -23,10 +23,11 @@ class Create extends Component
     public $productList = [];
 
 
-    function rules(){
+    function rules()
+    {
         return [
-            'sale.sale_date'=>'required',
-            'sale.client_id'=>'required',
+            'sale.sale_date' => 'required',
+            'sale.client_id' => 'required',
         ];
     }
 
@@ -38,23 +39,24 @@ class Create extends Component
     }
 
 
-      function addQuantity($key)
+    function addQuantity($key)
     {
         $this->productList[$key]['quantity']++;
     }
     function subtractQuantity($key)
     {
-            if ( $this->productList[$key]['quantity'] > 1) {
-                 $this->productList[$key]['quantity']--;
-            }
-         
-       
+        if ($this->productList[$key]['quantity'] > 1) {
+            $this->productList[$key]['quantity']--;
+        }
+
+
     }
 
-    function deleteCartItem($key){
-        array_splice($this->productList,$key,1);
+    function deleteCartItem($key)
+    {
+        array_splice($this->productList, $key, 1);
     }
-   
+
 
     function selectClient($id)
     {
@@ -66,7 +68,7 @@ class Create extends Component
         $this->selectedProductId = $id;
     }
 
- function addToList()
+    function addToList()
     {
         try {
             $this->validate([
@@ -75,10 +77,18 @@ class Create extends Component
                 'price' => 'required',
             ]);
 
+
+            if (
+                Product::find($this->selectedProductId)->inventory_balance < $this->quantity
+            ) {
+                throw new \Exception("Inventory Balance is Low", 1);
+
+            }
             foreach ($this->productList as $key => $listItem) {
-                if ($listItem['product_id']==$this->selectedProductId && $listItem['price']==$this->price) {
-                    $this->productList[$key]['quantity']+=$this->quantity;
-                return;
+
+                if ($listItem['product_id'] == $this->selectedProductId && $listItem['price'] == $this->price) {
+                    $this->productList[$key]['quantity'] += $this->quantity;
+                    return;
                     # code...
                 }
             }
@@ -97,31 +107,45 @@ class Create extends Component
                 'price',
             ]);
         } catch (\Throwable $th) {
-             $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
+            $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
         }
     }
 
-    function makeSale(){
-        
+    function makeSale()
+    {
+
         try {
             $this->validate();
+            foreach ($this->productList as $key => $listItem) {
+
+                if (
+                    Product::find($listItem['product_id'])->inventory_balance < $listItem['quantity']
+                ) {
+                    throw new \Exception("Inventory Balance for" . Product::find($listItem['product_id'])->name . "is Low", 1);
+                }
+
+            }
             $this->sale->save();
             foreach ($this->productList as $key => $listItem) {
-                $this->sale->products()->attach($listItem['product_id'],[
-                    'quantity'=>$listItem['quantity'],
-                    'unit_price'=>$listItem['price']
+
+                $this->sale->products()->attach($listItem['product_id'], [
+                    'quantity' => $listItem['quantity'],
+                    'unit_price' => $listItem['price']
                 ]);
-                
             }
 
+
+            if ($this->sale->products->count() == 0) {
+                $this->sale->delete();
+            }
             return redirect()->route('admin.sales.index');
         } catch (\Throwable $th) {
-             $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
+            $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
         }
-      
+
     }
 
-  public function render()
+    public function render()
     {
         $clients = Client::where('name', 'like', '%' . $this->clientSearch . '%')->get();
         $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();

@@ -139,3 +139,8 @@ $role->save();
     ok its fix now the fucking google account was supplose to be slyrics fucking waste
 
 # working on permission now i wll just follow for now but i will change it to be simple fied later n
+
+
+
+# the purchase and sales edit are still broken and have not yet been fix
+        -- it start like that every sinve i add where you can see balance of and quantity of items for products

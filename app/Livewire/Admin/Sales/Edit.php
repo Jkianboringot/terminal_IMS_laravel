@@ -87,7 +87,12 @@ class Edit extends Component
                 'quantity' => 'required',
                 'price' => 'required',
             ]);
+  if (
+                Product::find($this->selectedProductId)->inventory_balance < $this->quantity
+            ) {
+                throw new \Exception("Inventory Balance is Low", 1);
 
+            }
             foreach ($this->productList as $key => $listItem) {
                 if ($listItem['product_id'] == $this->selectedProductId && $listItem['price'] == $this->price) {
                     $this->productList[$key]['quantity'] += $this->quantity;
@@ -119,6 +124,15 @@ class Edit extends Component
 
         try {
             $this->validate();
+              foreach ($this->productList as $key => $listItem) {
+
+                if (
+                    Product::find($listItem['product_id'])->inventory_balance < $listItem['quantity']
+                ) {
+                    throw new \Exception("Inventory Balance for" . Product::find($listItem['product_id'])->name . "is Low", 1);
+                }
+
+            }
             $this->sale->update();
             $this->sale->products()->detach();
             foreach ($this->productList as $listItem) {
@@ -129,12 +143,16 @@ class Edit extends Component
             }
 
 
+            if ($this->sale->products->count() == 0) {
+                $this->sale->delete();
+            }
             return redirect()->route('admin.sales.index');
         } catch (\Throwable $th) {
             $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
         }
 
     }
+
     public function render()
     {
         $clients = Client::where('name', 'like', '%' . $this->clientSearch . '%')->get();

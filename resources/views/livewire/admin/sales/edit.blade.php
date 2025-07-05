@@ -1,9 +1,7 @@
 <div>
     <x-slot:header>Sales</x-slot:header>
     <div class="row justify-content-center">
-        <div class="col-md-4 col-6 @if (!$productList)
-            w-50
-        @endif">
+        <div class="col-md-4 col-6 @if (!$productList) w-50 @endif">
             <div class="card">
                 <div class="card-header  bg-inv-primary text-inv-secondary border-0">
                     <h5>Set Date & Client</h5>
@@ -55,7 +53,7 @@
                         </ul>
                     </div>
 
-                    </div>
+                
                     <div class="row">
                         <div class="col-md-6">
 
@@ -67,6 +65,7 @@
                                 @enderror
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="" class="form-label">Unit Price</label>
@@ -178,7 +177,7 @@
     </div>
 </div>
 
-</div>
+
 
 
 <!-- after this make the client id and product a drop down and search because its annoying just being able to searcjh -->

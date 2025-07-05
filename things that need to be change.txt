@@ -11,5 +11,6 @@ register past click and the program process it the click first before the fucnit
 8.make the permisison in sidebar onliner
 9.i have been copy and pasting create to edit i might have fuck some up so double check all of htem witht that gut code
 10.recheck the user create becuase newly create user if they have no roles they are considered as admin
+11.edit for sales and purchase are broken
 what has been corrected:
     3. has been correct in the backend just need a simple guard
