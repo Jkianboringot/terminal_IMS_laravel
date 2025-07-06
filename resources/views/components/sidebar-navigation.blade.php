@@ -86,7 +86,7 @@
             <x-new-nav-link-dropdown title="Purchases" bi_icon="bi-bag-check" route="admin.purchases*">
                 <x-new-nav-link title="Purchase List" bi_icon="" route="admin.purchases.index" />
                 <x-new-nav-link title="Create Purchase" bi_icon="" route="admin.purchases.create" />
-            </x-new-nav-link-dropdown>
+            </x-new-nav-link-dropdown>  
     @endif
 
                       @if (auth()->user()->hasPermission('manage sales')  )
@@ -120,6 +120,21 @@
              <x-new-nav-link-dropdown title="Invoices" bi_icon="bi-receipt" route="admin.invoices*">
                 <x-new-nav-link title="Invoice List" bi_icon="" route="admin.invoices.index" />
                 <x-new-nav-link title="Create Invoice" bi_icon="" route="admin.invoices.create" />
+            </x-new-nav-link-dropdown>
+    @endif
+                   @if (auth()->user()->hasPermission('manage payments')  )
+ 
+             <x-new-nav-link-dropdown title="SalePayments" bi_icon="bi-receipt" route="admin.sale-payments*">
+                <x-new-nav-link title="Sale Payments List" bi_icon="" route="admin.sale-payments.index" />
+                <x-new-nav-link title="Create Sale Payment" bi_icon="" route="admin.sale-payments.create" />
+            </x-new-nav-link-dropdown>
+    @endif
+
+         @if (auth()->user()->hasPermission('manage payments')  )
+ 
+             <x-new-nav-link-dropdown title="PurchasePayments" bi_icon="bi-receipt" route="admin.purchase-payments*">
+                <x-new-nav-link title="Purchase Payments List" bi_icon="" route="admin.purchase-payments.index" />
+                <x-new-nav-link title="Create Purchase Payment" bi_icon="" route="admin.purchase-payments.create" />
             </x-new-nav-link-dropdown>
     @endif
 

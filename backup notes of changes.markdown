@@ -144,3 +144,6 @@ $role->save();
 
 # the purchase and sales edit are still broken and have not yet been fix
         -- it start like that every sinve i add where you can see balance of and quantity of items for products
+
+
+# from now on i need to understand what each shit is for becuase i need to createa doc for client so that they understand what the fuck happens not gause so  ye am fuck because eevn now idont understand shit

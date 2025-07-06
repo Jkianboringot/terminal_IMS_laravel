@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('sale_sale_payment', function (Blueprint $table) {
             $table->id();
              $table->foreignId('sale_id')->constrained();
-             $table->foreignId('sale_payment_id')->constrained('sales_payments');
+             $table->foreignId('sales_payment_id')->constrained('sales_payments');
             $table->decimal('amount');
 
         

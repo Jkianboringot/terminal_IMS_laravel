@@ -9,4 +9,10 @@ class PurchasePayment extends Model
     function purchases(){
         return $this->belongsToMany(Purchase::class,'purchase_purchase_payment');
     }
+    
+       function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+
 }

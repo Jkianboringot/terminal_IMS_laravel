@@ -7,6 +7,21 @@ use Livewire\Component;
 
 class Index extends Component
 {
+
+    function updatePermissions($id){
+       try {
+         if ($id != 1) {
+            throw new \Exception("This is not the Super Admin", 1);
+            
+        }
+        $role= Role::find($id);
+        $role->permissions=json_encode(config('permissions.permissions'));
+        $role->save();
+        $this->dispatch('done',success :'Succesfully Updated Super Admin');
+       } catch (\Throwable $th) {
+        $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
+       }
+    }
     
     function delete($id)
     {

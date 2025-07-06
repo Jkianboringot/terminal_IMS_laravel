@@ -31,13 +31,21 @@ class Purchase extends Model
             return $product->pivot->quantity ;
         });
     }
-   
+     function getTotalBalanceAttribute(){
+            return $this->total_amount- $this->total_paid ;
+        }
         function getIsPaidAttribute(){
-            return $this->id % 2==0;
+            return $this->total_amount- $this->total_paid <= 0;
+        }
+
+        function getTotalPaidAttribute(){
+            return $this->payments->sum(function ($payment){
+            return $payment->pivot->amount;
+        });
         }
 
           function payments(){
-        return $this->belongsToMany(PurchasePayment::class,'purchase_purchase_payment');
+        return $this->belongsToMany(PurchasePayment::class,'purchase_purchase_payment')->withPivot('amount');
     }
 
 }
