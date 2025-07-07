@@ -14,7 +14,8 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('purchase_id')->constrained();
             $table->foreignId('purchase_payment_id')->constrained('purchase_payments');
-            $table->decimal('amount');
+            $table->decimal('amount', 15, 2);
+
             $table->timestamps();
         });
     }

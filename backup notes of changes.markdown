@@ -147,3 +147,6 @@ $role->save();
 
 
 # from now on i need to understand what each shit is for becuase i need to createa doc for client so that they understand what the fuck happens not gause so  ye am fuck because eevn now idont understand shit
+
+
+# function for taking all payment in purchase payment in allocated amount is broken becase it cant revcognize the current selected so you have to seelct other then reselect

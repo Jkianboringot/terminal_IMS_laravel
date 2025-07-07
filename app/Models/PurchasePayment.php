@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class PurchasePayment extends Model
 {
     function purchases(){
-        return $this->belongsToMany(Purchase::class,'purchase_purchase_payment');
+        return $this->belongsToMany(Purchase::class,'purchase_purchase_payment')->withPivot('amount');
     }
     
        function supplier()

@@ -21,3 +21,7 @@ what has been corrected:
 
 
 
+   function selectSupplier($id)
+    {
+        $this->purchase_payment->supplier_id = $id;
+        $this->supplierSearch = Supplier::find($id)->name; this this in otther for product like of purhcase and sales and other this is for ui fixing
