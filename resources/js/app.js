@@ -2,7 +2,8 @@ import './bootstrap';
 
 import Alpine from 'alpinejs';
 import Swal from 'sweetalert2';
-import Livewire from '../../vendor/livewire/livewire/dist/livewire.esm'; // Adjust path if needed
+import * as Livewire from '../../vendor/livewire/livewire/dist/livewire.esm.js';
+
 
 
 const Toast = Swal.mixin({
