@@ -97,3 +97,26 @@ body {
 .text-cash-red{
   color: #ae0c00;
 }
+
+.btn-inv-primary {
+    color: #f29f67 ;
+    background-color: #ae0c00 ;
+    :hover {
+        color: white !important;
+        background-color: #ae0c00 !important;
+    }
+    :focus {
+        color: white !important;
+        background-color: #ae0c00 !important;
+    }
+    :active {
+        color: white !important;
+        background-color: #ae0c00 !important;
+    }
+    :active {
+        color: white !important;
+        background-color: #6c6c6c !important;
+    }
+
+
+}

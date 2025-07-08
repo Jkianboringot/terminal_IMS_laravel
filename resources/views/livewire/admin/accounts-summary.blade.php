@@ -1,44 +1,40 @@
 <div>
     <x-slot:header>Accounts Summary</x-slot:header>
 
-    <input type="month" wire:model.live="month">
-    <div class="row g-4">
+    <div class="mb-3">
+        <input class="form-control bg-inv-primary" type="month" wire:model.live='month'>
+    </div>
+    <div class="row mb-3">
         <!-- Revenue and Sales -->
-        <div class="col-md-4">
-            <div class="card text-center shadow-sm bg-inv-secondary text-inv-primary">
-                <div class="card-body">
-                    <i class="bi bi-currency-exchange display-4 text-inv-primary"></i>
-                    <h5 class="card-title mt-2">Total Revenue</h5>
-                    <p class="fs-3 fw-bold">PISO {{ number_format($total_revenue, 2) }}</p>
-                
-                </div>
-            </div>
-        </div>
-
-     
-
-        <!-- Revenue and Sales -->
-        <div class="col-md-4">
+        <div class="col-md-7">
             <div class="card text-center shadow-sm bg-inv-primary text-inv-secondary">
                 <div class="card-body">
-                    <i class="bi bi-currency-exchange display-4 text-inv-primary"></i>
-                    <h5 class="card-title mt-2">Sales Count</h5>
-                    <p class="fs-3 fw-bold"> {{number_format($sales_count) }} Items</p>
-                
+                    <i class="bi bi-currency-exchange display-4 text-inv-secondary"></i>
+                    <h5 class="card-title mt-2">Total Revenue</h5>
+                    <p class="fs-3 fw-bold">PISO {{ number_format($total_revenue, 2) }}</p>
+                    <p class="text-{{ $revenueDeviation > 0 ? 'success' : 'danger' }}">
+                        {{ number_format($revenueDeviation * 100, 2) }}%
+                        compared to last month</p>
                 </div>
             </div>
         </div>
-
-        
-
-        <!-- Revenue and Sales -->
-        <div class="col-md-4">
-            <div class="card text-center shadow-sm bg-inv-secondary text-inv-primary">
+        <div class="col-md-5 col-12">
+            <div class="card bg-inv-primary">
+                <div class="card-header text-inv-secondary">
+                    <h5>Generate Documents</h5>
+                </div>
                 <div class="card-body">
-                    <i class="bi bi-currency-exchange display-4 text-inv-primary"></i>
-                    <h5 class="card-title mt-2">Stock Value</h5>
-                    <p class="fs-3 fw-bold">PISO {{ number_format($stock_value, 2) }}</p>
-                
+                    <div class="row">
+                        <div class="mb-3">
+                            <button class="btn btn-primary"
+                                wire:click="downloadPLStatement('{{ $month }}')">P&L Statement</button>
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-primary"
+                                wire:click="downloadAccountSummary('{{ $month }}')">Accounts
+                                Summary</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -46,5 +42,20 @@
 
 
 
-   
+    </div>
+
+    <div class="row mb-3" >
+
+        <div class="card bg-inv-primary" style="min-height: 500px">
+            <div class="card-header border-3 border-inv-primary d-flex">
+                <h5 class="text-inv-secondary">
+                    Sales & Purchase Summary
+                </h5>
+                <div class="ms-auto">
+
+                </div>
+
+            </div>
+           </div>
+    </div>
 </div
