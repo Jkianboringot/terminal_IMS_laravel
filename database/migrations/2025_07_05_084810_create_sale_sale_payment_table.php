@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
              $table->foreignId('sale_id')->constrained();
              $table->foreignId('sales_payment_id')->constrained('sales_payments');
-            $table->decimal('amount');
+                       $table->decimal('amount', 15, 2);
+
 
         
             $table->timestamps();

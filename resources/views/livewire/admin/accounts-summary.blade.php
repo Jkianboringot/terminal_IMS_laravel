@@ -1,7 +1,7 @@
 <div>
     <x-slot:header>Accounts Summary</x-slot:header>
 
-    
+    <input type="month" wire:model.live="month">
     <div class="row g-4">
         <!-- Revenue and Sales -->
         <div class="col-md-4">

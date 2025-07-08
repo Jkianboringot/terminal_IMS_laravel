@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained();
             $table->primary(['product_id','credit_note_id']);
             $table->decimal('quantity');
-            $table->decimal('unit_price');
+            $table->decimal('unit_price',15,2);
+          
             
             $table->timestamps();
         });

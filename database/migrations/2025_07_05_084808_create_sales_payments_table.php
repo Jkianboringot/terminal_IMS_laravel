@@ -16,7 +16,8 @@ return new class extends Migration {
             $table->string('transaction_reference');
 
             $table->dateTime('payment_time');
-            $table->decimal('amount');
+                      $table->decimal('amount', 15, 2);
+
             $table->timestamps();
         });
     }
