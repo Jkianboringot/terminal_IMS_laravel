@@ -55,31 +55,20 @@ class Edit extends Component
 
     function mount($id)
     {
-        $this->purchase_payment = PurchasePayment::find($id);
+        $this->purchase_payment = PurchasePayment::findOrFail(id: $id);
         foreach ($this->purchase_payment->purchases as $key => $purchase) {
 
-            array_push(
-                $this->purchaseList,
-                [
-                    'purchase_id' => $purchase->id,
-                    'amount' => $purchase->pivot->amount,
-                ]
-            );
-
+            array_push($this->purchaseList, [
+                'purchase_id' => $purchase->id,
+                'amount' => $purchase->pivot->amount,
+            ]);
         }
         $this->supplierSearch = $this->purchase_payment->supplier->name;
-
     }
 
     function addToList()
     {
         try {
-            $this->validate([
-                'selectedPurchaseId' => 'required',
-                'amount' => 'required',
-            ]);
-
-
             if (Purchase::find($this->selectedPurchaseId)->total_balance < $this->amount) {
                 throw new \Exception("Total Balance is Low", 1);
             }
@@ -122,23 +111,24 @@ class Edit extends Component
     function savePayment()
     {
         try {
-            $this->validate();
-
+            // $this->validate([
+            //     'purchase_payment.supplier_id' => 'required',
+            //     'purchase_payment.transaction_reference' => 'required',
+            //     'purchase_payment.payment_time' => 'required',
+            //     'purchase_payment.amount' => 'required',
+            // ]);
             foreach ($this->purchaseList as $key => $listItem) {
-                if (!in_array($listItem['purchase_id'], $this->purchase_payment->supplier->purchases()->pluck('id')->toArray())) {
-                    throw new \Exception("This Supplier doesn't have all these Purchases", 1);
-
+                if (!in_array($listItem['purchase_id'], Supplier::find($this->purchase_payment->supplier_id)->purchases()->pluck('id')->toArray())) {
+                    throw new \Exception("This Supplier doesn't have all these purchases", 1);
                 }
             }
-
             $this->purchase_payment->save();
-            $this->purchase_payment->purchases()->detach();
 
-            foreach ($this->purchaseList as $key => $listItem) {
-                $this->purchase_payment->purchases()->attach($listItem['purchase_id'], [
-                    'amount' => $listItem['amount'],
-                ]);
+            $syncData = [];
+            foreach ($this->purchaseList as $listItem) {
+                $syncData[$listItem['purchase_id']] = ['amount' => $listItem['amount']];
             }
+            $this->purchase_payment->purchases()->sync($syncData);
             return redirect()->route('admin.purchase-payments.index');
         } catch (\Throwable $th) {
             $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());

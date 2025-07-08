@@ -35,7 +35,8 @@ class Purchase extends Model
             return $this->total_amount- $this->total_paid ;
         }
         function getIsPaidAttribute(){
-            return $this->total_amount- $this->total_paid <= 0;
+            return $this->total_balance <= 0;
+            
         }
 
         function getTotalPaidAttribute(){

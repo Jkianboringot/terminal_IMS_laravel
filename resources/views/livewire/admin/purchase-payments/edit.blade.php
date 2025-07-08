@@ -130,6 +130,8 @@
                                     @foreach ($purchaseList as $key => $listItem)
                                         <tr>
                                             <td scope="row">{{ App\Models\Purchase::find($listItem['purchase_id'])->id }}</td>
+                                        <td scope="row">{{ App\Models\Purchase::find($listItem['purchase_id'])->supplier->name}}</td>
+
                                             <td>
                                                 {{ Carbon\Carbon::parse(App\Models\Purchase::find($listItem['purchase_id'])->purchase_date)->format('jS F,Y')}} <br>
                                                

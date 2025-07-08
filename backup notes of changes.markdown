@@ -150,3 +150,9 @@ $role->save();
 
 
 # function for taking all payment in purchase payment in allocated amount is broken becase it cant revcognize the current selected so you have to seelct other then reselect
+
+
+
+
+### IMPORTANT FIx of edit in all:
+-   just get rid of $this->validate as its the one casueing it and the attach and detacht try to replace it with somthing else, else just git rid of it for now
