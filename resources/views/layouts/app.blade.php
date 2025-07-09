@@ -149,7 +149,7 @@
     @livewireScripts
     @livewireStyles
     @livewireChartsScripts
-dd($months, $this->getTotalRevenue($months[0]), $this->getTotalPurchases($months[0]));
+
 
     @stack('scripts')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

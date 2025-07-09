@@ -13,8 +13,6 @@
                         <th>Quotation Date</th>
                         <th>Client</th>
                         <th>Total Amount</th>
-                        <!-- <th>Status</th> -->
-
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
@@ -23,28 +21,34 @@
                         <tr>
                             <td scope="row">{{ $quotation->id }}</td>
                             <td>
-                                <h6>{{Carbon\Carbon::parse($quotation->client_id)->format('jS F,Y') }}</h6>
+                                <h6>{{ Carbon\Carbon::parse($quotation->quotation_date)->format('jS F,Y') }}</h6>
                             </td>
-                            <td>{{ $quotation->client->name }}</td>
-                            <td> <small>PISO  {{ number_format($quotation->total_amount, 2)}}</small></td>
-                            <!-- <td>
-                                <span class={{ $quotation->is_paid ? 'text-success' : 'text-danger' }} style="font: bold">
-                                {{ $quotation->is_paid ? 'Paid' : 'Not Paid' }}</span>
-                            </td> -->
+                            <td>
+                                {{ $quotation->client->name }}
+                            </td>
+                            <td>
+                                <small>PISO {{ number_format($quotation->total_amount, 2) }}</small>
+                            </td>
+                            {{-- <td>
+                                <span class="{{ $quotation->is_paid ? 'text-success' : 'text-danger' }}"
+                                    style="font: bold">
+                                    {{ $quotation->is_paid ? 'Paid' : 'Not Paid' }}
+                                </span>
+                            </td> --}}
                             <td class="text-center">
-                                <a wire:navigate href="{{ route('admin.quotations.edit', $quotation->id) }}"
+                                <a href="{{ route('admin.quotations.edit', $quotation->id) }}"
                                     class="btn btn-secondary">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
-                                <a target="_blank" href="{{ route('admin.quotation-download',$quotation->id) }}"
-                                    class="btn btn-primary" >
-                                    <i class="bi bi-file-earmark-arrow-down "></i>
+                                <a target="_blank" href="{{ route('admin.quotation-download', $quotation->id) }}" class="btn btn-primary">
+                                    <i class="bi bi-file-earmark-arrow-down"></i>
                                 </a>
-      <button
-                                    onclick="confirm('Are you sure you wish to DELETE this Quotation?')||event.stopImmediatePropagation()"
+                                <button
+                                    onclick="confirm('Are you sure you wish to delete this Quotation?')||event.stopImmediatePropagation()"
                                     class="btn btn-danger" wire:click='delete({{ $quotation->id }})'>
                                     <i class="bi bi-trash-fill"></i>
-                                </button>   
+                                </button>
+
                             </td>
                         </tr>
                     @endforeach

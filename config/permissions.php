@@ -12,6 +12,6 @@ return [
         'manage invoices','manage orders',
         'manage product categories','manage products',
         'manage product purchases','manage sales',
-        'manage product quotations','manage units','manage payments'
+        'manage quotations','manage units','manage payments'
     ]
     ];

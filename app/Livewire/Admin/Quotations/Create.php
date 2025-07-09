@@ -60,6 +60,8 @@ class Create extends Component
     function selectClient($id)
     {
         $this->quotation->client_id = $id;
+        $this->clientSearch=$this->quotation->client->name;
+
     }
 
     function selectProduct($id)

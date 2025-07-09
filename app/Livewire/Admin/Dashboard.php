@@ -2,79 +2,218 @@
 
 namespace App\Livewire\Admin;
 
+use App\Models\Product;
+use App\Models\Purchase;
+use App\Models\PurchasePayment;
+use App\Models\Sale;
+use App\Models\SalesPayment;
+use Asantibanez\LivewireCharts\Facades\LivewireCharts;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
-
 
 class Dashboard extends Component
 {
-    
-    public $options =[
-    'last_7_days',
-    'last_28_days',
-    'last_90_days',
-    'last_365_days',
-    'lifetime',
+    public $total_revenue = 0;
+    public $revenueDeviation = 0;
+    public $revenuePrevious = 0;
+    public $sales_count = 0;
+    public $stock_value = 0;
 
+    public $receivables = 0;
+    public $overdue_invoices = 0;
+    public $loss_summary = 0;
+
+    public $instance;
+    public $month;
+    public $previousMonth;
+
+
+    protected $listeners = [
+        'done' => 'render'
     ];
 
+    function updatedMonth()
+    {
+        $this->instance = Carbon::parse($this->month);
+        $this->total_revenue = $this->getTotalRevenue($this->instance->format('Y-m'));
+        $this->revenuePrevious = $this->getTotalRevenue($this->instance->subMonth()->format('Y-m'));
 
-public $selectedOption='last_28_days';
-
-public $dateRange=[];
-
-public  function getDates(){
-    switch ($this->selectedOption) {
-        case 'last_7_days':
-            $dates=CarbonPeriod::create(Carbon::now()->subDay(7),'1 days',Carbon::now());
-            break;
-            case 'last_28_days':
-            $dates=CarbonPeriod::create(Carbon::now()->subDay(28),'4 days',Carbon::now());
-            break;
-            case 'last_90_days':
-            $dates=CarbonPeriod::create(Carbon::now()->subDay(90),'12 days',Carbon::now());
-            break;
-            case 'last_365_days':
-            $dates=CarbonPeriod::create(Carbon::now()->subDay(365),'52 days',Carbon::now());
-            break;
-           
-            
-        
-        default:
-           $date1=DB::table('sales')->union(DB::table('purchases'))->min('create_at');
-           $date2=Carbon::now();
-           $dateVariance=Carbon::parse($date1)->diffInDays($date2)/7;
-           $dates=CarbonPeriod::create($date1,$dateVariance,$date2); 
-            break;
+        if ($this->total_revenue  !== 0) {
+            $this->revenueDeviation = ($this->total_revenue - $this->revenuePrevious) / $this->total_revenue;
+        }
     }
-    return $dates;
-}
 
 
+    function getOpeningStock($month)
+    {
+        $salesValue = 0;
+        $purchasesValue = 0;
+        $openingDate = Carbon::parse($month)->firstOfMonth()->toDateString();
+        foreach (Sale::all() as $key => $sale) {
+            if (Carbon::parse($sale->sale_date)->isBefore($openingDate)) {
+                $salesValue += $sale->total_value;
+            }
+        }
+        foreach (Purchase::all() as $key => $purchase) {
+            if (Carbon::parse($purchase->purchase_date)->isBefore($openingDate)) {
+                $purchasesValue += $purchase->total_value;
+            }
+        }
 
- public function updatedSelectedOption(){
+        return $purchasesValue - $salesValue;
+    }
+    function getClosingStock($month)
+    {
 
-    $this->dispatch('chart-updated',
-      $this->dateRange
-    );
- }
-function getPurchases(){
+        $salesValue = 0;
+        $purchasesValue = 0;
+        $openingDate = Carbon::parse($month)->addMonth()->firstOfMonth()->toDateString();
+        foreach (Sale::all() as $key => $sale) {
+            if (Carbon::parse($sale->sale_date)->isBefore($openingDate)) {
+                $salesValue += $sale->total_value;
+            }
+        }
+        foreach (Purchase::all() as $key => $purchase) {
+            if (Carbon::parse($purchase->purchase_date)->isBefore($openingDate)) {
+                $purchasesValue += $purchase->total_value;
+            }
+        }
 
-    
-} 
+        return $purchasesValue - $salesValue;
+    }
 
-function getSales(){
+    function getTotalRevenue($month)
+    {
+        $total = 0;
+        foreach (Sale::all() as $key => $sale) {
+            if (Carbon::parse($sale->sale_date)->format('Y-m') == $month) {
+                $total += $sale->total_amount;
+            }
+        }
 
-    
-} 
+        return $total;
+    }
+    function getTotalPurchases($month)
+    {
+        $total = 0;
+        foreach (Purchase::all() as $key => $purchase) {
+            if (Carbon::parse($purchase->purchase_date)->format('Y-m') == $month) {
+                $total += $purchase->total_amount;
+            }
+        }
+
+        return $total;
+    }
+    function getTotalSalesPayments($month)
+    {
+        $total = 0;
+        foreach (SalesPayment::all() as $key => $payment) {
+            if (Carbon::parse($payment->payment_time)->format('Y-m') == $month) {
+                $total += $payment->amount;
+            }
+        }
+
+        return $total;
+    }
+    function getTotalPurchasePayments($month)
+    {
+        $total = 0;
+        foreach (PurchasePayment::all() as $key => $payment) {
+            if (Carbon::parse($payment->payment_time)->format('Y-m') == $month) {
+                $total += $payment->amount;
+            }
+        }
+
+        return $total;
+    }
+
+    function downloadPLStatement($month)
+    {
+        $pdf = Pdf::loadView('pdf.profitloss', [
+            'date' => Carbon::parse($month)->endOfMonth()->format('jS F, Y'),
+            'opening_stock' => $this->getOpeningStock($month),
+            'closing_stock' => $this->getClosingStock($month),
+            'total_revenue' => $this->getTotalRevenue($month),
+            'total_purchases' => $this->getTotalPurchases($month),
+        ]);
+        return response()->streamDownload(function () use ($pdf) {
+            echo  $pdf->stream();
+        }, Carbon::parse($month)->endOfMonth()->format('m-Y') . ' - Profit & Loss Statement.pdf');
+    }
+    function downloadAccountSummary($month)
+    {
+        $pdf = Pdf::loadView('pdf.account-summary', [
+            'date' => Carbon::parse($month)->format('F, Y'),
+            'total_sales' => $this->getTotalRevenue($month),
+            'total_sales_payments' => $this->getTotalSalesPayments($month),
+            'total_purchases' => $this->getTotalPurchases($month),
+            'total_purchase_payments' => $this->getTotalPurchasePayments($month),
+        ]);
+        return response()->streamDownload(function () use ($pdf) {
+            echo  $pdf->stream();
+        }, Carbon::parse($month)->endOfMonth()->format('m-Y') . ' - Accounts Summary Statement.pdf');
+    }
+    function mount()
+    {
+
+        $this->instance = Carbon::now();
+        $this->month = $this->instance->format('Y-m');
+        $this->total_revenue = $this->getTotalRevenue($this->instance->format('Y-m'));
+        $this->revenuePrevious = $this->getTotalRevenue($this->instance->subMonth()->format('Y-m'));
+
+        if ($this->total_revenue  !== 0) {
+            $this->revenueDeviation = ($this->total_revenue - $this->revenuePrevious) / $this->total_revenue;
+        }
+        $this->dispatch('done');
+    }
+
+
+    function getSalesChart($date)
+    {
+        // Generate a period of the last 5 months
+        // $date = $this->instance->toDateString();
+        $end = Carbon::parse($date);
+        $start = Carbon::parse($date)->subMonthsNoOverflow(6);
+        $period = CarbonPeriod::since($start)->months(1)->until($end);
+
+        // Map the period to an array of month names or desired format
+
+        $months = [];
+        foreach ($period as $key => $month) {
+            array_push($months, $month->format('Y-m'));
+        }
+        $lineChartModel = LivewireCharts::multiLineChartModel();
+
+        // dd($months);
+        foreach ($months as $key => $month) {
+            $lineChartModel->addSeriesPoint("Sales ",  Carbon::parse($month)->format('F Y'), $this->getTotalRevenue($month));
+            $lineChartModel->addSeriesPoint("Purchases ", Carbon::parse($month)->format('F Y'),  $this->getTotalPurchases($month));
+        }
+        $lineChartModel->setAnimated('ease-in');
+        $lineChartModel->setSmoothCurve();
+        $lineChartModel->setColors(["#336699", "#f29f67"]);
+        $lineChartModel->setDataLabelsEnabled(true);
+        // $lineChartModel
+
+
+        $lineChartModel->setJsonConfig([
+            'tooltip.y.formatter' => '(val) => `KES ${val.toLocaleString()}`',
+            'dataLabels.formatter' => '(val) => `KES ${val.toLocaleString()}`',
+            'yaxis.labels.formatter' => '(val) => `KES ${val.toLocaleString()}`',
+            // 'chart'=>"area"
+        ]);
+
+        return $lineChartModel;
+    }
     public function render()
     {
-        $this->dateRange=$this->getDates()->toArray();
-        // $this->dispatch('chart-updated',[
-        //     'dataRange'=>$this->dateRange
-        // ]);
-        return view('livewire.admin.dashboard');
+
+        $lineChartModel = $this->getSalesChart($this->month);
+
+        return view('livewire.admin.dashboard', [
+            'lineChartModel' => $lineChartModel`
+        ]);
     }
 }

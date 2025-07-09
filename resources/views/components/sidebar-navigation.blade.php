@@ -4,6 +4,8 @@
             <li class="nav-header">Initialization</li>
 
             <x-new-nav-link title="Dashboard" bi_icon="bi-speedometer" route="admin.dashboard" />
+
+
             @if (auth()->user()->hasPermission('manage roles')  )
             
             <x-new-nav-link-dropdown title="Roles" bi_icon="bi-shield-lock" route="admin.roles*">
@@ -79,7 +81,6 @@
 
           <li class="nav-header">Accounting & Inventory</li>
 
-          <x-new-nav-link title="OverView" bi_icon="bi-wallet" route="admin.accounts-summary" />
           
             @if (auth()->user()->hasPermission('manage product purchases')  ) 
             <!-- this manage product purchase is suppose to be just amnage product -->

@@ -72,6 +72,9 @@ class Edit extends Component
     function selectSupplier($id)
     {
         $this->purchase->supplier_id = $id;
+               $this->supplierSearch = $this->purchase->supplier->name;
+        
+
     }
 
     function selectProduct($id)

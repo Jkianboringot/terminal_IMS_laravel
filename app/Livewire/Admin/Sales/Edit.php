@@ -72,6 +72,8 @@ class Edit extends Component
     function selectClient($id)
     {
         $this->sale->client_id = $id;
+        $this->clientSearch=$this->sale->client->name;
+
     }
 
     function selectProduct($id)
