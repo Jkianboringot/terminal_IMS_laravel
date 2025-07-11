@@ -213,7 +213,7 @@ class Dashboard extends Component
         $lineChartModel = $this->getSalesChart($this->month);
 
         return view('livewire.admin.dashboard', [
-            'lineChartModel' => $lineChartModel`
+            'lineChartModel' => $lineChartModel
         ]);
     }
 }

@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class Edit extends Component
 {
-    
+
     public $clientSearch;
     public $productSearch;
 
@@ -59,13 +59,13 @@ class Edit extends Component
     {
         $this->productList[$key]['quantity']++;
     }
-   function subtractQuantity($key)
+    function subtractQuantity($key)
     {
-            if ( $this->productList[$key]['quantity'] > 1) {
-                 $this->productList[$key]['quantity']--;
-            }
-         
-       
+        if ($this->productList[$key]['quantity'] > 1) {
+            $this->productList[$key]['quantity']--;
+        }
+
+
     }
 
 
@@ -73,13 +73,16 @@ class Edit extends Component
     function selectClient($id)
     {
         $this->invoice->client_id = $id;
-        $this->clientSearch=$this->quotation->client->name;
+        $this->clientSearch = $this->quotation->client->name;
 
     }
 
     function selectProduct($id)
     {
         $this->selectedProductId = $id;
+        $this->productSearch = Product::find($id)->name;
+
+
     }
 
     function addToList()
@@ -152,6 +155,6 @@ class Edit extends Component
             ]
         );
     }
-   
+
 
 }

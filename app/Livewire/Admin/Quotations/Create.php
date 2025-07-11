@@ -67,6 +67,8 @@ class Create extends Component
     function selectProduct($id)
     {
         $this->selectedProductId = $id;
+        $this->productSearch=Product::find($id)->name;
+
     }
 
  function addToList()
