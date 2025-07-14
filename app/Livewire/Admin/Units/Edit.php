@@ -7,36 +7,37 @@ use Livewire\Component;
 
 class Edit extends Component
 {
-      public Unit  $unit;
+    public $unit;
 
-    function rules(){
-            return [
-                'unit.name'=>'required',
-               
-
-
-            ];
-    }
-    function mount($id){
-            $this->unit =Unit::find($id);
+    function rules()
+    {
+        return [
+            'unit.name' => "required",
+            'unit.symbol' => "required",
+        ];
     }
 
-    function updated(){
- $this->validate() ; 
+    function mount($id)
+    {
+        $this->unit = Unit::find($id);
     }
 
-    function save(){
-  $this->validate();
+    function updated()
+    {
+        $this->validate();
+    }
+
+    function save()
+    {
+        $this->validate();
         try {
-     
-             $this->unit->update();
-          
-             return redirect()->route('admin.units.index');
-            } catch (\Throwable $th) {
-                $this->dispatch('done',error:'Something went wrong: '.$th->getMessage());
-            }
-    } 
-       public function render()
+            $this->unit->save();
+            return redirect()->route('admin.units.index');
+        } catch (\Throwable $th) {
+            $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
+        }
+    }
+    public function render()
     {
         return view('livewire.admin.units.edit');
     }

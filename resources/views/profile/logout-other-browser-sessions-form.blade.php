@@ -1,3 +1,4 @@
+@if(false)
 <x-action-section>
     <x-slot name="title">
         {{ __('Browser Sessions') }}
@@ -18,7 +19,6 @@
 
         @if (count($this->sessions) > 0)
             <div class="mt-3">
-                <!-- Other Browser Sessions -->
                 @foreach ($this->sessions as $session)
                     <div class="d-flex">
                         <div>
@@ -28,20 +28,21 @@
                                 </svg>
                             @else
                                 <svg xmlns="http://www.w3.org/2000/svg" width="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="text-muted">
-                                    <path d="M0 0h24v24H0z" stroke="none"></path><rect x="7" y="4" width="10" height="16" rx="1"></rect><path d="M11 5h2M12 17v.01"></path>
+                                    <path d="M0 0h24v24H0z" stroke="none"></path>
+                                    <rect x="7" y="4" width="10" height="16" rx="1"></rect>
+                                    <path d="M11 5h2M12 17v.01"></path>
                                 </svg>
                             @endif
                         </div>
 
                         <div class="ms-2">
                             <div>
-                                {{ $session->agent->platform() ? $session->agent->platform() : 'Unknown' }} - {{ $session->agent->browser() ? $session->agent->browser() : 'Unknown' }}
+                                {{ $session->agent->platform() ?? 'Unknown' }} - {{ $session->agent->browser() ?? 'Unknown' }}
                             </div>
 
                             <div>
                                 <div class="small font-weight-lighter text-muted">
                                     {{ $session->ip_address }},
-
                                     @if ($session->is_current_device)
                                         <span class="text-success font-weight-bold">{{ __('This device') }}</span>
                                     @else
@@ -61,7 +62,6 @@
             </x-button>
         </div>
 
-        <!-- Log out Other Devices Confirmation Modal -->
         <x-dialog-modal wire:model="confirmingLogout">
             <x-slot name="title">
                 {{ __('Log Out Other Browser Sessions') }}
@@ -71,11 +71,12 @@
                 {{ __('Please enter your password to confirm you would like to log out of your other browser sessions across all of your devices.') }}
 
                 <div class="mt-3 w-md-75" x-data="{}" x-on:confirming-logout-other-browser-sessions.window="setTimeout(() => $refs.password.focus(), 250)">
-                    <x-input type="password" placeholder="{{ __('Password') }}"
-                                 x-ref="password"
-                                 class="{{ $errors->has('password') ? 'is-invalid' : '' }}"
-                                 wire:model.defer="password"
-                                 wire:keydown.enter="logoutOtherBrowserSessions" />
+                    <x-input type="password"
+                             placeholder="{{ __('Password') }}"
+                             x-ref="password"
+                             class="{{ $errors->has('password') ? 'is-invalid' : '' }}"
+                             wire:model.defer="password"
+                             wire:keydown.enter="logoutOtherBrowserSessions" />
 
                     <x-input-error for="password" class="mt-2" />
                 </div>
@@ -90,11 +91,15 @@
                     <div wire:loading wire:target="logoutOtherBrowserSessions" class="spinner-border spinner-border-sm" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
-
                     {{ __('Log out Other Browser Sessions') }}
                 </x-button>
             </x-slot>
         </x-dialog-modal>
     </x-slot>
-
 </x-action-section>
+@endif
+
+<div>
+
+
+</div>

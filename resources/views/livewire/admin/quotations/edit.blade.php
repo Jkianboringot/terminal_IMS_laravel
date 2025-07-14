@@ -5,7 +5,7 @@
         <div class="col-md-4 col-6 @if (!$productList) w-50 @endif">
 
             <div class="card">
-                <div class="card-header bg-inv-primary text-inv-secondary bquotation-0">
+                <div class="card-header bg-inv-primary text-inv-secondary quotation-0">
                     <h5>Set Date & Client</h5>
                 </div>
                 <div class="card-body">
@@ -26,10 +26,7 @@
                         <ul class="list-group mt-2 w-100">
                             @if ($clientSearch != '')
                                 @foreach ($clients as $client)
-                                    <li wire:click='selectClient({{ $client->id }})'
-                                        class="list-group-item {{ $client->id == $quotation->client_id ? 'active' : '' }}">
-                                        {{ $client->name }}
-                                    </li>
+                                    <x-client-quotation-list-item :client="$client" :quotation="$quotation" />
                                 @endforeach
                             @endif
                         </ul>
@@ -39,23 +36,21 @@
                 </div>
             </div>
             <div class="card mt-2">
-                <div class="card-header bg-inv-primary text-inv-secondary bquotation-0">
+                <div class="card-header bg-inv-primary text-inv-secondary quotation-0">
                     <h5>Add Products to List</h5>
                 </div>
                 <div class="card-body">
-
-                    <div class="mb-3">
+ <div class="mb-3">
                         <label for="" class="form-label">Product Search</label>
                         <input type="text" wire:model.live='productSearch' class="form-control" />
                         <ul class="list-group mt-2 w-100">
                             @if ($productSearch != '')
                                 @foreach ($products as $product)
-                                    <x-product-list-group :product="$product" :selectedProductId="$selectedProductId"/>
+                                    <x-product-list-item :product="$product" :selectedProductId="$selectedProductId"/>
                                 @endforeach
                             @endif
                         </ul>
                     </div>
-
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -86,7 +81,7 @@
         @if ($productList)
             <div class="col-md-8 col-6">
                 <div class="card shadow">
-                    <div class="card-header bg-inv-primary text-inv-secondary bquotation-0">
+                    <div class="card-header bg-inv-primary text-inv-secondary quotation-0">
                         <h5 class="text-center text-uppercase">Cart</h5>
                     </div>
                     <div class="card-body">

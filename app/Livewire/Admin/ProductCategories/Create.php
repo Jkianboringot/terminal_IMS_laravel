@@ -13,7 +13,7 @@ class Create extends Component
     function rules(){
             return [
                 'category.name'=>'required',
-               
+                'category.description' => 'nullable', 
 
 
             ];

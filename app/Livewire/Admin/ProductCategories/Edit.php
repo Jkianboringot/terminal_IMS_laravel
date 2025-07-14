@@ -14,6 +14,8 @@ class Edit extends Component
     {
         return [
             'category.name' => 'required',
+                              'category.description' => 'nullable', 
+
 
 
 
