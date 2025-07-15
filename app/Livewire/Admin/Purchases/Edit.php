@@ -83,63 +83,70 @@ class Edit extends Component
         $this->productSearch=Product::find($id)->name;
 
     }
-
-    function addToList()
-    {
-        try {
-            $this->validate([
-                'selectedProductId' => 'required',
-                'quantity' => 'required',
-                'price' => 'required',
-            ]);
-
-            foreach ($this->productList as $key => $listItem) {
-                if ($listItem['product_id'] == $this->selectedProductId && $listItem['price'] == $this->price) {
-                    $this->productList[$key]['quantity'] += $this->quantity;
-                    return;
-                    # code...
-                }
-            }
-
-
-            array_push($this->productList, [
-                'product_id' => $this->selectedProductId,
-                'quantity' => $this->quantity,
-                'price' => $this->price
-            ]);
-
-            $this->reset([
-                'selectedProductId',
-                'productSearch',
-                'quantity',
-                'price',
-            ]);
-        } catch (\Throwable $th) {
-            $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
-        }
-    }
-
-    function makePurchase()
-    {
-
-        try {
-            $this->validate();
-            $this->purchase->update();
-            $this->purchase->products()->detach();
-            foreach ($this->productList as $listItem) {
-                $this->purchase->products()->attach($listItem['product_id'], [
-                    'quantity' => $listItem['quantity'],
-                    'unit_price' => $listItem['price']
-                ]);
-            }
-
-
-            return redirect()->route('admin.purchases.index');
-        } catch (\Throwable $th) {
-            $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
+function addToList()
+{
+    try {
+        // Manual checks to replace validate()
+        if (!$this->selectedProductId || !$this->quantity || !$this->price) {
+            throw new \Exception('All product fields are required.');
         }
 
+        // Try to merge with an existing entry (same product and price)
+        foreach ($this->productList as $key => $item) {
+            if ($item['product_id'] == $this->selectedProductId && $item['price'] == $this->price) {
+                $this->productList[$key]['quantity'] += $this->quantity;
+                $this->reset(['selectedProductId', 'productSearch', 'quantity', 'price']);
+                return;
+            }
+        }
+
+        // Add new item to list
+        $this->productList[] = [
+            'product_id' => $this->selectedProductId,
+            'quantity' => $this->quantity,
+            'price' => $this->price
+        ];
+
+        // Clean up input fields
+        $this->reset(['selectedProductId', 'productSearch', 'quantity', 'price']);
+    } catch (\Throwable $th) {
+        $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
     }
+}
+
+   function makePurchase()
+{
+    try {
+        // Manual checks instead of $this->validate()
+        if (!$this->purchase->purchase_date || !$this->purchase->supplier_id) {
+            throw new \Exception('Purchase Date and Supplier are required.');
+        }
+
+        if (empty($this->productList)) {
+            throw new \Exception('You must add at least one product to the list.');
+        }
+
+        // Save the updated purchase info
+        $this->purchase->save();
+
+        // Detach old products
+        $this->purchase->products()->detach();
+
+        // Re-attach updated products from productList
+        foreach ($this->productList as $listItem) {
+            $this->purchase->products()->attach($listItem['product_id'], [
+                'quantity' => $listItem['quantity'],
+                'unit_price' => $listItem['price']
+            ]);
+        }
+
+        // Redirect to index after successful update
+        return redirect()->route('admin.purchases.index');
+
+    } catch (\Throwable $th) {
+        $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
+    }
+}
     public function render()
     {
         $suppliers = Supplier::where('name', 'like', '%' . $this->supplierSearch . '%')->get();

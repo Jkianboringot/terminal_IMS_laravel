@@ -84,62 +84,60 @@ class Edit extends Component
 
     }
 
-    function addToList()
-    {
-        try {
-            $this->validate([
-                'selectedProductId' => 'required',
-                'quantity' => 'required',
-                'price' => 'required',
-            ]);
-
-            foreach ($this->productList as $key => $listItem) {
-                if ($listItem['product_id'] == $this->selectedProductId && $listItem['price'] == $this->price) {
-                    $this->productList[$key]['quantity'] += $this->quantity;
-                    return;
-                    # code...
-                }
-            }
-
-
-            array_push($this->productList, [
-                'product_id' => $this->selectedProductId,
-                'quantity' => $this->quantity,
-                'price' => $this->price
-            ]);
-
-            $this->reset([
-                'selectedProductId',
-                'productSearch',
-                'quantity',
-                'price',
-            ]);
-        } catch (\Throwable $th) {
-            $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
-        }
-    }
-
-    function makeOrder()
-    {
-
-        try {
-            $this->validate();
-            $this->order->update();
-            $this->order->products()->detach();
-            foreach ($this->productList as $listItem) {
-                $this->order->products()->attach($listItem['product_id'], [
-                    'quantity' => $listItem['quantity'],
-                    'unit_price' => $listItem['price']
-                ]);
-            }
-
-
-            return redirect()->route('admin.orders.index');
-        } catch (\Throwable $th) {
-            $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
+ function addToList()
+{
+    try {
+        if (!$this->selectedProductId || !$this->quantity || !$this->price) {
+            throw new \Exception("Please fill all product fields (Product, Quantity, Price).");
         }
 
+        foreach ($this->productList as $key => $listItem) {
+            if ($listItem['product_id'] == $this->selectedProductId && $listItem['price'] == $this->price) {
+                $this->productList[$key]['quantity'] += $this->quantity;
+                return;
+            }
+        }
+
+        array_push($this->productList, [
+            'product_id' => $this->selectedProductId,
+            'quantity' => $this->quantity,
+            'price' => $this->price
+        ]);
+
+        $this->reset([
+            'selectedProductId',
+            'productSearch',
+            'quantity',
+            'price',
+        ]);
+    } catch (\Throwable $th) {
+        $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
     }
+}
+
+function makeOrder()
+{
+    try {
+        if (!$this->order->order_date || !$this->order->supplier_id) {
+            throw new \Exception("Order date and supplier are required.");
+        }
+
+        $this->order->update();
+        $this->order->products()->detach();
+
+        foreach ($this->productList as $listItem) {
+            $this->order->products()->attach($listItem['product_id'], [
+                'quantity' => $listItem['quantity'],
+                'unit_price' => $listItem['price']
+            ]);
+        }
+
+        return redirect()->route('admin.orders.index');
+    } catch (\Throwable $th) {
+        $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
+    }
+}
+
     public function render()
     {
         $suppliers = Supplier::where('name', 'like', '%' . $this->supplierSearch . '%')->get();

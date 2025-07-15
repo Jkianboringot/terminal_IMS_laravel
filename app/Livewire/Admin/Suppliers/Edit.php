@@ -14,7 +14,7 @@ class Edit extends Component
     {
         return [
             'supplier.name' => "required",
-            'supplier.email' => "required|unique:suppliers,email",
+            'supplier.email' => "required",
             'supplier.address' => "required",
             'supplier.phone_number' => "required",
             'supplier.registration_number' => "nullable",

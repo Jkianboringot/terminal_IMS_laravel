@@ -167,7 +167,7 @@
                  
                             <button
                         onclick="confirm('Are you sure you wish to make the Purchase')||event.stopImmediatePropagation()"
-                        wire:click='makePurchase' class="btn btn-dark text-inv-secondary w-100">Purchase</button>
+                         wire:click.prevent="makePurchase" wire:loading.attr="disabled" class="btn btn-dark text-inv-secondary w-100">Purchase</button>
                       
                     </div>
                 </div>

@@ -85,61 +85,58 @@ class Edit extends Component
     }
 
     function addToList()
-    {
-        try {
-            $this->validate([
-                'selectedProductId' => 'required',
-                'quantity' => 'required',
-                'price' => 'required',
-            ]);
-
-            foreach ($this->productList as $key => $listItem) {
-                if ($listItem['product_id'] == $this->selectedProductId && $listItem['price'] == $this->price) {
-                    $this->productList[$key]['quantity'] += $this->quantity;
-                    return;
-                    # code...
-                }
-            }
-
-
-            array_push($this->productList, [
-                'product_id' => $this->selectedProductId,
-                'quantity' => $this->quantity,
-                'price' => $this->price
-            ]);
-
-            $this->reset([
-                'selectedProductId',
-                'productSearch',
-                'quantity',
-                'price',
-            ]);
-        } catch (\Throwable $th) {
-            $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
-        }
-    }
-
-    function makeQuotation()
-    {
-
-        try {
-            $this->validate();
-            $this->quotation->update();
-            $this->quotation->products()->detach();
-            foreach ($this->productList as $listItem) {
-                $this->quotation->products()->attach($listItem['product_id'], [
-                    'quantity' => $listItem['quantity'],
-                    'unit_price' => $listItem['price']
-                ]);
-            }
-
-
-            return redirect()->route('admin.quotations.index');
-        } catch (\Throwable $th) {
-            $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
+{
+    try {
+        if (!$this->selectedProductId || !$this->quantity || !$this->price) {
+            throw new \Exception("Please fill all product fields (Product, Quantity, Price).");
         }
 
+        foreach ($this->productList as $key => $listItem) {
+            if ($listItem['product_id'] == $this->selectedProductId && $listItem['price'] == $this->price) {
+                $this->productList[$key]['quantity'] += $this->quantity;
+                return;
+            }
+        }
+
+        $this->productList[] = [
+            'product_id' => $this->selectedProductId,
+            'quantity' => $this->quantity,
+            'price' => $this->price
+        ];
+
+        $this->reset([
+            'selectedProductId',
+            'productSearch',
+            'quantity',
+            'price',
+        ]);
+    } catch (\Throwable $th) {
+        $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
     }
+}
+function makeQuotation()
+{
+    try {
+        if (!$this->quotation->quotation_date || !$this->quotation->client_id) {
+            throw new \Exception("Quotation date and client are required.");
+        }
+
+        $this->quotation->update();
+        $this->quotation->products()->detach();
+
+        foreach ($this->productList as $listItem) {
+            $this->quotation->products()->attach($listItem['product_id'], [
+                'quantity' => $listItem['quantity'],
+                'unit_price' => $listItem['price']
+            ]);
+        }
+
+        return redirect()->route('admin.quotations.index');
+    } catch (\Throwable $th) {
+        $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
+    }
+}
+
     public function render()
     {
         $clients = Client::where('name', 'like', '%' . $this->clientSearch . '%')->get();

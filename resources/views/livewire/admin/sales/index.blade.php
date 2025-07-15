@@ -27,7 +27,7 @@
                         <tr>
                             <td scope="row">{{ $sale->id }}</td>
                             <td>
-                                <h6>{{Carbon\Carbon::parse($sale->client_id)->format('jS F,Y') }}</h6>
+                                <h6>{{Carbon\Carbon::parse($sale->sale_date)->format('jS F,Y') }}</h6>
                             </td>
                             <td>{{ $sale->client->name }}</td>
                             <td> <small> {{ number_format($sale->total_quantity, 2)}}</small></td>

@@ -26,7 +26,8 @@
                         <tr>
                             <td scope="row">{{ $purchase->id }}</td>
                             <td>
-                                <h6>{{Carbon\Carbon::parse($purchase->supplier_id)->format('jS F,Y') }}</h6>
+                                <h6>{{ \Carbon\Carbon::parse($purchase->purchase_date)->format('F j, Y') }}
+ </h6>
                             </td>
                             <td>{{ $purchase->supplier->name }}</td>
                               <td> <small>{{ number_format($purchase->total_quantity, 2)}}</small></td>

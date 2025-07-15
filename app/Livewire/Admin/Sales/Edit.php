@@ -83,79 +83,101 @@ class Edit extends Component
 
     }
 
-    function addToList()
-    {
-        try {
-            $this->validate([
-                'selectedProductId' => 'required',
-                'quantity' => 'required',
-                'price' => 'required',
-            ]);
-  if (
-                Product::find($this->selectedProductId)->inventory_balance < $this->quantity
-            ) {
-                throw new \Exception("Inventory Balance is Low", 1);
-
-            }
-            foreach ($this->productList as $key => $listItem) {
-                if ($listItem['product_id'] == $this->selectedProductId && $listItem['price'] == $this->price) {
-                    $this->productList[$key]['quantity'] += $this->quantity;
-                    return;
-                    # code...
-                }
-            }
-
-
-            array_push($this->productList, [
-                'product_id' => $this->selectedProductId,
-                'quantity' => $this->quantity,
-                'price' => $this->price
-            ]);
-
-            $this->reset([
-                'selectedProductId',
-                'productSearch',
-                'quantity',
-                'price',
-            ]);
-        } catch (\Throwable $th) {
-            $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
+function addToList()
+{
+    try {
+        // Manual validation to prevent deep state sync
+        if (!$this->selectedProductId || !$this->quantity || !$this->price) {
+            throw new \Exception("All fields are required.");
         }
-    }
 
-    function makeSale()
-    {
+        $product = Product::find($this->selectedProductId);
+        if (!$product) {
+            throw new \Exception("Selected product not found.");
+        }
 
-        try {
-            $this->validate();
-              foreach ($this->productList as $key => $listItem) {
+        if ($product->inventory_balance < $this->quantity) {
+            throw new \Exception("Inventory balance for {$product->name} is too low.");
+        }
 
-                if (
-                    Product::find($listItem['product_id'])->inventory_balance < $listItem['quantity']
-                ) {
-                    throw new \Exception("Inventory Balance for" . Product::find($listItem['product_id'])->name . "is Low", 1);
-                }
+        // Try to merge with existing entry
+        foreach ($this->productList as $key => $item) {
+            if ($item['product_id'] == $this->selectedProductId && $item['price'] == $this->price) {
+                $this->productList[$key]['quantity'] += $this->quantity;
 
-            }
-            $this->sale->update();
-            $this->sale->products()->detach();
-            foreach ($this->productList as $listItem) {
-                $this->sale->products()->attach($listItem['product_id'], [
-                    'quantity' => $listItem['quantity'],
-                    'unit_price' => $listItem['price']
+                $this->reset([
+                    'selectedProductId',
+                    'productSearch',
+                    'quantity',
+                    'price',
                 ]);
+                return;
             }
-
-
-            if ($this->sale->products->count() == 0) {
-                $this->sale->delete();
-            }
-            return redirect()->route('admin.sales.index');
-        } catch (\Throwable $th) {
-            $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
         }
 
+        // Add new entry
+        $this->productList[] = [
+            'product_id' => $this->selectedProductId,
+            'quantity' => $this->quantity,
+            'price' => $this->price
+        ];
+
+        $this->reset([
+            'selectedProductId',
+            'productSearch',
+            'quantity',
+            'price',
+        ]);
+    } catch (\Throwable $th) {
+        $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
     }
+}
+
+
+  function makeSale()
+{
+    try {
+        // Manual lightweight validation
+        if (!$this->sale->sale_date || !$this->sale->client_id) {
+            throw new \Exception("Sale date and client are required.");
+        }
+
+        // Validate inventory for all items
+        foreach ($this->productList as $item) {
+            $product = Product::find($item['product_id']);
+
+            if (!$product) {
+                throw new \Exception("Product not found.");
+            }
+
+            if ($product->inventory_balance < $item['quantity']) {
+                throw new \Exception("Not enough inventory for {$product->name}.");
+            }
+        }
+
+        // Save sale updates
+        $this->sale->update();
+
+        // Replace existing items
+        $this->sale->products()->detach();
+
+        foreach ($this->productList as $item) {
+            $this->sale->products()->attach($item['product_id'], [
+                'quantity' => $item['quantity'],
+                'unit_price' => $item['price']
+            ]);
+        }
+
+        // Optional cleanup: if empty, delete sale
+        if ($this->sale->products()->count() == 0) {
+            $this->sale->delete();
+        }
+
+        return redirect()->route('admin.sales.index');
+    } catch (\Throwable $th) {
+        $this->dispatch('done', error: "Error: " . $th->getMessage());
+    }
+}
 
     public function render()
     {

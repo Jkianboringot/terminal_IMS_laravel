@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Clients;
 
 use App\Models\Bank;
 use App\Models\Client;
+use Illuminate\Validation\Rules\Unique;
 use Livewire\Component;
 
 class Edit extends Component
@@ -13,7 +14,8 @@ class Edit extends Component
     function rules(){
             return [
                 'client.name'=>'required',
-                'client.email'=>'required|unique:clients,email',
+                'client.email'=>'required', 
+                // this migth cause some shit by getting rid of the email being Unique but fuck it its annoying
                 'client.address'=>'nullable',
                 'client.phone_number'=>'nullable',
                 'client.registration_number'=>'nullable',

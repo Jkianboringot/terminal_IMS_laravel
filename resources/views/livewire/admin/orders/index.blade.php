@@ -23,7 +23,7 @@
                         <tr>
                             <td scope="row">{{ $order->id }}</td>
                             <td>
-                                <h6>{{Carbon\Carbon::parse($order->supplier_id)->format('jS F,Y') }}</h6>
+                                <h6>{{Carbon\Carbon::parse($order->order_date)->format('jS F,Y') }}</h6>
                             </td>
                             <td>{{ $order->supplier->name }}</td>
                             <td> <small>PISO  {{ number_format($order->total_amount, 2)}}</small></td>
