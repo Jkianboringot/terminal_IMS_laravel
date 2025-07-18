@@ -1,6 +1,8 @@
 <div>
    <x-slot:head>Users</x-slot:head>
-
+ @php
+    $user = auth()->user();
+    @endphp
     
  <div class="card">
     <div class="card-header bg-inv-primary text-inv-secondary border-0">
@@ -14,7 +16,9 @@
             <th>Name</th>
             <th>Email</th>
             <th>Role</th>
-            <th class="text-center">Actions</th>
+           @if ($user && $user->hasPermission('edit permission') || $user->hasPermission('delete permission'))
+                        <th class="text-center">Actions</th>
+                        @endif
 
         </tr>
         </thead>
@@ -29,15 +33,21 @@
                     @endforeach
                 </td>
                 <td class="text-center">
+                                                  @if ($user && $user->hasPermission('edit permission'))
+
                     <a wire:navigate href="{{ route('admin.users.edit',$user->id) }}" class="btn btn btn-secondary">
                    <i class="bi bi-pencil-square"></i>
 
                     </a>
+                                                        @endif
+
+                              @if ($user && $user->hasPermission('delete permission'))
                  <button
                                     onclick="confirm('Are you sure you wish to DELETE this User?')||event.stopImmediatePropagation()"
                                     class="btn btn-danger" wire:click='delete({{ $role->id }})'>
                                     <i class="bi bi-trash-fill"></i>
                                 </button>
+                                   @endif
 
                     </a>
                 </td>

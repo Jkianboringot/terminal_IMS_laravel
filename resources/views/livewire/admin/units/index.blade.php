@@ -1,6 +1,9 @@
 <div>
     <x-slot:header>Units</x-slot:header>
 
+    @php
+    $user = auth()->user();
+@endphp
     <div class="card">
         <div class="card-header bg-inv-primary text-inv-secondary border-0">
             <h5>Units' List</h5>
@@ -13,7 +16,9 @@
                         <th>Name</th>
                         <th>Symbol</th>
                         <th>Number of Products</th>
+                      @can('edit permission')
                         <th class="text-center">Actions</th>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -25,6 +30,8 @@
                             <td>{{ $unit->products->count() }}</td>
 
                             <td class="text-center">
+                      @can('edit permission')
+                                
                                 <a href="{{ route('admin.units.edit', $unit->id) }}"
                                     class="btn btn-secondary">
                                     <i class="bi bi-pencil-square"></i>

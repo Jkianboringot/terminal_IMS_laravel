@@ -4,30 +4,56 @@ namespace App\Livewire\Admin\Products;
 
 use App\Models\Product;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
+    use WithPagination;
 
-           function delete($id)
+    public string $search = '';
+
+    public function updatingSearch()
+    {
+        // Reset pagination when search input changes
+        $this->resetPage();
+    }
+
+    public function delete($id)
     {
         try {
             $product = Product::findOrFail($id);
-            if (count($product->purchases) >0 || count($product->sales) >0 ) {
-                throw new \Exception("Permission : This Categories has been bought  and/or sold {$product->purchases->count()} Purchase {$product->sales->count()}  Sales", 1);
+
+            if ($product->purchases()->exists() || $product->sales()->exists()) {
+                throw new \Exception("Permission: This product has been bought and/or sold.");
             }
 
-       
             $product->delete();
 
-            $this->dispatch('done', success: "Successfully Deleted this user");
+            $this->dispatch('done', success: "Successfully deleted the product.");
         } catch (\Throwable $th) {
-            //throw $th;
             $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
         }
     }
-    public function render()
-    {
-        return view('livewire.admin.products.index',[
-    'products'=>Product::all()]);
-    }
+
+   public function render()
+{
+    $search = trim($this->search);
+
+    $products = Product::with(['category:id,name', 'unit:id,name'])
+        ->when($search, fn ($query) =>
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                  ->orWhereHas('category', fn ($q2) =>
+                      $q2->where('name', 'like', "%$search%")
+                  );
+            })
+        )
+        ->orderBy('name')
+        ->paginate(10);
+
+    return view('livewire.admin.products.index', [
+        'products' => $products,
+    ]);
+}
+
 }

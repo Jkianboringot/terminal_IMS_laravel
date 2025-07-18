@@ -12,6 +12,8 @@ return [
         'manage invoices','manage orders',
         'manage product categories','manage products',
         'manage product purchases','manage sales',
-        'manage quotations','manage units','manage payments'
+        'manage quotations','manage units','manage payments',
+        'edit permission','delete permission','download permission'
+        ,'create permission'
     ]
     ];

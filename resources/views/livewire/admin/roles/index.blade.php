@@ -1,6 +1,8 @@
 <div>
     <x-slot:header>Roles</x-slot:header>
-
+ @php
+    $user = auth()->user();
+    @endphp
     <div class="card">
         <div class="card-header bg-inv-primary text-inv-secondary border-0">
             <h5>Roles' List</h5>
@@ -13,7 +15,9 @@
                         <th>Title</th>
                         <th>Users</th>
                         <th class="text-center w-50">Roles</th>
+                       @if ($user && $user->hasPermission('edit permission') || $user->hasPermission('delete permission'))
                         <th class="text-center">Actions</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -32,15 +36,19 @@
                             </td>
 
                             <td class="text-center">
+                                  @if ($user && $user->hasPermission('edit permission'))
                                 <a href="{{ route('admin.roles.edit', $role->id) }}" class="btn btn-secondary">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
+                                @endif
+                                  @if ($user && $user->hasPermission('delete permission'))
                                 <button
+                                
                                     onclick="confirm('Are you sure you wish to DELETE this Role?')||event.stopImmediatePropagation()"
                                     class="btn btn-danger" wire:click='delete({{ $role->id }})'>
                                     <i class="bi bi-trash-fill"></i>
                                 </button>
-
+    @endif
                                 @if ($role->id == 1 && json_decode($role->permissions) != config('permissions.permissions'))
                                     <button
                                         onclick="confirm('Are you sure you wish to UPDATE this roles permissions?')||event.stopImmediatePropagation()"

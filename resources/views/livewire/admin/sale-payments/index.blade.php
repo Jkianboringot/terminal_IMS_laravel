@@ -1,6 +1,8 @@
 <div>
     <x-slot:header>Sale Payments</x-slot:header>
-
+ @php
+    $user = auth()->user();
+    @endphp
     <div class="card">
         <div class="card-header bg-inv-secondary text-inv-primary border-0">
             <h5>Sale Payments' list</h5>
@@ -15,7 +17,9 @@
                         <th>Transaction Reference</th>
                         <th>Attached Sales</th>
                         <th>Amount paid</th>
+                       @if ($user && $user->hasPermission('edit permission') || $user->hasPermission('delete permission'))
                         <th class="text-center">Actions</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -47,15 +51,21 @@
                             </td>
 
                             <td class="text-center">
+                                  @if ($user && $user->hasPermission('edit permission'))
                                 <a wire:navigate href="{{ route('admin.sale-payments.edit', $payment->id) }}"
                                     class="btn btn-secondary">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
+                                    @endif
+                                  @if ($user && $user->hasPermission('delete permission'))
+
                                 <button
                                     onclick="confirm('Are you sure you wish to delete this Sale Payment?')||event.stopImmediatePropagation()"
                                     class="btn btn-danger" wire:click='delete({{ $payment->id }})'>
                                     <i class="bi bi-trash-fill"></i>
                                 </button>
+                                    @endif
+
 
                             </td>
                         </tr>
