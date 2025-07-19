@@ -9,6 +9,8 @@
             <h5>Product Categories List</h5>
         </div>
         <div class="card-body table-responsive">
+            
+
             <table class="table table-hover ">
                 <thead class="thead-inverse">
                     <tr>

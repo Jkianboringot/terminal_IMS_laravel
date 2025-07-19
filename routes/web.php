@@ -76,17 +76,17 @@ Route::middleware([
         Route::get('{id}/edit', Admin\Clients\Edit::class)->name('edit');
     });
 
-    Route::prefix('credit-notes')->middleware('permission:manage credit notes')->name('creditnotes.')->group(function () {
-        Route::get('/', Admin\CreditNotes\Index::class)->name('index');
-        Route::get('/create', Admin\CreditNotes\Create::class)->middleware('permission:create permission')->name('create');
-        Route::get('{id}/edit', Admin\CreditNotes\Edit::class)->name('edit');
-    });
+    // Route::prefix('credit-notes')->middleware('permission:manage credit notes')->name('creditnotes.')->group(function () {
+    //     Route::get('/', Admin\CreditNotes\Index::class)->name('index');
+    //     Route::get('/create', Admin\CreditNotes\Create::class)->middleware('permission:create permission')->name('create');
+    //     Route::get('{id}/edit', Admin\CreditNotes\Edit::class)->name('edit');
+    // });
 
-    Route::prefix('delivery-notes')->middleware('permission:manage delivery notes')->name('deliverynotes.')->group(function () {
-        Route::get('/', Admin\DeliveryNotes\Index::class)->name('index');
-        Route::get('/create', Admin\DeliveryNotes\Create::class)->middleware('permission:create permission')->name('create');
-        Route::get('{id}/edit', Admin\DeliveryNotes\Edit::class)->name('edit');
-    });
+    // Route::prefix('delivery-notes')->middleware('permission:manage delivery notes')->name('deliverynotes.')->group(function () {
+    //     Route::get('/', Admin\DeliveryNotes\Index::class)->name('index');
+    //     Route::get('/create', Admin\DeliveryNotes\Create::class)->middleware('permission:create permission')->name('create');
+    //     Route::get('{id}/edit', Admin\DeliveryNotes\Edit::class)->name('edit');
+    // });
 
     Route::prefix('invoices')->middleware('permission:manage invoices')->name('invoices.')->group(function () {
         Route::get('/', Admin\Invoices\Index::class)->name('index');

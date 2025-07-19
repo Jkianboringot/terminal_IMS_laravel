@@ -193,15 +193,15 @@ class Dashboard extends Component
         }
         $lineChartModel->setAnimated('ease-in');
         $lineChartModel->setSmoothCurve();
-        $lineChartModel->setColors(["#336699", "#f29f67"]);
+        $lineChartModel->setColors(["#2eacecff", "#f43695ff"]);
         $lineChartModel->setDataLabelsEnabled(true);
         // $lineChartModel
 
 
         $lineChartModel->setJsonConfig([
-            'tooltip.y.formatter' => '(val) => `KES ${val.toLocaleString()}`',
-            'dataLabels.formatter' => '(val) => `KES ${val.toLocaleString()}`',
-            'yaxis.labels.formatter' => '(val) => `KES ${val.toLocaleString()}`',
+            'tooltip.y.formatter' => '(val) => `PISO ${val.toLocaleString()}`',
+            'dataLabels.formatter' => '(val) => `PISO ${val.toLocaleString()}`',
+            'yaxis.labels.formatter' => '(val) => `PISO ${val.toLocaleString()}`',
             // 'chart'=>"area"
         ]);
 

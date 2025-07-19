@@ -5,10 +5,19 @@ namespace App\Livewire\Admin\SalePayments;
 use App\Models\SalePayment;
 use App\Models\SalesPayment;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
     
+      use WithPagination;
+
+    public string $search = '';
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
+    }
          function delete($id)
     {
         try {
@@ -24,11 +33,26 @@ class Index extends Component
             //throw $th;
             $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
         }
-    }
-    public function render()
-    {
-        return view('livewire.admin.sale-payments.index',[
-            'sales_payments'=>SalesPayment::all()
-        ]);
-    }
+    }public function render()
+{
+    $search = trim($this->search);
+
+    $salesPayments = SalesPayment::query()
+        ->select('sales_payments.*')
+        ->join('clients', 'sales_payments.client_id', '=', 'clients.id')
+        ->when($search, fn($q) => $q->where(function ($sub) use ($search) {
+            $sub->where('sales_payments.transaction_reference', 'like', "%{$search}%")
+                ->orWhere('clients.name', 'like', "%{$search}%");
+        }))
+        ->with(['client:id,name']) // Only name needed
+        ->orderBy('sales_payments.payment_time', 'desc')
+        ->paginate(10);
+
+    return view('livewire.admin.sale-payments.index', [
+        'sales_payments' => $salesPayments,
+    ]);
+}
+
+
+
 }

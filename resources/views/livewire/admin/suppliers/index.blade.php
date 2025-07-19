@@ -9,6 +9,12 @@
             <h5>Suppliers List</h5>
         </div>
         <div class="card-body table-responsive">
+               <div class="card-body table-responsive">
+                <input type="text"
+                   wire:model.live.debounce.300ms="search"
+                   placeholder="Search by product name..."
+                   class="form-control mb-3 @if($search) border border-primary @endif">
+
             <table class="table table-hover ">
                 <thead class="thead-inverse">
                     <tr>
@@ -78,6 +84,7 @@
             </table>
             {{ $suppliers->links('pagination::bootstrap-5') }}
 
+</div>
         </div>
     </div>
 

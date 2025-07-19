@@ -21,7 +21,7 @@ class Index extends Component
        
             $user->delete();
 
-            $this->dispatch('done', success: "Successfully Deleted this user");
+            $this->dispatch('done', success: "Successfully Deleted this User");
         } catch (\Throwable $th) {
             //throw $th;
             $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());

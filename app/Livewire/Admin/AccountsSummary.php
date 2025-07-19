@@ -188,7 +188,7 @@ class AccountsSummary extends Component
         }
         $lineChartModel->setAnimated('ease-in');
         $lineChartModel->setSmoothCurve();
-        $lineChartModel->setColors(["#336699", "#f29f67"]);
+        $lineChartModel->setColors(["#336699", "#f3378cff"]);
         $lineChartModel->setDataLabelsEnabled(true);
         // $lineChartModel
 

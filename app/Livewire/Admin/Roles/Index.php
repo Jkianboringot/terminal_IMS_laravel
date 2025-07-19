@@ -34,7 +34,7 @@ class Index extends Component
        
             $role->delete();
 
-            $this->dispatch('done', success: "Successfully Deleted this user");
+            $this->dispatch('done', success: "Successfully Deleted this Role");
         } catch (\Throwable $th) {
             //throw $th;
             $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());

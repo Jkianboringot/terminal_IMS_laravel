@@ -8,6 +8,12 @@
             <h5>Purchase Payments' list</h5>
         </div>
         <div class="card-body table-responsive">
+               <div class="card-body table-responsive">
+                <input type="text"
+                   wire:model.live.debounce.300ms="search"
+                   placeholder="Search by product name..."
+                   class="form-control mb-3 @if($search) border border-primary @endif">
+
             <table class="table table-hover  ">
                 <thead class="thead-inverse">
                     <tr>
@@ -31,7 +37,7 @@
                         </td>
                         <td>
                             <h5>{{ $payment->supplier->name }}</h5>
-                            <h6>Balance: <strong>KES {{ number_format($payment->supplier->balance, 2) }}</strong>
+                            <h6>Balance: <strong>PISO {{ number_format($payment->supplier->balance, 2) }}</strong>
                             </h6>
                         </td>
                         <td>
@@ -42,12 +48,12 @@
                             @foreach ($payment->purchases as $purchase)
                             <li>
                                 Purchase No: #{{ $purchase->id }} <br>
-                                KES {{ number_format($purchase->total_paid, 2) }}
+                                PISO {{ number_format($purchase->total_paid, 2) }}
                             </li>
                             @endforeach
                         </td>
                         <td>
-                            KES {{ number_format($payment->amount, 2) }}
+                            PISO {{ number_format($payment->amount, 2) }}
                         </td>
 
                         <td class="text-center">
@@ -76,7 +82,7 @@
                         <td></td>
                         <td></td>
                         <td><strong>
-                                KES
+                                PISO
                                 {{ number_format(
                                     $purchase_payments->sum(function ($payment) {
                                         return $payment->purchases->sum(function ($purchase) {
@@ -89,7 +95,7 @@
                             </strong></td>
                         <td>
                             <strong>
-                                KES
+                                PISO
                                 {{ number_format(
                                     $purchase_payments->sum(function ($payment) {
                                         return $payment->amount;
@@ -102,6 +108,7 @@
                     </tr>
                 </tbody>
             </table>
+</div>
         </div>
     </div>
 </div>

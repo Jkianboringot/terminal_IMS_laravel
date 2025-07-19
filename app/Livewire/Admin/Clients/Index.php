@@ -9,6 +9,13 @@ use Livewire\WithPagination;
 class Index extends Component
 {
     use WithPagination;
+       public string $search = '';
+
+       public function updatingSearch()
+    {
+        // Reset pagination when search input changes
+        $this->resetPage();
+    }
       function delete($id)
     {
         try {
@@ -20,7 +27,7 @@ class Index extends Component
        
             $client->delete();
 
-            $this->dispatch('done', success: "Successfully Deleted this user");
+            $this->dispatch('done', success: "Successfully Deleted this Client");
         } catch (\Throwable $th) {
             //throw $th;
             $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
@@ -28,8 +35,21 @@ class Index extends Component
     }
     public function render()
     {
+       $search = trim($this->search);
+
+    $client = Client::with(['bank:id,name'])
+        ->when($search, fn ($query) =>
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                  ->orWhereHas('bank', fn ($q2) =>
+                      $q2->where('name', 'like', "%$search%")
+                  );
+            })
+        )
+        ->orderBy('name')
+        ->paginate(10);
+
         return view('livewire.admin.clients.index',[
-            'clients'=>Client::orderBy('id','DESC')->paginate(10)
-        ]);
+            'clients'=>$client]);
     }
 }

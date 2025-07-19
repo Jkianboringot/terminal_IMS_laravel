@@ -9,6 +9,12 @@
             <h5>Quotations' list</h5>
         </div>
         <div class="card-body table-responsive">
+               <div class="card-body table-responsive">
+                <input type="text"
+                   wire:model.live.debounce.300ms="search"
+                   placeholder="Search by product name..."
+                   class="form-control mb-3 @if($search) border border-primary @endif">
+
             <table class="table table-hover  ">
                 <thead class="thead-inverse">
                     <tr>
@@ -70,4 +76,5 @@
             </table>
         </div>
     </div>
+</div>
 </div>

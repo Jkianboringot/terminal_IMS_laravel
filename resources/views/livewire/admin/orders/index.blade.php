@@ -9,6 +9,12 @@
             <h5>Orders' list</h5>
         </div>
         <div class="card-body table-responsive">
+               <div class="card-body table-responsive">
+                <input type="text"
+                   wire:model.live.debounce.300ms="search"
+                   placeholder="Search by product name..."
+                   class="form-control mb-3 @if($search) border border-primary @endif">
+
             <table class="table table-hover  ">
                 <thead class="thead-inverse">
                     <tr>
@@ -28,7 +34,7 @@
                     <tr>
                         <td scope="row">{{ $order->id }}</td>
                         <td>
-                            <h6>{{Carbon\Carbon::parse($order->supplier_id)->format('jS F,Y') }}</h6>
+                            <h6>{{Carbon\Carbon::parse($order->order_date)->format('jS F,Y') }}</h6>
                         </td>
                         <td>{{ $order->supplier->name }}</td>
                         <td> <small>PISO {{ number_format($order->total_amount, 2)}}</small></td>
@@ -68,4 +74,5 @@
             </table>
         </div>
     </div>
+</div>
 </div>

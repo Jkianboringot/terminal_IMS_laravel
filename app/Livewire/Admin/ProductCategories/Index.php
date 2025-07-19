@@ -5,8 +5,10 @@ namespace App\Livewire\Admin\ProductCategories;
 use App\Models\ProductCategory;
 use Livewire\Component;
 
+
 class Index extends Component
 {
+    
        function delete($id)
     {
         try {
@@ -18,7 +20,7 @@ class Index extends Component
        
             $category->delete();
 
-            $this->dispatch('done', success: "Successfully Deleted this user");
+            $this->dispatch('done', success: "Successfully Deleted this Product Category");
         } catch (\Throwable $th) {
             //throw $th;
             $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());

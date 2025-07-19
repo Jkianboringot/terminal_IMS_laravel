@@ -4,9 +4,18 @@ namespace App\Livewire\Admin\Sales;
 
 use App\Models\Sale;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
+     use WithPagination;
+
+    public string $search = '';
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
+    }
       function delete($id)
     {
         try {
@@ -26,10 +35,25 @@ class Index extends Component
     }
 
     
-    public function render()
-    {
-        return view('livewire.admin.sales.index',[
-            'sales'=>Sale::all()
-        ]);
-    }
+   
+       public function render()
+{
+    $search = trim($this->search);
+
+    $sales = Sale::select('sales.*')
+        ->join('clients', 'sales.client_id', '=', 'clients.id')
+        ->when($search, fn ($query) =>
+            $query->where(function ($sub) use ($search) {
+                $sub->where('sales.sale_date', 'like', "%$search%")
+                    ->orWhere('clients.name', 'like', "%$search%");
+            })
+        )
+        ->with(['client:id,name']) // Only load needed fields
+        ->orderBy('sales.sale_date', 'desc')
+        ->paginate(10);
+
+    return view('livewire.admin.sales.index', [
+        'sales' => $sales
+    ]);
+}
 }

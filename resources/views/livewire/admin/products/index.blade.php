@@ -38,7 +38,7 @@
                             <tr>
                                 <td scope="row">{{ $product->id }}</td>
                                 <td>
-                                    <h6>{{ $product->name }}</h6>
+                                    <h6>{{ $product->name }}</h6> 
                                     <small>{{ $product->description }}</small>
                                 </td>
                                 <td>{{ $product->category->name }}</td>

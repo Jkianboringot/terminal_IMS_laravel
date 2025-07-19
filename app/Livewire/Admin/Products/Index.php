@@ -29,7 +29,7 @@ class Index extends Component
 
             $product->delete();
 
-            $this->dispatch('done', success: "Successfully deleted the product.");
+            $this->dispatch('done', success: "Successfully deleted the Product.");
         } catch (\Throwable $th) {
             $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
         }

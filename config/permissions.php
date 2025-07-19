@@ -8,7 +8,7 @@ return [
         'manage brands',
         'manage clients',
         'manage suppliers',
-        'manage delivery notes','manage credit notes',
+       
         'manage invoices','manage orders',
         'manage product categories','manage products',
         'manage product purchases','manage sales',
@@ -17,3 +17,5 @@ return [
         ,'create permission'
     ]
     ];
+
+    //  'manage delivery notes','manage credit notes', be added later

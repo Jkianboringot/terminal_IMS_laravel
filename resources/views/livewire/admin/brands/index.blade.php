@@ -8,14 +8,21 @@
             <h5>Brands List</h5>
         </div>
         <div class="card-body table-responsive">
+            
+            <input type="text"
+                   wire:model.live.debounce.300ms="search"
+                   placeholder="Search by product name..."
+                   class="form-control mb-3 @if($search) border border-primary @endif">
+
             <table class="table table-hover">
+                
                 <thead class="thead-inverse">
                     <tr>
                         <th>ID</th>
-                        <th>Name</th>
-                        <th>Logo</th>
+                        <th class="text-center">Name</th>
+                        <!-- <th>Logo</th> -->
                         @if ($user && $user->hasPermission('edit permission') || $user->hasPermission('delete permission'))
-                        <th class="text-center">Actions</th>
+                        <th class="text-end">Actions</th>
                         @endif
                     </tr>
                 </thead>
@@ -23,8 +30,8 @@
                     @foreach($brands as $brand)
                     <tr>
                         <td scope="row">{{ $brand->id }}</td>
-                        <td>{{ $brand->name }}</td>
-                        <td>
+                        <td class="text-center">{{ $brand->name }}</td>
+                        <!-- <td>
                             <img
                                 src="{{ $brand->logo_url }}"
                                 width="60"
@@ -33,8 +40,8 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#imageModal"
                                 onclick="document.getElementById('modalImage').src='{{ $brand->logo_url }}'" />
-                        </td>
-                        <td class="text-center">
+                        </td> -->
+                        <td class="text-end">
 
                             @if ($user && $user->hasPermission('edit permission'))
                             <a wire:navigate href="{{ route('admin.brands.edit', $brand->id) }}"
@@ -81,6 +88,7 @@
             </div>
 
         </div>
+    </div>
     </div>
 </div>
 <!-- #use gpt to on this so dont be confuse if i cant fix but -->

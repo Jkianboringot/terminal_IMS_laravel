@@ -20,7 +20,7 @@ class Index extends Component
        
             $supplier->delete();
 
-            $this->dispatch('done', success: "Successfully Deleted this supplier");
+            $this->dispatch('done', success: "Successfully Deleted this Supplier");
         } catch (\Throwable $th) {
             //throw $th;
             $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());

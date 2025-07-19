@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <i class="bi bi-currency-exchange display-4 text-inv-secondary"></i>
                     <h5 class="card-title mt-2">Total Revenue</h5>
-                    <p class="fs-3 fw-bold">KES {{ number_format($total_revenue, 2) }}</p>
+                    <p class="fs-3 fw-bold">PISO {{ number_format($total_revenue, 2) }}</p>
                     <p class="text-{{ $revenueDeviation > 0 ? 'success' : 'danger' }}">
                         {{ number_format($revenueDeviation * 100, 2) }}%
                         compared to last month</p>
