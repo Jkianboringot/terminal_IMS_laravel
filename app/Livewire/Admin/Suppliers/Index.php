@@ -5,10 +5,18 @@ namespace App\Livewire\Admin\Suppliers;
 use App\Models\Supplier;
 use Livewire\Component;
 use Livewire\WithoutUrlPagination;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
-    use WithoutUrlPagination;
+      use WithPagination;
+       public string $search = '';
+
+       public function updatingSearch()
+    {
+        // Reset pagination when search input changes
+        $this->resetPage();
+    }
       function delete($id)
     {
         try {
@@ -28,7 +36,20 @@ class Index extends Component
     }
     public function render()
     {
+         $search = trim($this->search);
+
+    $supplier = Supplier::with(['bank:id,name'])
+        ->when($search, fn ($query) =>
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                  ->orWhereHas('bank', fn ($q2) =>
+                      $q2->where('name', 'like', "%$search%")
+                  );
+            })
+        )
+        ->orderBy('name')
+        ->paginate(10);
         return view('livewire.admin.suppliers.index',[
-    'suppliers'=>Supplier::paginate(10)]);
+    'suppliers'=>$supplier]);
     }
 }

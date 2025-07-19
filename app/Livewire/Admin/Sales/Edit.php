@@ -132,6 +132,12 @@ function addToList()
         $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
     }
 }
+public function cancelEdit()
+{
+    $this->reset(); // or reset specific fields
+    $this->dispatch('notify', 'Edit canceled'); // or show feedback
+}
+
 
 
   function makeSale()

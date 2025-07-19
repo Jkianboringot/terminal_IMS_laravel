@@ -71,6 +71,12 @@ class Create extends Component
         $this->productSearch=Product::find($id)->name;
 
     }
+    public function cancelEdit()
+{
+    $this->reset(); // or reset specific fields
+    $this->dispatch('notify', 'Create canceled'); // or show feedback
+}
+
 
     function addToList()
     {

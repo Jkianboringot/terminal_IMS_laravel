@@ -167,7 +167,7 @@
                  
                             <button
                         onclick="confirm('Are you sure you wish to make the Sale')||event.stopImmediatePropagation()"
-                        wire:click='maPISOale' class="btn btn-dark text-inv-secondary w-100">Sale</button>
+                        wire:click='makeSale' class="btn btn-dark text-inv-secondary w-100">Sale</button>
                       
                     </div>
                 </div>

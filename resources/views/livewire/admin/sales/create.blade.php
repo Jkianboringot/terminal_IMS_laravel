@@ -1,4 +1,5 @@
-<div>
+<div wire:keydown.enter="addToList" wire:keydown.escape="cancelEdit" tabindex="0">
+
     <x-slot:header>Sales</x-slot:header>
     <div class="row justify-content-center">
         <div class="col-md-4 col-6 @if (!$productList)
@@ -84,13 +85,13 @@
 
         </div>
         @if ($productList)
-            <div class="col-md-8 col-6">
+            <div class="col-md-8 col-6" wire:keydown.enter="makeSale" wire:keydown.escape="cancelEdit" tabindex="0">
                 <div class="card shadow">
                     <div class="card-header  bg-inv-secondary text-inv-primary border-0">
 
                         <h5 class="text-center text-uppercase">Cart</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" >
                         <table class="table">
                             <thead>
                                 <tr>
@@ -165,7 +166,7 @@
                  
                             <button
                         onclick="confirm('Are you sure you wish to make the Sale')||event.stopImmediatePropagation()"
-                        wire:click='maPISOale' class="btn btn-dark text-inv-secondary w-100">Sale</button>
+                        wire:click='makeSale' class="btn btn-dark text-inv-secondary w-100">Sale</button>
                       
                     </div>
                 </div>
