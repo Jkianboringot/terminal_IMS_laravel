@@ -1,4 +1,4 @@
-<div wire:keydown.enter="addToList" wire:keydown.escape="cancelEdit" tabindex="0">
+<div >
 
     <x-slot:header>Sales</x-slot:header>
     <div class="row justify-content-center">
