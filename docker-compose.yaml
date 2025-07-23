@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel-app
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/var/www
+    environment:
+      APP_ENV: production
+      APP_DEBUG: true
+      APP_KEY:  base64:w5i6JtXafCkmterTG4bEjr4OqVPbQHlIfW3KkJtU1do=
+      DB_CONNECTION: pgsql
+      DB_HOST: dpg-d2082g7diees7396ufq0-a.oregon-postgres.render.com
+      DB_PORT: 5432
+      DB_DATABASE: ego_inventory_db    
+      DB_USERNAME: ego_inventory_db_user
+      DB_PASSWORD: VVSJ9lVCpRvWOkhCj8ku6nZxvI8HLxsM

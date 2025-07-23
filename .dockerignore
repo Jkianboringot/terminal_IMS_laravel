@@ -1,0 +1,10 @@
+node_modules
+vendor
+.env
+*.log
+*.sqlite
+docker-compose.yml
+docker-compose.yaml
+public/storage
+storage/*
+!storage/app/public

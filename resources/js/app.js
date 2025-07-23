@@ -2,7 +2,7 @@ import './bootstrap';
 
 import Alpine from 'alpinejs';
 import Swal from 'sweetalert2';
-import * as Livewire from '../../vendor/livewire/livewire/dist/livewire.esm.js';
+// import * as Livewire from '../../vendor/livewire/livewire/dist/livewire.esm.js';
 
 
 
