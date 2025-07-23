@@ -1,18 +1,25 @@
 services:
   - type: web
-    name: laravel-livewire-demo
-    env: php
+    name: laravel-docker-app
+    env: docker
     plan: free
-    buildCommand: |
-      composer install --no-dev
-      php artisan key:generate
-      php artisan migrate --force
-      php artisan db:seed --force
-    startCommand: php artisan serve --host=0.0.0.0 --port=10000
+    autoDeploy: true
+    dockerContext: .
+    dockerfilePath: Dockerfile
+    buildCommand: docker-compose build
+    startCommand: docker-compose up
     envVars:
       - key: APP_ENV
         value: production
-      - key: APP_DEBUG
-        value: false
-      - key: APP_KEY
-        generateValue: true
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        value: dpg-d2082g7diees7396ufq0-a.oregon-postgres.render.com
+      - key: DB_PORT
+        value: 5432
+      - key: DB_DATABASE
+        value: ego_inventory_db
+      - key: DB_USERNAME
+        value: ego_inventory_db_user
+      - key: DB_PASSWORD
+        value: VVSJ9lVCpRvWOkhCj8ku6nZxvI8HLxsM
