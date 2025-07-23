@@ -44,4 +44,5 @@ USER www-data
 
 # --- 11. Entrypoint and CMD ---
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+EXPOSE 9000
 CMD ["php-fpm"]
