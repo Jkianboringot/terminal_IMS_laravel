@@ -3,16 +3,22 @@ set -e
 
 cd /var/www
 
-# Ensure storage dirs are writable every start (important if volumes override)
-mkdir -p storage/framework/{cache,sessions,views} bootstrap/cache
+# 🔧 Create storage & bootstrap cache folders if missing
+mkdir -p storage/framework/{cache,sessions,views}
+mkdir -p bootstrap/cache
+
+# 🔐 Fix permissions (important for both dev & production)
+chmod -R 775 storage bootstrap/cache
 chown -R www-data:www-data storage bootstrap/cache
-chmod -R ug+rwx storage bootstrap/cache
 
-# Laravel bootstrap steps (skip errors to avoid build crash)
-php artisan config:cache --no-interaction || true
-php artisan route:cache --no-interaction || true
-php artisan view:cache --no-interaction || true
-php artisan package:discover --ansi --no-interaction || true
+# ⚡ Laravel bootstrap (allow errors so build doesn't fail)
+if [ -f artisan ]; then
+  php artisan config:clear || true
+  php artisan config:cache || true
+  php artisan route:cache || true
+  php artisan view:cache || true
+  php artisan package:discover --ansi || true
+fi
 
-# Start the container command (e.g. php-fpm)
+# 🟢 Run container's default CMD
 exec "$@"

@@ -48,6 +48,9 @@ Route::middleware([
         // ->download('Order - #' . sprintf('%04d', $order->id) . 'pdf')
     })->name('invoice-download');
 
+Route::get('/health', function () {
+    return response()->json(['status' => 'ok']);
+});
 
     Route::get('/dashboard', Admin\Dashboard::class)->name('dashboard');
     // Route::get('/accounts-summary', Admin\AccountsSummary::class)->name('accounts-summary');
