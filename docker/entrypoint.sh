@@ -3,15 +3,15 @@ set -e
 
 cd /var/www
 
-# 🔧 Create storage & bootstrap cache folders if missing
+# 🔁 Ensure folders always exist (Render sometimes overwrites them)
 mkdir -p storage/framework/{cache,sessions,views}
 mkdir -p bootstrap/cache
 
-# 🔐 Fix permissions (important for both dev & production)
-chmod -R 775 storage bootstrap/cache
-chown -R www-data:www-data storage bootstrap/cache
+# 🔒 Set correct permissions
+chmod -R 775 storage bootstrap/cache || true
+chown -R www-data:www-data storage bootstrap/cache || true
 
-# ⚡ Laravel bootstrap (allow errors so build doesn't fail)
+# ⚙ Laravel bootstrap (ignore errors)
 if [ -f artisan ]; then
   php artisan config:clear || true
   php artisan config:cache || true
@@ -20,5 +20,5 @@ if [ -f artisan ]; then
   php artisan package:discover --ansi || true
 fi
 
-# 🟢 Run container's default CMD
+# ▶ Run CMD
 exec "$@"
