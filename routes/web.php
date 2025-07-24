@@ -88,17 +88,17 @@ Route::middleware([
     //     Route::get('{id}/edit', Admin\DeliveryNotes\Edit::class)->name('edit');
     // });
 
-    Route::prefix('invoices')->middleware('permission:manage invoices')->name('invoices.')->group(function () {
-        Route::get('/', Admin\Invoices\Index::class)->name('index');
-        Route::get('/create', Admin\Invoices\Create::class)->middleware('permission:create permission')->name('create');
-        Route::get('{id}/edit', Admin\Invoices\Edit::class)->name('edit');
-    });
+    // Route::prefix('invoices')->middleware('permission:manage invoices')->name('invoices.')->group(function () {
+    //     Route::get('/', Admin\Invoices\Index::class)->name('index');
+    //     Route::get('/create', Admin\Invoices\Create::class)->middleware('permission:create permission')->name('create');
+    //     Route::get('{id}/edit', Admin\Invoices\Edit::class)->name('edit');
+    // });
 
-    Route::prefix('orders')->middleware('permission:manage orders')->name('orders.')->group(function () {
-        Route::get('/', Admin\Orders\Index::class)->name('index');
-        Route::get('/create', Admin\Orders\Create::class)->middleware('permission:create permission')->name('create');
-        Route::get('{id}/edit', Admin\Orders\Edit::class)->name('edit');
-    });
+    // Route::prefix('orders')->middleware('permission:manage orders')->name('orders.')->group(function () {
+    //     Route::get('/', Admin\Orders\Index::class)->name('index');
+    //     Route::get('/create', Admin\Orders\Create::class)->middleware('permission:create permission')->name('create');
+    //     Route::get('{id}/edit', Admin\Orders\Edit::class)->name('edit');
+    // });
 
     Route::prefix('product-categories')->middleware('permission:manage product categories')->name('productcategories.')->group(function () {
         Route::get('/', Admin\ProductCategories\Index::class)->name('index');
@@ -118,11 +118,11 @@ Route::middleware([
         Route::get('{id}/edit', Admin\Purchases\Edit::class)->name('edit');
     });
 
-    Route::prefix('quotations')->middleware('permission:manage quotations')->name('quotations.')->group(function () {
-        Route::get('/', Admin\Quotations\Index::class)->name('index');
-        Route::get('/create', Admin\Quotations\Create::class)->middleware('permission:create permission')->name('create');
-        Route::get('{id}/edit', Admin\Quotations\Edit::class)->name('edit');
-    });
+    // Route::prefix('quotations')->middleware('permission:manage quotations')->name('quotations.')->group(function () {
+    //     Route::get('/', Admin\Quotations\Index::class)->name('index');
+    //     Route::get('/create', Admin\Quotations\Create::class)->middleware('permission:create permission')->name('create');
+    //     Route::get('{id}/edit', Admin\Quotations\Edit::class)->name('edit');
+    // });
 
     Route::prefix('roles')->middleware('permission:manage roles')->name('roles.')->group(function () {
         Route::get('/', Admin\Roles\Index::class)->name('index');
@@ -130,11 +130,11 @@ Route::middleware([
         Route::get('{id}/edit', Admin\Roles\Edit::class)->name('edit');
     });
 
-    Route::prefix('sales')->middleware('permission:manage sales')->name('sales.')->group(function () {
-        Route::get('/', Admin\Sales\Index::class)->name('index');
-        Route::get('/create', Admin\Sales\Create::class)->middleware('permission:create permission')->name('create');
-        Route::get('{id}/edit', Admin\Sales\Edit::class)->name('edit');
-    });
+    // Route::prefix('sales')->middleware('permission:manage sales')->name('sales.')->group(function () {
+    //     Route::get('/', Admin\Sales\Index::class)->name('index');
+    //     Route::get('/create', Admin\Sales\Create::class)->middleware('permission:create permission')->name('create');
+    //     Route::get('{id}/edit', Admin\Sales\Edit::class)->name('edit');
+    // });
 
     Route::prefix('suppliers')->middleware('permission:manage suppliers')->name('suppliers.')->group(function () {
         Route::get('/', Admin\Suppliers\Index::class)->name('index');
@@ -149,17 +149,17 @@ Route::middleware([
     });
 
 
-  Route::prefix('purchase-payments')->middleware('permission:manage payments')->name('purchase-payments.')->group(function () {
-        Route::get('/', Admin\PurchasePayments\Index::class)->name('index');
-        Route::get('/create', Admin\PurchasePayments\Create::class)->middleware('permission:create permission')->name('create');
-        Route::get('{id}/edit', Admin\PurchasePayments\Edit::class)->name('edit');
-    });
+//   Route::prefix('purchase-payments')->middleware('permission:manage payments')->name('purchase-payments.')->group(function () {
+//         Route::get('/', Admin\PurchasePayments\Index::class)->name('index');
+//         Route::get('/create', Admin\PurchasePayments\Create::class)->middleware('permission:create permission')->name('create');
+//         Route::get('{id}/edit', Admin\PurchasePayments\Edit::class)->name('edit');
+//     });
 
     
-  Route::prefix('sale-payments')->middleware('permission:manage payments')->name('sale-payments.')->group(function () {
-        Route::get('/', Admin\SalePayments\Index::class)->name('index');
-        Route::get('/create', Admin\SalePayments\Create::class)->middleware('permission:create permission')->name('create');
-        Route::get('{id}/edit', Admin\SalePayments\Edit::class)->name('edit');
-    });
+//   Route::prefix('sale-payments')->middleware('permission:manage payments')->name('sale-payments.')->group(function () {
+//         Route::get('/', Admin\SalePayments\Index::class)->name('index');
+//         Route::get('/create', Admin\SalePayments\Create::class)->middleware('permission:create permission')->name('create');
+//         Route::get('{id}/edit', Admin\SalePayments\Edit::class)->name('edit');
+//     });
 
 });

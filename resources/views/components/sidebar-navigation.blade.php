@@ -92,7 +92,7 @@
                     @endif
                 </x-new-nav-link-dropdown>
             @endif
-
+{{-- 
             <li class="nav-header">Accounting & Inventory</li>
 
             @if ($user && $user->hasPermission('manage product purchases'))
@@ -156,7 +156,7 @@
                         <x-new-nav-link title="Create Purchase Payment" bi_icon="" route="admin.purchase-payments.create" />
                     @endif
                 </x-new-nav-link-dropdown>
-            @endif
+            @endif --}}
 
 
         </ul>
