@@ -26,6 +26,7 @@ class Edit extends Component
     }
     function mount($id)
     {
+        
         $this->role = Role::find($id);
         $this->selected_permissions = json_decode($this->role->permissions);
     }
@@ -60,6 +61,9 @@ class Edit extends Component
     {
         $this->validate();
         try {
+               if ($this->role->id == 1) {
+            throw new \Exception("Super Admin role cannot be edited.", 1);
+        }
             $this->role->permissions=json_encode($this->selected_permissions);
             
             $this->role->update();

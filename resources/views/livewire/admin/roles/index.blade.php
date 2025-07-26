@@ -2,7 +2,8 @@
     <x-slot name="header">Roles</x-slot>
 
     @php
-        $user = auth()->user();
+        $currentUser = auth()->user();
+        $isSuperAdmin = $currentUser->roles->contains('title', 'Super Administrator');
     @endphp
 
     <div class="card shadow-sm">
@@ -18,7 +19,7 @@
                         <th>Title</th>
                         <th>Users</th>
                         <th class="text-center">Permissions</th>
-                        @if ($user && ($user->hasPermission('edit permission') || $user->hasPermission('delete permission')))
+                        @if ($isSuperAdmin)
                             <th class="text-center">Actions</th>
                         @endif
                     </tr>
@@ -26,6 +27,10 @@
 
                 <tbody>
                     @foreach ($roles as $role)
+                        @php
+                            $isProtectedRole = $role->id === 1; // Super Administrator
+                        @endphp 
+
                         <tr>
                             <td>{{ $role->id }}</td>
                             <td>{{ $role->title }}</td>
@@ -39,31 +44,23 @@
                                 </ul>
                             </td>
 
-                            @if ($user && ($user->hasPermission('edit permission') || $user->hasPermission('delete permission')))
+                            @if ($isSuperAdmin)
                                 <td class="text-center">
-                                    <div class="d-flex flex-wrap gap-1 justify-content-center">
-                                        @if ($user->hasPermission('edit permission'))
+                                    @if (!$isProtectedRole)
+                                        <div class="d-flex flex-wrap gap-1 justify-content-center">
                                             <a href="{{ route('admin.roles.edit', $role->id) }}" class="btn btn-sm btn-secondary">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
-                                        @endif
 
-                                        @if ($user->hasPermission('delete permission'))
                                             <button class="btn btn-sm btn-danger"
                                                 onclick="confirm('Are you sure you wish to DELETE this Role?') || event.stopImmediatePropagation()"
                                                 wire:click='delete({{ $role->id }})'>
                                                 <i class="bi bi-trash-fill"></i>
                                             </button>
-                                        @endif
-
-                                        @if ($role->id == 1 && json_decode($role->permissions) != config('permissions.permissions'))
-                                            <button class="btn btn-sm btn-primary"
-                                                onclick="confirm('Are you sure you wish to UPDATE this role\'s permissions?') || event.stopImmediatePropagation()"
-                                                wire:click='updatePermissions({{ $role->id }})'>
-                                                <i class="bi bi-arrow-repeat"></i>
-                                            </button>
-                                        @endif
-                                    </div>
+                                        </div>
+                                    @else
+                                        <span class="text-muted">—</span>
+                                    @endif
                                 </td>
                             @endif
                         </tr>

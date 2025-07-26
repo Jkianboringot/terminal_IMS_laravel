@@ -26,6 +26,10 @@ class Index extends Component
     function delete($id)
     {
         try {
+             if ($id == 1) {
+            throw new \Exception("This is  the Super Admin", 1);
+            // this is just a second layer of protection
+        }
             $role = Role::findOrFail($id);
             if (count($role->users) >0) {
                 throw new \Exception("Permission denied: This Role has {$role->users->count()} User", 1);
