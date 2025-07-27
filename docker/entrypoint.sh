@@ -3,22 +3,21 @@ set -e
 
 cd /var/www
 
-# 🔁 Ensure folders always exist (Render sometimes overwrites them)
+# Ensure storage and cache directories exist
 mkdir -p storage/framework/{cache,sessions,views}
 mkdir -p bootstrap/cache
 
-# 🔒 Set correct permissions
+# Fix permissions (ignore errors if already owned)
 chmod -R 775 storage bootstrap/cache || true
 chown -R www-data:www-data storage bootstrap/cache || true
 
-# ⚙ Laravel bootstrap (ignore errors)
-if [ -f artisan ]; then
-  php artisan config:clear || true
-  php artisan config:cache || true
-  php artisan route:cache || true
-  php artisan view:cache || true
-  php artisan package:discover --ansi || true
-fi
+# Clear & rebuild Laravel caches
+php artisan config:clear || true
+php artisan config:cache || true
+php artisan route:clear || true
+php artisan route:cache || true
+php artisan view:clear || true
+php artisan view:cache || true
 
-# ▶ Run CMD
+# Finally exec the container CMD (php-fpm)
 exec "$@"
