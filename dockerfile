@@ -33,4 +33,5 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 EXPOSE 8000
 
 # Start Laravel server (or use php-fpm with nginx)
-CMD php artisan serve --host=0.0.0.0 --port=8000
+CMD php artisan serve --host=0.0.0.0 --port=${PORT}
+
