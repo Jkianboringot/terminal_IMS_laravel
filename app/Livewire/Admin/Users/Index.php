@@ -9,16 +9,26 @@ use Livewire\Component;
 class Index extends Component
 {
 
-      function delete($id)
+    function delete($id)
     {
         try {
-            $user = User::findOrFail($id);
-            if ($id == 1 ) {
-                throw new \Exception("Permission denied: Cant delete Admin user", 1);
+
+            $currentUser = auth()->user(); //this is an intilisense error no worry
+            if (!$currentUser->roles->contains('title', 'Super Administrator')) {
+                abort(403, 'Only Admin Action');
+            }
+            if ($currentUser->id == $id) {
+                throw new \Exception("You cannot delete your own account.");
             }
 
+            $user = User::findOrFail($id);
+            if ($user->roles->contains('title', 'Super Administrator')) {
+                throw new \Exception("You cannot delete another Super Administrator.");
+            }
+
+
             $user->roles()->detach();
-       
+
             $user->delete();
 
             $this->dispatch('done', success: "Successfully Deleted this User");
@@ -29,8 +39,8 @@ class Index extends Component
     }
     public function render()
     {
-        return view('livewire.admin.users.index',[
-            'users'=>User::all(),
+        return view('livewire.admin.users.index', [
+            'users' => User::with('roles')->get(), // change this, it was all prev is if any performace change or unexpected error go here
         ]);
     }
 }

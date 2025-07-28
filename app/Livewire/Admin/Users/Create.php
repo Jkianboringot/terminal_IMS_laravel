@@ -52,7 +52,6 @@ class Create extends Component
     {
         return view('livewire.admin.users.create',
     [
-        'roles'=>Role::all()
-    ]);
+        'roles'=>Role::where('title','!=','Super Administrator')->get()    ]);
     }
 }

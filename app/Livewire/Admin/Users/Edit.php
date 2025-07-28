@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Livewire\Admin\Users;
+
 use App\Mail\UserCreatedMail;
 use App\Models\Role;
 use App\Models\User;
@@ -13,45 +14,67 @@ class Edit extends Component
 {
 
     public User $user;
-    public  $selectedRoles=[];
+    public  $selectedRoles = [];
 
 
-    function rules(){
-            return [
-                'user.name'=>'required',
-                'user.email'=>'required|unique:users,email,'.$this->user->id,
-                'selectedRoles'=>'required',
+    function rules()
+    {
+        return [
+            'user.name' => 'required',
+            'user.email' => 'required|unique:users,email,' . $this->user->id,
+            'selectedRoles' => 'required',
 
 
-            ];
+        ];
     }
-    function mount($id){
-            $this->user = User::find($id);
-            $this->selectedRoles = $this->user->roles()->pluck('id');
+    function mount($id)
+    {
 
+        $this->user = User::findOrFail($id);
+
+       
+         $currentUser = auth()->user(); //this is an intilisense error no worry
+        if (!$currentUser->roles->contains('title', 'Super Administrator')) {
+            abort(403, 'Unauthorized');
+        }
+        
+         if ($this->user->roles->contains('title', 'Super Administrator')) {
+            abort(403, 'Cant edit other Super Admin');
+        }   //ok i forget what ! is for its for reverse logic i will explian it because your forgetting
+        // what this block does is to check if teh user as a role title of 'Super Administrator' and with ! it means
+        // if the do have have that title then we dont abort because it it will only run teht abort in case the role is not an 
+        // admin because it reverse it it say if this role is not and admin than alow edit 
+            
+        $this->selectedRoles = $this->user->roles()->pluck('id')->toArray();
     }
 
-    function updated(){
- $this->validate() ; 
+
+    function updated()
+    {
+        $this->validate();
     }
 
-    function save(){
-  $this->validate();
+    function save()
+    {
+        $this->validate();
         try {
-             $this->user->update();
+            $this->user->update();
             $this->user->roles()->detach();
-             $this->user->roles()->attach($this->selectedRoles);
-                
-             return redirect()->route('admin.users.index');
-            } catch (\Throwable $th) {
-                $this->dispatch('done',error:'Something went wrong: '.$th->getMessage());
-            }
+            $this->user->roles()->attach($this->selectedRoles);
+
+            return redirect()->route('admin.users.index');
+        } catch (\Throwable $th) {
+            $this->dispatch('done', error: 'Something went wrong: ' . $th->getMessage());
+        }
     }
     public function render()
     {
-        return view('livewire.admin.users.edit',
-    [
-        'roles'=>Role::all()
-    ]);
+        return view(
+            'livewire.admin.users.edit',
+            [
+                'roles' => Role::where('title',"!=",'Super Administrator')->get()
+            ] // in the future change this to go base on permission like if this titlw role have all permission dont show it not even all jsut a few sensitive one
+        );
     }
 }
+

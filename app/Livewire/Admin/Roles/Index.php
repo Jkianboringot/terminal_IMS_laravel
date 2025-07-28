@@ -8,34 +8,36 @@ use Livewire\Component;
 class Index extends Component
 {
 
-    function updatePermissions($id){
-       try {
-         if ($id != 1) {
-            throw new \Exception("This is not the Super Admin", 1);
-            
-        }
-        $role= Role::find($id);
-        $role->permissions=json_encode(config('permissions.permissions'));
-        $role->save();
-        $this->dispatch('done',success :'Succesfully Updated Super Admin');
-       } catch (\Throwable $th) {
-        $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
-       }
-    }
-    
+    // function updatePermissions($id){
+    //    try {
+    //        $currentUser = auth()->user(); //this is an intilisense error no worry
+    //     if (!$currentUser->roles->contains('title', 'Super Administrator')) {
+    //         abort(403, 'Only Admin Action');
+    //     }
+    //     $role= Role::find($id);
+    //     $role->permissions=json_encode(config('permissions.permissions'));
+    //     $role->save();
+    //     $this->dispatch('done',success :'Succesfully Updated Super Admin');
+    //    } catch (\Throwable $th) {
+    //     $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
+    //    }
+    // }
+
     function delete($id)
     {
         try {
-             if ($id == 1) {
-            throw new \Exception("This is  the Super Admin", 1);
-            // this is just a second layer of protection
-        }
-            $role = Role::findOrFail($id);
-            if (count($role->users) >0) {
-                throw new \Exception("Permission denied: This Role has {$role->users->count()} User", 1);
+            $currentUser = auth()->user(); //this is an intilisense error no worry
+
+            if (!$currentUser->roles->contains('title', 'Super Administrator')) {
+                abort(403, 'Only Admin Action');
             }
 
-       
+            $role = Role::findOrFail($id);
+            if ($role->users->count() > 0) {
+                throw new \Exception("Permission denied: This role has {$role->users->count()} user(s) assigned.");
+            }
+
+
             $role->delete();
 
             $this->dispatch('done', success: "Successfully Deleted this Role");
@@ -46,8 +48,8 @@ class Index extends Component
     }
     public function render()
     {
-        return view('livewire.admin.roles.index',[
-            'roles'=>Role::all()
+        return view('livewire.admin.roles.index', [
+            'roles' => Role::all()
         ]);
     }
 }

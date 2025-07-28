@@ -28,6 +28,11 @@ class Edit extends Component
     {
         
         $this->role = Role::find($id);
+         $currentUser = auth()->user(); //this is an intilisense error no worry
+        if (!$currentUser->roles->contains('title', 'Super Administrator')) {
+            abort(403, 'Unauthorized');
+        }
+
         $this->selected_permissions = json_decode($this->role->permissions);
     }
     function addToList($permission)
