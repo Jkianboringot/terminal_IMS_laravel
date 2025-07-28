@@ -11,6 +11,11 @@ Route::get('/', function () {
     return redirect('dashboard');
 });
 
+Route::get('/run-migrations', function () {
+    \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+    return 'Migrations run successfully!';
+});
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
