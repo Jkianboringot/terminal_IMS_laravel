@@ -37,4 +37,4 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 EXPOSE 8000
 
 # Start php-fpm (Render expects this)
-CMD ["php-fpm"]
+CMD php artisan serve --host=0.0.0.0 --port=${PORT}
