@@ -1,10 +1,6 @@
 node_modules
 vendor
 .env
+storage/*.key
 *.log
-*.sqlite
-docker-compose.yml
-docker-compose.yaml
-public/storage
-storage/*
-!storage/app/public
+.git

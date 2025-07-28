@@ -1,49 +1,67 @@
-# 1) Base PHP-FPM image
-FROM php:8.2-fpm AS app
+# --------------------------------------
+# STAGE 1: Build Composer dependencies
+# --------------------------------------
+FROM composer:2.7 as composer
 
-# 2) System dependencies + PHP extensions
-RUN apt-get update \
- && apt-get install -y git curl zip unzip libpng-dev libonig-dev libxml2-dev libzip-dev \
- && docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd zip \
- && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
 
-# 3) Install Composer
-COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --prefer-dist --no-interaction --no-scripts
 
-# 4) Set working directory
+# --------------------------------------
+# STAGE 2: Build Node assets
+# --------------------------------------
+FROM node:20-alpine as node
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm install && npm run build
+
+# --------------------------------------
+# STAGE 3: Laravel production image
+# --------------------------------------
+FROM php:8.1-fpm-alpine
+
+# Install system packages
+RUN apk add --no-cache \
+    bash \
+    git \
+    unzip \
+    libzip-dev \
+    icu-dev \
+    zlib-dev \
+    libpng-dev \
+    freetype-dev \
+    oniguruma-dev \
+    mysql-client \
+    curl \
+    libjpeg-turbo-dev
+
+# PHP extensions
+RUN docker-php-ext-install \
+    pdo \
+    pdo_mysql \
+    mbstring \
+    zip \
+    exif \
+    pcntl \
+    intl \
+    bcmath
+
+# Set working directory
 WORKDIR /var/www
 
-# 5) Copy application files
+# Copy source code
 COPY . .
 
-# 6) Copy production env (if present)
-RUN if [ -f .env.production ]; then cp .env.production .env; fi
+# Copy built assets and vendor deps
+COPY --from=composer /app/vendor ./vendor
+COPY --from=node /app/public ./public
 
-# 7) Pre-create storage directories
-RUN mkdir -p storage/framework/{sessions,views,cache} bootstrap/cache
+# Set proper permissions
+RUN chmod -R 775 storage bootstrap/cache && chown -R www-data:www-data .
 
-# 8) Permissions
-RUN chown -R www-data:www-data /var/www \
- && chmod -R ug+rwx storage bootstrap/cache
-
-# 9) Install PHP dependencies & optimize
-ENV COMPOSER_ALLOW_SUPERUSER=1
-RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
-
-# 10) Generate app key & cache configs
-RUN php artisan key:generate --ansi \
- && php artisan config:cache \
- && php artisan route:cache \
- && php artisan view:cache
-
-# 11) Entrypoint script
-COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
-
-# 12) Switch to non‑root user
-USER www-data
-
-# 13) Expose PHP‑FPM port & launch
-EXPOSE 9000
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-CMD ["php-fpm"]
+# Laravel web entry point
+EXPOSE 8000
+CMD php artisan serve --host=0.0.0.0 --port=8000
