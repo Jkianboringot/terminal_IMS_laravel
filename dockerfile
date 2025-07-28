@@ -1,67 +1,36 @@
-# --------------------------------------
-# STAGE 1: Build Composer dependencies
-# --------------------------------------
-FROM composer:2.7 as composer
+# Use official PHP image with required extensions
+FROM php:8.2-fpm
 
-WORKDIR /app
+# Install system dependencies and PHP extensions
+RUN apt-get update && apt-get install -y \
+    git curl zip unzip libpq-dev libonig-dev libxml2-dev \
+    libzip-dev libjpeg-dev libpng-dev libfreetype6-dev \
+    libmcrypt-dev libssl-dev libsqlite3-dev \
+    && docker-php-ext-install pdo pdo_pgsql mbstring zip exif pcntl
 
-COPY composer.json composer.lock ./
-RUN composer install --no-dev --prefer-dist --no-interaction --no-scripts
-
-# --------------------------------------
-# STAGE 2: Build Node assets
-# --------------------------------------
-FROM node:20-alpine as node
-
-WORKDIR /app
-
-COPY package.json package-lock.json ./
-RUN npm install && npm run build
-
-# --------------------------------------
-# STAGE 3: Laravel production image
-# --------------------------------------
-FROM php:8.1-fpm-alpine
-
-# Install system packages
-RUN apk add --no-cache \
-    bash \
-    git \
-    unzip \
-    libzip-dev \
-    icu-dev \
-    zlib-dev \
-    libpng-dev \
-    freetype-dev \
-    oniguruma-dev \
-    mysql-client \
-    curl \
-    libjpeg-turbo-dev
-
-# PHP extensions
-RUN docker-php-ext-install \
-    pdo \
-    pdo_mysql \
-    mbstring \
-    zip \
-    exif \
-    pcntl \
-    intl \
-    bcmath
+# Install Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Set working directory
 WORKDIR /var/www
 
-# Copy source code
+# Copy app files
 COPY . .
 
-# Copy built assets and vendor deps
-COPY --from=composer /app/vendor ./vendor
-COPY --from=node /app/public ./public
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader
 
-# Set proper permissions
-RUN chmod -R 775 storage bootstrap/cache && chown -R www-data:www-data .
+# Set permissions
+RUN chown -R www-data:www-data /var/www \
+    && chmod -R 755 /var/www/storage /var/www/bootstrap/cache
 
-# Laravel web entry point
+# Build frontend assets
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install && npm run build
+
+# Expose port 8000
 EXPOSE 8000
+
+# Start Laravel server (or use php-fpm with nginx)
 CMD php artisan serve --host=0.0.0.0 --port=8000

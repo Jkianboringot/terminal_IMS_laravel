@@ -1,16 +1,19 @@
 services:
   - type: web
-    name: laravel-docker-app
+    name: ego-inventory
     env: docker
     plan: free
-    autoDeploy: true
-    dockerContext: .
+    branch: main
     dockerfilePath: Dockerfile
-    buildCommand: docker-compose build
-    startCommand: docker-compose up
     envVars:
       - key: APP_ENV
         value: production
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        value: https://jkdyinventory.shop
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_HOST
