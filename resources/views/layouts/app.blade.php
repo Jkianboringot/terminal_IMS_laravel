@@ -50,6 +50,8 @@
                         class="brand-text fw-light ">{{ env('APP_NAME', 'Ego Ent Inventory') }}</span> <!--end::Brand Text--> </a>
                 <!--end::Brand Link-->
             </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
+          
+
             <x-sidebar-navigation  />
             <!--end::Sidebar Wrapper-->
         </aside> <!--end::Sidebar--> <!--begin::App Main-->
