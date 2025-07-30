@@ -1,0 +1,95 @@
+the app was deployed and the only real problem was that the .env was miss configur but 
+i need to test it now but here is teh .env use for deployment the app url must match what
+render gives you at the top and region as asia
+
+ADMIN_EMAIL=jkian@gmail.com
+ADMIN_PASSWORD=onlyforme
+APP_DEBUG=false
+APP_ENV=production
+APP_FAKER_LOCALE=en_US
+APP_FALLBACK_LOCALE=en
+APP_KEY="base64:9opppNmhDsfU1kMX7poqdGw+KV+XzFCl2HRTtX9xbmQ="
+APP_LOCALE=en
+APP_MAINTENANCE_DRIVER=file
+APP_NAME=Ego-Ent-Inventory
+APP_URL=https://terminal-ims-laravel-17.onrender.com
+AWS_ACCESS_KEY_ID=
+AWS_BUCKET=
+AWS_DEFAULT_REGION=us-east-1
+AWS_SECRET_ACCESS_KEY=
+AWS_USE_PATH_STYLE_ENDPOINT=false
+BCRYPT_ROUNDS=12
+BROADCAST_CONNECTION=log
+CACHE_STORE=database
+COMPANY_ADDRESS="70 Rizal Avenue, Brgy.,San Jose Virac Catanduanes"
+COMPANY_EMAIL=primetech2230@gmail.com
+COMPANY_NAME="EGO ENTERPISE"
+COMPANY_PHONE=09684279494
+DB_CONNECTION=pgsql
+DB_DATABASE=ego_inventory_db
+DB_HOST=dpg-d2082g7diees7396ufq0-a.oregon-postgres.render.com
+DB_PASSWORD=VVSJ9lVCpRvWOkhCj8ku6nZxvI8HLxsM
+DB_PORT=5432
+DB_USERNAME=ego_inventory_db_user
+FILESYSTEM_DISK=local
+LOG_CHANNEL=stack
+LOG_DEPRECATIONS_CHANNEL=null
+LOG_LEVEL=debug
+LOG_STACK=single
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=hello@example.com
+MAIL_FROM_NAME=${APP_NAME}
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_LOG_CHANNEL=stack
+MAIL_MAILER=smtp
+MAIL_PASSWORD=f5d6bcf8992c33
+MAIL_PORT=2525
+MAIL_USERNAME=e65415b0116b63
+MEMCACHED_HOST=127.0.0.1
+PHP_CLI_SERVER_WORKERS=4
+QUEUE_CONNECTION=database
+REDIS_CLIENT=phpredis
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+SANCTUM_STATEFUL_DOMAINS=jkdyinventory.shop
+SESSION_CONNECTION=pgsql
+SESSION_DOMAIN=terminal-ims-laravel-17.onrender.com
+SESSION_DRIVER=cookie
+SESSION_ENCRYPT=false
+SESSION_LIFETIME=120
+SESSION_PARTITIONED_COOKIE=false
+SESSION_PATH=/
+SESSION_SAME_SITE=none
+SESSION_SECURE_COOKIE=true
+VITE_APP_NAME=${APP_NAME}
+
+
+review of deployed app
+what to test:
+1.speed
+2.create
+    1.role ✔ a bit slow
+    2.user
+    3.bank
+    4.client
+    5.purchase
+    6.sale
+    7.supplier
+    8.brand
+    9.product
+    10.product category
+    11.order
+    12.purchas pay
+    13.sale pay
+    14.invoice
+    15.quotation
+3.delete
+4.download ✔ but slow took like 10sec
+5.edit
+6.purchase and sale
+7.profile
+
+# functions that should work but its does not or inconsistent
+    1.is roles where you double click and it say already select🤞
+        - i might just get rid of this as its useless and it will jsut hinder performance
