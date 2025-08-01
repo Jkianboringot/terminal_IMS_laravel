@@ -11,9 +11,7 @@
 
     <x-sticky-note-banner/>
             
-            
-
-
+        
 
 
             <li class="nav-item dropdown user-menu"> <a href="#" class="nav-link dropdown-toggle"
@@ -25,14 +23,8 @@
                         <span class="d-none d-md-inline">
                         {{ auth()->user()->name }}</span> </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <!--begin::User Image-->
-                    <li class="user-header text-bg-primary"> <img src="{{auth()->user()->profile_photo_url}}"
-                            class="rounded-circle shadow" alt="User Image">
-                        <p>
-                            {{ auth()->user()->name }}
-                            <small>Member since {{Carbon\Carbon::parse(auth()->user()->created_at)->format('M . Y')}}</small>
-                        </p>
-                    </li>
-                    <li class="user-footer">
+                
+                    <li class="user-body">
                         <a href="{{ route('profile.show') }}" class="btn btn-default btn-flat">Profile</a>
                         <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();"

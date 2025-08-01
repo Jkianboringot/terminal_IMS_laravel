@@ -37,16 +37,6 @@
                     <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
                 </label>
             </div>
-<div class="row mt-3">
-    <!-- Forgot password link - left-aligned -->
-    <div class="col d-flex justify-content-start mt-2">
-        @if (Route::has('password.request'))
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-               href="{{ route('password.request') }}">
-                {{ __('Forgot your password?') }}
-            </a>
-        @endif
-    </div>
 
     <!-- Login button - right-aligned -->
     <div class="col d-flex justify-content-end mb-3">
