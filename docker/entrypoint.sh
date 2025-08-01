@@ -6,6 +6,8 @@ php artisan config:cache
 
 # Run DB migrations
 php artisan migrate --force
+php artisan db:seed --force
+
 
 # Start Laravel
 exec "$@"

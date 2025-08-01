@@ -21,7 +21,7 @@
                             <div class="flex-grow-1">
                                 <h3 class="dropdown-item-title">
                                     Brad Diesel
-                                    <span class="float-end fs-7 text-danger"><i class="bi bi-star-fill"></i></span>
+                                    <span class="float-en`d fs-7 text-danger"><i class="bi bi-star-fill"></i></span>
                                 </h3>
                                 <p class="fs-7">Call me whenever you can...</p>
                                 <p class="fs-7 text-secondary"> <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
