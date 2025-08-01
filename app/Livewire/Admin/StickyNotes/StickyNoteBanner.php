@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire\Admin\StickyNotes;
 
 use App\Models\StickyNote;
 use Livewire\Component;
@@ -38,6 +38,6 @@ class StickyNoteBanner extends Component
 
     public function render()
     {
-        return view('views.navigation-menu');
+        return view('livewire.admin.sticky-notes.sticky-note-wrapper');
     }
 }
