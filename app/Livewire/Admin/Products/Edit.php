@@ -7,10 +7,18 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\Unit;
 use Livewire\Component;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
+
 
 class Edit extends Component
 {
     public Product $product;
+
+    public $technical_image;
+
+    use WithFileUploads;
+
 
     function rules()
     {
@@ -24,6 +32,8 @@ class Edit extends Component
             'product.quantity' => 'required',
             'product.purchase_price' => 'required',
             'product.sale_price' => 'required',
+            'technical_image' => 'nullable|image|max:2048',
+
         ];
     }
 
@@ -31,16 +41,25 @@ class Edit extends Component
     {
         $this->product = Product::find($id);
     }
-    // function updated()
-    // {
-    //     // $this->validate();
-    // }
+    function updated()
+    {    
+        $this->validate();
+    }
 
     function save()
     {
         // return redirect()->route('admin.products.index');
         try {
-            // $this->validate();
+               $this->validate();
+
+              if ($this->technical_image) {
+                $productManual = Str::slug($this->product->name) . '-manual.' . $this->technical_image->extension();
+
+                $this->technical_image->storeAs('product_manual', $productManual, 'public');
+
+                $this->product->technical_path = "product_manual" . $productManual;
+            }
+
 
             $this->product->update();
 

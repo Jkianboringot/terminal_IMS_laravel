@@ -6,6 +6,7 @@ use App\Models\Quotation;
 use \Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin;
+use App\Models\Product;
 
 Route::get('/', function () {
     return redirect('dashboard');
@@ -47,6 +48,33 @@ Route::middleware([
         ])->stream();
         // ->download('Order - #' . sprintf('%04d', $order->id) . 'pdf')
     })->name('invoice-download');
+
+
+            Route::get('/{id}/product', function ($id) {
+        $product = Product::find($id);
+
+        // return PDF::loadView('public/product_manual', [
+        return PDF::loadView('pdf.manual', [
+            'product' => $product
+        ])->stream();
+        // ->download('Order - #' . sprintf('%04d', $order->id) . 'pdf')
+    })->name('technical-download');
+        
+        // got 2 option 
+        // 1.make an html show the image
+        // 2.just make it like brand 
+
+        // i need to understand what this do  like this it make pdf file or make them
+
+
+
+
+
+
+
+
+
+
 
 
     Route::get('/dashboard', Admin\Dashboard::class)->name('dashboard');

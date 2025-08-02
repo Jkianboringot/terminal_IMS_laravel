@@ -14,11 +14,11 @@
                         <select wire:model.live='product.product_category_id' class="form-select " name="" id="">
                             <option selected>Select your Product Category</option>
                             @foreach ($productCategories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
                         @error('product.product_category_id')
-                            <small id="" class="form-text text-danger">{{ $message }}</small>
+                        <small id="" class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
@@ -29,11 +29,11 @@
                         <select wire:model.live='product.brand_id' class="form-select " name="" id="">
                             <option selected>Select your Product Brand</option>
                             @foreach ($brands as $brand)
-                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                             @endforeach
                         </select>
                         @error('product.brand_id')
-                            <small id="" class="form-text text-danger">{{ $message }}</small>
+                        <small id="" class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                     <input wire:model.live='product.name' type="text" class="form-control" name="name" id="name"
                         aria-describedby="name" placeholder="Enter your Product's Name" />
                     @error('product.name')
-                        <small id="" class="form-text text-danger">{{ $message }}</small>
+                    <small id="" class="form-text text-danger">{{ $message }}</small>
                     @enderror
                 </div>
                 <div class="mb-3">
@@ -51,9 +51,47 @@
                     <textarea wire:model.live='product.description' class="form-control" name="" id=""
                         rows="3"></textarea>
                     @error('product.description')
-                        <small id="" class="form-text text-danger">{{ $message }}</small>
+                    <small id="" class="form-text text-danger">{{ $message }}</small>
+                    @enderror
+
+              
+                    <label for="" class="form-label">Logo</label>
+                    <input
+                        wire:model.live='technical_image'
+                        type="file"
+                        class="form-control" />
+                    @error('brand.technical_image')
+                    <small id="" class="form-text text-danger">{{ $message }}</small>
                     @enderror
                 </div>
+                @if($technical_image)
+                <div class="mb-3">
+                    <img width="150px" class="img-fluid p-3 border border-secondary" src="{{$technical_image->temporaryUrl() }}">
+                </div>
+                @endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
@@ -61,11 +99,11 @@
                         <select wire:model.live='product.unit_id' class="form-select " name="" id="">
                             <option selected>Select your Product Unit</option>
                             @foreach ($units as $unit)
-                                <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                            <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                             @endforeach
                         </select>
                         @error('product.unit_id')
-                            <small id="" class="form-text text-danger">{{ $message }}</small>
+                        <small id="" class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
@@ -76,7 +114,7 @@
                             name="quantity" id="name" aria-describedby="quantity"
                             placeholder="Enter your Product's quantity per unit" />
                         @error('product.quantity')
-                            <small id="" class="form-text text-danger">{{ $message }}</small>
+                        <small id="" class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
@@ -87,7 +125,7 @@
                             class="form-control" name="purchase_price" id="name" aria-describedby="purchase_price"
                             placeholder="Enter your Product's purchase price" />
                         @error('product.purchase_price')
-                            <small id="" class="form-text text-danger">{{ $message }}</small>
+                        <small id="" class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
@@ -98,7 +136,7 @@
                             class="form-control" name="sale_price" id="name" aria-describedby="sale_price"
                             placeholder="Enter your Product's sale price" />
                         @error('product.sale_price')
-                            <small id="" class="form-text text-danger">{{ $message }}</small>
+                        <small id="" class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
