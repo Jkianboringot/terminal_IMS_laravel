@@ -15,7 +15,7 @@ class Create extends Component
 {
     public Product $product;
 
-    public $technical_image;
+    public $manual_image;
 
     use WithFileUploads;
 
@@ -33,7 +33,7 @@ class Create extends Component
             'product.quantity' => 'required',
             'product.purchase_price' => 'required',
             'product.sale_price' => 'required',
-            'technical_image' => 'nullable|image|max:2048',
+            'manual_image' => 'nullable|image|max:2048',
             
 
 
@@ -54,12 +54,13 @@ class Create extends Component
         try {
             $this->validate();
 
-              if ($this->technical_image) {
-                $productManual = Str::slug($this->product->name) . '-manual.' . $this->technical_image->extension();
+               if ($this->manual_image) {
+                $logoName = Str::slug($this->product->name) . '-logo.' . $this->manual_image->extension();
 
-                $this->technical_image->storeAs('product_manual', $productManual, 'public');
+                $this->manual_image->storeAs('product-manual/', $logoName, 'public');
 
-                $this->product->technical_path = "product_manual" . $productManual;
+                $this->product->technical_path = "product-manual/" . $logoName;
+                //saves the path and input it in the databse techinical path 
             }
 
             $this->product->save();

@@ -23,6 +23,8 @@
                         <th>Suplies Category</th>
                         <th>Measurement</th>
                         <th>Inventory Balance</th>
+                        <th>Manual</th>
+
                         @if ($user && $user->hasPermission('edit permission') || $user->hasPermission('delete permission'))
                         <th class="text-center">Actions</th>
                         @endif
@@ -47,6 +49,16 @@
 
                         <td>{{ $product->quantity . ' ' . $product->unit->name }}</td>
                         <td>{{ $product->Inventory_balance }}</td>
+                          <td>
+                            <img
+                                src="{{ $product->manual_url }}"
+                                width="60"
+                                alt="Brand Logo"
+                                style="cursor: pointer;"
+                                data-bs-toggle="modal"
+                                data-bs-target="#imageModal"
+                                onclick="document.getElementById('modalImage').src='{{ $product->manual_url }}'" />
+                        </td>
                         <td class="text-center">
                             @if ($user && $user->hasPermission('edit permission'))
 
@@ -54,14 +66,7 @@
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                             @endif
-                            @if ($user && $user->hasPermission('download permission'))
-
-                            <a target="_blank"  href="{{ route('admin.technical-download',$product->id) }}"
-                                class="btn btn-primary">
-                                <i class="bi bi-file-earmark-arrow-down "></i>
-                            </a>
-                            @endif
-
+                          
                             @if ($user && $user->hasPermission('delete permission'))
 
                             <button onclick="confirm('Are you sure you wish to DELETE this product?')||event.stopImmediatePropagation()" class="btn btn-danger" wire:click='delete({{ $product->id }})'>
@@ -76,5 +81,30 @@
                 </tbody>
             </table>
         </div>
+    </div>
+     <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-fullscreen">
+                    <div class="modal-content bg-black border-0">
+                        <div class="modal-body d-flex justify-content-center align-items-center p-0" style="height: 100vh;">
+                            <img
+                                id="modalImage"
+                                src=""
+                                alt="Enlarged Image"
+                                style="
+                                    display: block;
+                                    width: 100vw;
+                                    max-width: 100vw;
+                                    max-height: 95vh;
+                                    object-fit: contain;
+                                    cursor: pointer;
+                                "
+                                data-bs-dismiss="modal" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
     </div>
 </div>

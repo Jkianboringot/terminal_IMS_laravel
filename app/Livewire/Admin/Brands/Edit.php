@@ -10,14 +10,14 @@ use Livewire\WithFileUploads;
 class Edit extends Component
 {
     public Brand $brand;
-    // public $image;
-    // use WithFileUploads;
+    public $image;
+    use WithFileUploads;
 
     function rules()
     {
         return [
             'brand.name' => "required",
-            // 'image' => 'nullable|image|max:2048'
+            'image' => 'nullable|image|max:2048'
 
         ];
     }
@@ -36,17 +36,13 @@ class Edit extends Component
     {
         $this->validate();
         try {
-            // if ($this->image) {
+               if ($this->image) {
+                $logoName = Str::slug($this->brand->name) . '-logo.' . $this->image->extension();
 
-            //     if (file_exists(public_path($this->brand->logo_path))) {
-            //         unlink(public_path($this->brand->logo_path));
-            //     }
-            //     $logoName = Str::slug($this->brand->name) . '-logo.' . $this->image->extension();
+                $this->image->storeAs('brands_logo/logos', $logoName, 'public');
 
-            //     $this->image->storeAs('brands_logo/logos', $logoName, 'public');
-
-            //     $this->brand->logo_path = "brands_logo/logos/" . $logoName;
-            // }
+                $this->brand->logo_path = "brands_logo/logos/" . $logoName;
+            }
             $this->brand->update();
             return redirect()->route('admin.brands.index');
         } catch (\Throwable $th) {

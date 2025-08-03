@@ -20,7 +20,7 @@
                     <tr>
                         <th>ID</th>
                         <th class="text-center">Name</th>
-                        <!-- <th>Logo</th> -->
+                        <th>Logo</th>
                         @if ($user && $user->hasPermission('edit permission') || $user->hasPermission('delete permission'))
                         <th class="text-end">Actions</th>
                         @endif
@@ -31,7 +31,7 @@
                     <tr>
                         <td scope="row">{{ $brand->id }}</td>
                         <td class="text-center">{{ $brand->name }}</td>
-                        <!-- <td>
+                        <td>
                             <img
                                 src="{{ $brand->logo_url }}"
                                 width="60"
@@ -40,7 +40,7 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#imageModal"
                                 onclick="document.getElementById('modalImage').src='{{ $brand->logo_url }}'" />
-                        </td> -->
+                        </td>
                         <td class="text-end">
 
                             @if ($user && $user->hasPermission('edit permission'))

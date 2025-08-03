@@ -10,15 +10,15 @@ use Livewire\WithFileUploads;
 class Create extends Component
 {
     public Brand $brand;
-    // public $image;
+    public $image;
 
-    // use WithFileUploads;
+    use WithFileUploads;
 
     function rules()
     {
         return [
             'brand.name' => "required",
-            // 'image' => 'nullable|image|max:2048'
+            'image' => 'nullable|image|max:2048'
         ];
     }
 
@@ -37,13 +37,13 @@ class Create extends Component
         $this->validate();
         try {
 
-            // if ($this->image) {
-            //     $logoName = Str::slug($this->brand->name) . '-logo.' . $this->image->extension();
+            if ($this->image) {
+                $logoName = Str::slug($this->brand->name) . '-logo.' . $this->image->extension();
 
-            //     $this->image->storeAs('brands_logo/logos', $logoName, 'public');
+                $this->image->storeAs('brands_logo/logos', $logoName, 'public');
 
-            //     $this->brand->logo_path = "brands_logo/logos/" . $logoName;
-            // }
+                $this->brand->logo_path = "brands_logo/logos/" . $logoName;
+            }
 
 
 

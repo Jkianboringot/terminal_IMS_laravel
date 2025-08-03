@@ -18,7 +18,8 @@ class Create extends Component
     function rules()
     {
         return [
-            'role.title' => 'required|unique',
+           'role.title' => 'required|unique:roles,title',
+
 
 
 

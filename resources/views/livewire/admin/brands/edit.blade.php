@@ -19,7 +19,7 @@
                     </div>
             </div>
 
-               {{-- <div class="mb-3">
+               <div class="mb-3">
                     <label for="" class="form-label">Logo</label>
                     <input
                     wire:model.live='image'
@@ -47,7 +47,7 @@
                 </div>
                 @endif
                     </div>
-                --}}
+               
 
             <button onclick="confirm('Are you sure you wish to update this Brand')||event.stopImmediatePropagation()"
                 wire:click='save' class="btn btn-dark text-inv-secondary">Save</button>

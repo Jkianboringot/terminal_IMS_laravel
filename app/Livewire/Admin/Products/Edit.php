@@ -15,7 +15,8 @@ class Edit extends Component
 {
     public Product $product;
 
-    public $technical_image;
+   
+    public $manual_image;
 
     use WithFileUploads;
 
@@ -32,7 +33,7 @@ class Edit extends Component
             'product.quantity' => 'required',
             'product.purchase_price' => 'required',
             'product.sale_price' => 'required',
-            'technical_image' => 'nullable|image|max:2048',
+            'manual_image' => 'nullable|image|max:2048',
 
         ];
     }
@@ -52,14 +53,13 @@ class Edit extends Component
         try {
                $this->validate();
 
-              if ($this->technical_image) {
-                $productManual = Str::slug($this->product->name) . '-manual.' . $this->technical_image->extension();
+                if ($this->manual_image) {
+                $productManual = Str::slug($this->product->name) . '-logo.' . $this->manual_image->extension();
 
-                $this->technical_image->storeAs('product_manual', $productManual, 'public');
+                $this->manual_image->storeAs('product-manual/', $productManual, 'public');
 
-                $this->product->technical_path = "product_manual" . $productManual;
+                $this->product->technical_path = "product-manual/" . $productManual;
             }
-
 
             $this->product->update();
 

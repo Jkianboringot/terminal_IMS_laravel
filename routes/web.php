@@ -50,15 +50,7 @@ Route::middleware([
     })->name('invoice-download');
 
 
-            Route::get('/{id}/product', function ($id) {
-        $product = Product::find($id);
-
-        // return PDF::loadView('public/product_manual', [
-        return PDF::loadView('pdf.manual', [
-            'product' => $product
-        ])->stream();
-        // ->download('Order - #' . sprintf('%04d', $order->id) . 'pdf')
-    })->name('technical-download');
+       
         
         // got 2 option 
         // 1.make an html show the image

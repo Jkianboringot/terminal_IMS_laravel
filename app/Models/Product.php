@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-
     protected $appends=[
         'total_purchase_count',
         'total_sales_count',
         'inventory_balance',
+         'manual_url',
     ];
     function brand()
     {
@@ -84,4 +84,22 @@ class Product extends Model
     {
         return $this->total_purchase_count - $this->total_sales_count;
     }
+  public function getManualUrlAttribute()
+{
+    if ($this->technical_path && file_exists(public_path($this->technical_path))) {
+        return asset($this->technical_path);
+        //the problem is in where
+    }
+
+    return asset('product_manual/23-manual.jpg');
 }
+    protected function defaultProfilePhotoUrl()
+    {
+        $name = trim(collect(explode(' ', $this->name))->map(function ($segment) {
+            return mb_substr($segment, 0, 1);
+        })->join(' '));
+
+        return 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&color=7F9CF5&background=EBF4FF';
+    }
+}
+

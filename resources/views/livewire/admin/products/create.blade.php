@@ -57,16 +57,16 @@
               
                     <label for="" class="form-label">Logo</label>
                     <input
-                        wire:model.live='technical_image'
+                        wire:model.live='manual_image'
                         type="file"
                         class="form-control" />
-                    @error('brand.technical_image')
+                    @error('brand.manual_image')
                     <small id="" class="form-text text-danger">{{ $message }}</small>
                     @enderror
                 </div>
-                @if($technical_image)
+                @if($manual_image)
                 <div class="mb-3">
-                    <img width="150px" class="img-fluid p-3 border border-secondary" src="{{$technical_image->temporaryUrl() }}">
+                    <img width="150px" class="img-fluid p-3 border border-secondary" src="{{$manual_image->temporaryUrl() }}">
                 </div>
                 @endif
 
