@@ -56,9 +56,9 @@ class Edit extends Component
                 if ($this->manual_image) {
                 $productManual = Str::slug($this->product->name) . '-logo.' . $this->manual_image->extension();
 
-                $this->manual_image->storeAs('product-manual/', $productManual, 'public');
+                $this->manual_image->storeAs('product_manual/', $productManual, 'public');
 
-                $this->product->technical_path = "product-manual/" . $productManual;
+                $this->product->technical_path = "product_manual/" . $productManual;
             }
 
             $this->product->update();

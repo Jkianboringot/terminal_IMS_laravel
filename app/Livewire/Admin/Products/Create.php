@@ -57,9 +57,9 @@ class Create extends Component
                if ($this->manual_image) {
                 $logoName = Str::slug($this->product->name) . '-logo.' . $this->manual_image->extension();
 
-                $this->manual_image->storeAs('product-manual/', $logoName, 'public');
+                $this->manual_image->storeAs('product_manual/', $logoName, 'public');
 
-                $this->product->technical_path = "product-manual/" . $logoName;
+                $this->product->technical_path = "product_manual/" . $logoName;
                 //saves the path and input it in the databse techinical path 
             }
 

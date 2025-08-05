@@ -69,7 +69,7 @@
                             </a>
                             @endif
                             
-               
+            
 
                             @if ($user && $user->hasPermission('delete permission'))
 
