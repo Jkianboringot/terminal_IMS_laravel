@@ -91,7 +91,7 @@ class Product extends Model
         //the problem is in where
     }
 
-    return asset('product_manual/23-manual.jpg');
+    return null;
 }
     protected function defaultProfilePhotoUrl()
     {

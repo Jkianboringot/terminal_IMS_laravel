@@ -55,7 +55,7 @@
                     @enderror
 
               
-                    <label for="" class="form-label">Logo</label>
+                    <label for="" class="form-label">Manual</label>
                     <input
                         wire:model.live='manual_image'
                         type="file"

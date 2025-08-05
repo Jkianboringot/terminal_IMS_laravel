@@ -49,7 +49,8 @@
 
                         <td>{{ $product->quantity . ' ' . $product->unit->name }}</td>
                         <td>{{ $product->Inventory_balance }}</td>
-                          <td>
+                        <td>
+                              @if ($product->manual_url)
                             <img
                                 src="{{ $product->manual_url }}"
                                 width="60"
@@ -58,6 +59,7 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#imageModal"
                                 onclick="document.getElementById('modalImage').src='{{ $product->manual_url }}'" />
+                                  @endif
                         </td>
                         <td class="text-center">
                             @if ($user && $user->hasPermission('edit permission'))
@@ -66,7 +68,9 @@
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                             @endif
-                          
+                            
+               
+
                             @if ($user && $user->hasPermission('delete permission'))
 
                             <button onclick="confirm('Are you sure you wish to DELETE this product?')||event.stopImmediatePropagation()" class="btn btn-danger" wire:click='delete({{ $product->id }})'>
@@ -82,15 +86,15 @@
             </table>
         </div>
     </div>
-     <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-fullscreen">
-                    <div class="modal-content bg-black border-0">
-                        <div class="modal-body d-flex justify-content-center align-items-center p-0" style="height: 100vh;">
-                            <img
-                                id="modalImage"
-                                src=""
-                                alt="Enlarged Image"
-                                style="
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content bg-black border-0">
+                <div class="modal-body d-flex justify-content-center align-items-center p-0" style="height: 100vh;">
+                    <img
+                        id="modalImage"
+                        src=""
+                        alt="Enlarged Image"
+                        style="
                                     display: block;
                                     width: 100vw;
                                     max-width: 100vw;
@@ -98,13 +102,13 @@
                                     object-fit: contain;
                                     cursor: pointer;
                                 "
-                                data-bs-dismiss="modal" />
-                        </div>
-                    </div>
+                        data-bs-dismiss="modal" />
                 </div>
             </div>
-
         </div>
     </div>
-    </div>
+
+</div>
+</div>
+</div>
 </div>
