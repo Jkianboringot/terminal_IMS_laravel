@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    // App\Models\StickyNote.php
+
+
     protected $appends=[
         'total_purchase_count',
         'total_sales_count',

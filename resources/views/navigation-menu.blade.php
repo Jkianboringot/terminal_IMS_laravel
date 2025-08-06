@@ -17,6 +17,12 @@
                 @livewire('admin.sticky-notes.sticky-note-banner')
             </li>
 
+             <li class="nav-item dropdown user-menu">
+                @livewire('admin.notifications.alerts-notification')
+            </li>
+
+
+            
             <!-- User Account Dropdown -->
             <li class="nav-item dropdown user-menu">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -25,6 +31,10 @@
                         {{ auth()->user()->name }}
                     </span>
                 </a>
+
+
+
+                
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                     <li class="user-body">
                         <a href="{{ route('profile.show') }}" class="btn btn-default btn-flat">Profile</a>
