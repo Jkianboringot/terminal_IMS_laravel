@@ -2,25 +2,64 @@
 
 namespace App\Livewire\Admin\Notifications;
 
-use App\Models\Notifications;
+use App\Models\Notification;
 use Livewire\Component;
 
 class AlertsNotification extends Component
 {
 
-   public $noti;
 
-public function render()
-{
-         $this->noti='hi from noti';
+
+    public $notifications;
+
+  
+
+
+
+    public function mount()
+    {
+        $this->loadNotifications();
     
-    return view('components.alerts-notification', [
-        'notes' => $this->noti,
+    }
+
+    public function loadNotifications()
+    {
+        $this->notifications = Notification::latest()->get();
+    }
+
+    function deleteNotification($id)
+    {
+        $noti = Notification::findOrFail($id);
+    
+        $noti->delete();
+        $this->loadNotifications();
+    }
+
+    function deleteAllNotifications()
+    {
+        Notification::truncate();
        
-    ]);
-}
+
+        $this->notifications = collect();
+    }
+    public function addNotification($msg)
+    {
+        Notification::create(['message' => $msg]);
+       
 
 
+        $this->loadNotifications();
+    }
+
+    public function render()
+    {
+
+
+        return view('components.alerts-notification', [
+            'notifications' => $this->notifications,
+
+        ]);
+    }
 }
 
 
