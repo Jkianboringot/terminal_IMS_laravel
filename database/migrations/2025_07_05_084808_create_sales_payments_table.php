@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('transaction_reference');
 
             $table->dateTime('payment_time');
-                      $table->unsignedDecimal('amount', 15, 2);
+                      $table->decimal('amount', 15, 2)->unsigned();
 
             $table->timestamps();
         });

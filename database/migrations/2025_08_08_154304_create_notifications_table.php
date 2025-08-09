@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->string('message');
+                  $table->foreignId('product_id')->constrained()->onDelete('cascade'); // link to products
             $table->timestamps();
         });
     }

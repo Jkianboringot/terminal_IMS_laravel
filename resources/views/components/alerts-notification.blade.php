@@ -12,11 +12,12 @@
     >
         <span class="d-none d-md-inline">
             Notifications
-            <span class="badge bg-danger ms-1">{{ $notifications->count() }}</span>
+            <span class="badge bg-danger ms-1">
+                {{ $notifications->count() }}
+            </span>
         </span>
     </a>
 
-    <!-- Dropdown is teleported so it doesn't affect navbar layout -->
     <template x-teleport="body">
         <div x-show="open"
              x-transition
@@ -30,6 +31,8 @@
                 width: 280px;
              `"
         >
+
+            {{-- Existing notifications --}}
             @forelse($notifications as $note)
                 <div class="px-3 py-2 border-bottom d-flex justify-content-between align-items-center">
                     <small class="text-muted">{{ Str::limit($note->message, 80) }}</small>
@@ -43,6 +46,19 @@
                 <div class="px-3 py-2 text-muted">No notifications</div>
             @endforelse
 
+            {{-- Low stock products --}}
+            @if(isset($lowStockProducts) && $lowStockProducts->count() > 0)
+                <div class="px-3 py-2 border-top bg-light fw-bold">Low Stock Products</div>
+               @foreach($notifications as $notification)
+    <div>
+        {{ $notification->message }}
+        <small>Product: {{ $notification->product->name }}</small>
+    </div>
+@endforeach
+
+            @endif
+
+            {{-- Actions --}}
             <div class="px-3 py-2 d-flex justify-content-between">
                 <button wire:click.stop="addNotification('Test notification message')"
                         class="btn btn-sm btn-outline-primary">
@@ -59,7 +75,6 @@
 
 <script>
 document.addEventListener('livewire:init', () => {
-    // Keep dropdown open after Livewire updates
     Livewire.hook('message.processed', (message, component) => {
         const notif = document.getElementById('notifDropdownWrapper');
         if (notif && notif.__x) {
@@ -68,3 +83,5 @@ document.addEventListener('livewire:init', () => {
     });
 });
 </script>
+
+

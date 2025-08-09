@@ -48,7 +48,7 @@
                         <td></td>
 
                         <td>{{ $product->quantity . ' ' . $product->unit->name }}</td>
-                        <td>{{ $product->Inventory_balance }}</td>
+                        <td>{{ $product->inventory_balance }}</td>
                         <td>
                               @if ($product->manual_url)
                             <img

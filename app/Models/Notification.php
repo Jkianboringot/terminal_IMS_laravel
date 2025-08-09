@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Notification extends Model
 {
-    protected $fillable = ['message'];
+    protected $fillable = ['product_id', 'message'];
 
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

@@ -15,8 +15,8 @@ return new class extends Migration
            $table->foreignId('invoice_id')->constrained();
             $table->foreignId('product_id')->constrained();
             $table->primary(['product_id','invoice_id']);
-            $table->unsignedDecimal('quantity',10,2);
-                   $table->unsignedDecimal('unit_price',15,2);
+            $table->decimal('quantity',10,2)->unsigned();
+                        $table->decimal('unit_price',10,2)->unsigned();
 
             
             $table->timestamps();

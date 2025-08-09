@@ -19,9 +19,10 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->foreignId('unit_id')->constrained();
-            $table->unsignedDecimal('quantity', 10, 2);
-            $table->unsignedDecimal('purchase_price', 10, 2);
-            $table->unsignedDecimal('sale_price', 10, 2);
+       $table->decimal('quantity', 10, 2)->unsigned();
+$table->decimal('purchase_price', 10, 2)->unsigned();
+$table->decimal('sale_price', 10, 2)->unsigned();
+
 
             $table->string('technical_path')->nullable();
 

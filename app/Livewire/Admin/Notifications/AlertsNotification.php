@@ -2,24 +2,34 @@
 
 namespace App\Livewire\Admin\Notifications;
 
+use App\Models\Product;
 use App\Models\Notification;
 use Livewire\Component;
 
 class AlertsNotification extends Component
 {
-
-
-
     public $notifications;
-
-  
-
-
 
     public function mount()
     {
+        $this->checkLowStock();
         $this->loadNotifications();
-    
+    }
+
+    public function checkLowStock()
+    {
+        $lowStockProducts = Product::where('quantity', '<', 10)->get();
+
+        foreach ($lowStockProducts as $product) {
+            // Avoid duplicate notifications for the same product
+            $exists = Notification::where('message', 'LIKE', "%{$product->name}%")->exists();
+
+            if (! $exists) {
+                Notification::create([
+                    'message' => "Low stock alert: {$product->name} (Qty: {$product->quantity})"
+                ]);
+            }
+        }
     }
 
     public function loadNotifications()
@@ -27,40 +37,22 @@ class AlertsNotification extends Component
         $this->notifications = Notification::latest()->get();
     }
 
-    function deleteNotification($id)
+    public function deleteNotification($id)
     {
-        $noti = Notification::findOrFail($id);
-    
-        $noti->delete();
+        Notification::findOrFail($id)->delete();
         $this->loadNotifications();
     }
 
-    function deleteAllNotifications()
+    public function deleteAllNotifications()
     {
         Notification::truncate();
-       
-
         $this->notifications = collect();
-    }
-    public function addNotification($msg)
-    {
-        Notification::create(['message' => $msg]);
-       
-
-
-        $this->loadNotifications();
     }
 
     public function render()
     {
-
-
         return view('components.alerts-notification', [
-            'notifications' => $this->notifications,
-
+            'notifications' => $this->notifications
         ]);
     }
 }
-
-
-// i will do this own my own without gpt jsut google and w3school its fine if it takes 10 days
