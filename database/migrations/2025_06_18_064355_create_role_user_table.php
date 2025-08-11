@@ -22,7 +22,7 @@ return new class extends Migration
         DB::table('users')->insert([
             'id'=>1,    
             'name'=>"Administrator",
-            'email'=>'jkian@gmail.com',
+            'email'=>env('ADMIN_EMAIL'), //proabable not safe but it will do now
             'password'=>Hash::make(env('ADMIN_PASSWORD'))
 
         ]);

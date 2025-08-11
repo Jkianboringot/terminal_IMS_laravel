@@ -37,7 +37,7 @@
                         @enderror
                     </div>
                 </div>
-
+            <div class="col-md-6 col-12">
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
                     <input wire:model.live='product.name' type="text" class="form-control" name="name" id="name"
@@ -45,6 +45,22 @@
                     @error('product.name')
                     <small id="" class="form-text text-danger">{{ $message }}</small>
                     @enderror
+                </div>
+                </div>
+
+                <div class="col-md-6 col-12">
+                <div class="mb-3">
+                   <label for="" class="form-label">Supplier</label>
+                        <select wire:model.live='product.supplier_id' class="form-select " name="" id="">
+                            <option selected>Select your Product Brand</option>
+                            @foreach ($suppliers as $supplier)
+                            <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('product.supplier_id')
+                        <small id="" class="form-text text-danger">{{ $message }}</small>
+                        @enderror
+                </div>
                 </div>
                 <div class="mb-3">
                     <label for="" class="form-label">Product Description</label>

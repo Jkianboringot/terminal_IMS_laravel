@@ -19,6 +19,7 @@ class ProductsSeeder extends Seeder
                 'brand_id' => rand(1, count(Brand::all())),
                 'product_category_id' => 1, // Laptops
                 'name' => 'Dell XPS 13',
+                  'supplier_id' => rand(1, 5), // adjust 5 to match supplier count
                 'description' => 'High-performance laptop with an Intel i7 processor and 16GB RAM.',
                 'unit_id' => 1, // Assuming 1 is for 'Piece'
                 'quantity' => 5,
@@ -31,6 +32,7 @@ class ProductsSeeder extends Seeder
                 'brand_id' => rand(1, count(Brand::all())),
                 'product_category_id' => 2, // Smartphones
                 'name' => 'Samsung Galaxy S23',
+                  'supplier_id' => rand(1, 5), // adjust 5 to match supplier count
                 'description' => 'Latest smartphone with advanced camera features and 256GB storage.',
                 'unit_id' => 1, // Piece
                 'quantity' => 10,
@@ -43,6 +45,7 @@ class ProductsSeeder extends Seeder
                 'brand_id' => rand(1, count(Brand::all())),
                 'product_category_id' => 3, // Tablets
                 'name' => 'Apple iPad Pro 11"',
+                  'supplier_id' => rand(1, 5), // adjust 5 to match supplier count
                 'description' => 'Premium tablet with M2 chip and 128GB storage.',
                 'unit_id' => 1, // Piece
                 'quantity' => 8,
@@ -55,6 +58,7 @@ class ProductsSeeder extends Seeder
                 'brand_id' => rand(1, count(Brand::all())),
                 'product_category_id' => 4, // Accessories
                 'name' => 'Wireless Earbuds',
+                  'supplier_id' => rand(1, 5), // adjust 5 to match supplier count
                 'description' => 'Bluetooth 5.0 wireless earbuds with noise cancellation.',
                 'unit_id' => 1, // Piece
                 'quantity' => 20,
@@ -67,6 +71,7 @@ class ProductsSeeder extends Seeder
                 'brand_id' => rand(1, count(Brand::all())), //
                 'product_category_id' => 5, // PC Components
                 'name' => 'NVIDIA GeForce RTX 4080',
+                  'supplier_id' => rand(1, 5), // adjust 5 to match supplier count
                 'description' => 'High-end graphics card for gaming and creative work.',
                 'unit_id' => 1, // Piece
                 'quantity' => 2,
@@ -79,6 +84,7 @@ class ProductsSeeder extends Seeder
                 'brand_id' => rand(1, count(Brand::all())), //
                 'product_category_id' => 6, // Networking Equipment
                 'name' => 'TP-Link Archer AX6000',
+                  'supplier_id' => rand(1, 5), // adjust 5 to match supplier count
                 'description' => 'Dual-band Wi-Fi 6 router with high-speed connectivity.',
                 'unit_id' => 1, // Piece
                 'quantity' => 15,
@@ -91,6 +97,7 @@ class ProductsSeeder extends Seeder
                 'brand_id' => rand(1, count(Brand::all())), //
                 'product_category_id' => 7, // Gaming Consoles
                 'name' => 'PlayStation 5',
+                  'supplier_id' => rand(1, 5), // adjust 5 to match supplier count
                 'description' => 'Next-generation gaming console with 4K resolution and dual sense controller.',
                 'unit_id' => 1, // Piece
                 'quantity' => 3,

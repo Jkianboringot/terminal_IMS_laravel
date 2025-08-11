@@ -20,6 +20,11 @@ class Product extends Model
         return $this->belongsTo(Brand::class);
     }
 
+       function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+
     function unit()
     {
         return $this->belongsTo(Unit::class);

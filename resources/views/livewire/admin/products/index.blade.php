@@ -45,7 +45,7 @@
                             <small>{{ $product->description }}</small>
                         </td>
                         <td>{{ $product->category->name }}</td>
-                        <td></td>
+                        <td>{{ $product->supplier->name }}</td>
 
                         <td>{{ $product->quantity . ' ' . $product->unit->name }}</td>
                         <td>{{ $product->inventory_balance }}</td>
