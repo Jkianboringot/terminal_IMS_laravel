@@ -3,13 +3,11 @@
     wire:poll.30s="loadNotifications"
     x-data="{ open: false, trigger: null }"
     x-init="trigger = $refs.toggle"
-    @click.outside="open = false"
->
+    @click.outside="open = false">
     <a href="#"
-       class="nav-link"
-       x-ref="toggle"
-       @click.prevent="open = !open"
-    >
+        class="nav-link"
+        x-ref="toggle"
+        @click.prevent="open = !open">
         <span class="d-none d-md-inline">
             Notifications
             <span class="badge bg-danger ms-1">
@@ -20,68 +18,51 @@
 
     <template x-teleport="body">
         <div x-show="open"
-             x-transition
-             class="absolute bg-white border border-gray-300 rounded shadow-lg z-50"
-             style="max-height: 300px; overflow-y: auto; min-width: 280px;"
-             @click.stop
-             x-bind:style="`
+            x-transition
+            class="absolute bg-white border border-gray-300 rounded shadow-lg z-50"
+            style="max-height: 300px; overflow-y: auto; min-width: 280px;"
+            @click.stop
+            x-bind:style="`
                 position: absolute;
                 top: ${trigger?.getBoundingClientRect().bottom + window.scrollY}px;
                 left: ${trigger?.getBoundingClientRect().right - 280}px;
                 width: 280px;
-             `"
-        >
+             `">
 
             {{-- Existing notifications --}}
             @forelse($notifications as $note)
-                <div class="px-3 py-2 border-bottom d-flex justify-content-between align-items-center">
-                    <small class="text-muted">{{ Str::limit($note->message, 80) }}</small>
-                    <button wire:click.stop="deleteNotification({{ $note->id }})"
-                            class="btn btn-sm btn-outline-danger ms-2"
-                            title="Delete this notification">
-                        <i class="fas fa-times"></i> Delete
-                    </button>
-                </div>
+            <div class="px-3 py-2 border-bottom d-flex justify-content-between align-items-center">
+             
+
+            <small> {{ $note->product->name }}</small>
+           <small >QTY:(<strong class="text-danger">{{ $note->product->quantity }}</strong>)</small>
+            </div>
             @empty
-                <div class="px-3 py-2 text-muted">No notifications</div>
+            <div class="px-3 py-2 ">No notifications</div>
             @endforelse
 
             {{-- Low stock products --}}
-            @if(isset($lowStockProducts) && $lowStockProducts->count() > 0)
-                <div class="px-3 py-2 border-top bg-light fw-bold">Low Stock Products</div>
-               @foreach($notifications as $notification)
-    <div>
-        {{ $notification->message }}
-        <small>Product: {{ $notification->product->name }}</small>
-    </div>
-@endforeach
-
-            @endif
-
+            
             {{-- Actions --}}
-            <div class="px-3 py-2 d-flex justify-content-between">
-                <button wire:click.stop="addNotification('Test notification message')"
-                        class="btn btn-sm btn-outline-primary">
-                    Add Test
-                </button>
-                <button wire:click.stop="deleteAllNotifications"
+            <!-- <div class="px-3 py-2 d-flex justify-content-between"> 
+         
+     <button wire:click.stop="deleteAllNotifications"
                         class="btn btn-sm btn-outline-danger">
                     Clear All
                 </button>
-            </div>
+              
+          </div> -->
         </div>
     </template>
 </li>
 
 <script>
-document.addEventListener('livewire:init', () => {
-    Livewire.hook('message.processed', (message, component) => {
-        const notif = document.getElementById('notifDropdownWrapper');
-        if (notif && notif.__x) {
-            notif.__x.$data.open = true;
-        }
+    document.addEventListener('livewire:init', () => {
+        Livewire.hook('message.processed', (message, component) => {
+            const notif = document.getElementById('notifDropdownWrapper');
+            if (notif && notif.__x) {
+                notif.__x.$data.open = true;
+            }
+        });
     });
-});
 </script>
-
-

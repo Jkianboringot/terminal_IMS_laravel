@@ -12,7 +12,7 @@
     >
         <span class="d-none d-md-inline">
             Notes
-            <span class="badge bg-danger ms-1">{{ $noteCount }}</span>
+            <span class="badge bg-danger ms-1" >{{ $noteCount }}</span>
         </span>
     </a>
 
@@ -43,14 +43,15 @@
                 </div>
             @else
                 @forelse ($notes as $note)
-                    <div class="px-3 py-1 border-bottom">
-                        <small class="text-muted d-block">
+                    <div class="px-3 py-1 border-bottom mt-2">
+                        <span class="text-muted d-block text-inv-secondary" style="color:red">
                             {!! nl2br(e(Str::limit($note->content, 100))) !!}
-                        </small>
+                        </span>
                     </div>
                 @empty
                     <div class="px-3 py-2">
-                        <small class="text-muted">No notes yet.</small>
+                        <span class="text-muted">No notes yet.</span>
+                        
                     </div>
                 @endforelse
 

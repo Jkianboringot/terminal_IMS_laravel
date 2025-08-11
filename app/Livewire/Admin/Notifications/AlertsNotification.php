@@ -15,21 +15,30 @@ class AlertsNotification extends Component
         $this->checkLowStock();
         $this->loadNotifications();
     }
+   
 
+    
+                 
     public function checkLowStock()
     {
-        $lowStockProducts = Product::where('quantity', '<', 10)->get();
+       // assume notifications table has product_id column and unique index on product_id
+$low = Product::where('quantity', '<', 10)->get();
+$lowIds = $low->pluck('id')->all();
 
-        foreach ($lowStockProducts as $product) {
-            // Avoid duplicate notifications for the same product
-            $exists = Notification::where('message', 'LIKE', "%{$product->name}%")->exists();
+$existingIds = Notification::whereIn('product_id', $lowIds)
+    ->pluck('product_id')
+    ->all();
 
-            if (! $exists) {
-                Notification::create([
-                    'message' => "Low stock alert: {$product->name} (Qty: {$product->quantity})"
-                ]);
-            }
-        }
+foreach ($low as $p) {
+    if (! in_array($p->id, $existingIds)) {
+        Notification::create([
+            'product_id' => $p->id,
+           'message' => "Low stock: {$p->name} (Qty:{$p->quantity})"
+                    // dont think this i a goodidea to do this but it will do for now
+        ]);
+    }
+}
+
     }
 
     public function loadNotifications()
