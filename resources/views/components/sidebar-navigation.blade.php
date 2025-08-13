@@ -92,10 +92,9 @@
                     @endif
                 </x-new-nav-link-dropdown>
             @endif
-{{-- 
-            <li class="nav-header">Accounting & Inventory</li>
 
-            @if ($user && $user->hasPermission('manage product purchases'))
+            <li class="nav-header">Accounting & Inventory</li>
+               @if ($user && $user->hasPermission('manage product purchases'))
                 <x-new-nav-link-dropdown title="Purchases" bi_icon="bi-bag-check" route="admin.purchases*">
                     <x-new-nav-link title="Purchase List" bi_icon="" route="admin.purchases.index" />
                     @if ($user && $user->hasPermission('create permission'))
@@ -103,6 +102,9 @@
                     @endif
                 </x-new-nav-link-dropdown>
             @endif
+
+{{-- 
+         
 
             @if ($user && $user->hasPermission('manage sales'))
                 <x-new-nav-link-dropdown title="Sales" bi_icon="bi-bar-chart" route="admin.sales*">

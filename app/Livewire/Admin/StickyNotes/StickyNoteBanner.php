@@ -34,9 +34,12 @@ public function save()
     $this->content = ''; // optional: clear textarea after saving
 }
 
+public function deleteNote($id){
+    StickyNote::findOrFail($id)->delete();
+    // $this->content=StickyNote::lastest()->get();    
+}
 
-
-    public function deleteNote()
+    public function deleteAllNote()
     {
         StickyNote::truncate();
 

@@ -55,19 +55,6 @@ Route::middleware([
 
 
 
-       
-        
-        // got 2 option 
-        // 1.make an html show the image
-        // 2.just make it like brand 
-
-        // i need to understand what this do  like this it make pdf file or make them
-
-
-
-
-
-
 
 
 

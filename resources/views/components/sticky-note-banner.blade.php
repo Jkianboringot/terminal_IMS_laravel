@@ -47,6 +47,11 @@
                         <span class="text-muted d-block text-inv-secondary" style="color:red">
                             {!! nl2br(e(Str::limit($note->content, 100))) !!}
                         </span>
+                            <button wire:click.stop="edit" class="btn btn-sm btn-outline-primary mr-6">edit    </button>
+                            <button wire:click.stop="deleteNote({{ $note->id }})" class="btn btn-sm btn-outline-danger">delete note</button>
+
+                                <!-- fix the logic for this in back end edit should be able to edit note although i dont need this its fine to do this 
+                                own your own as practice,add to this that it cannot be empty the input i mena it should ignore teh add if their is no input -->
                     </div>
                 @empty
                     <div class="px-3 py-2">
@@ -59,7 +64,7 @@
                     <button wire:click.stop="edit" class="btn btn-sm btn-outline-primary">
                         Add Note
                     </button>
-                    <button wire:click.stop="deleteNote" class="btn btn-sm btn-outline-danger">
+                    <button wire:click.stop="deleteAllNote" class="btn btn-sm btn-outline-danger">
                         Delete All
                     </button>
                 </div>
