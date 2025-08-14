@@ -1,8 +1,8 @@
-@props(["supplier", 'purchase'])
+@props(["supplier", 'addProduct'])
  <!-- // this was purchase i dont know if other function are using this but if error realted to this just change addProducts to purchases -->
 
 <li wire:click="selectSupplier({{ $supplier->id }})"
-    class="list-group-item {{ $supplier->id == $purchase->supplier_id ? 'active' : '' }} d-flex justify-content-between">
+    class="list-group-item {{ $supplier->id == $addProduct->supplier_id ? 'active' : '' }} d-flex justify-content-between">
     <div class="me-auto ">
         <h7 class='text-inv-secondary'>{{ $supplier->name }}</h7><br>
         <small class='text-muted'>{{ $supplier->email}} <br>{{ $supplier->phone_number }}</small>

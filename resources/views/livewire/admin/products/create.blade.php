@@ -87,28 +87,6 @@
                 @endif
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
                         <label for="" class="form-label">Product Measure Unit</label>

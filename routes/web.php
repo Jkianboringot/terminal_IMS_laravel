@@ -55,6 +55,19 @@ Route::middleware([
 
 
 
+       
+        
+        // got 2 option 
+        // 1.make an html show the image
+        // 2.just make it like brand 
+
+        // i need to understand what this do  like this it make pdf file or make them
+
+
+
+
+
+
 
 
 
@@ -128,6 +141,12 @@ Route::middleware([
         Route::get('/', Admin\Purchases\Index::class)->name('index');
         Route::get('/create', Admin\Purchases\Create::class)->middleware('permission:create permission')->name('create');
         Route::get('{id}/edit', Admin\Purchases\Edit::class)->name('edit');
+    });
+
+        Route::prefix('add-products')->middleware('permission:manage product purchases')->name('add-products.')->group(function () {
+        Route::get('/', Admin\AddProducts\Index::class)->name('index');
+        Route::get('/create', Admin\AddProducts\Create::class)->middleware('permission:create permission')->name('create');
+        Route::get('{id}/edit', Admin\AddProducts\Edit::class)->name('edit');
     });
 
     // Route::prefix('quotations')->middleware('permission:manage quotations')->name('quotations.')->group(function () {

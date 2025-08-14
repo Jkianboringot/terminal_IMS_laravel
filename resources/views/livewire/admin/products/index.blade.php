@@ -47,7 +47,9 @@
                         <td>{{ $product->category->name }}</td>
                         <td>{{ $product->supplier->name }}</td>
 
-                        <td>{{ $product->quantity . ' ' . $product->unit->name }}</td>
+                        <td><strong class=" {{$product->quantity<=10?
+                        "text-cash-red":"text-cash-green"}}
+                      ">{{ $product->quantity }}</strong>  {{ $product->unit->name }}</td>
                         <td>{{ $product->inventory_balance }}</td>
                         <td>
                               @if ($product->manual_url)

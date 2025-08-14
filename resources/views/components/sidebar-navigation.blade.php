@@ -103,6 +103,16 @@
                 </x-new-nav-link-dropdown>
             @endif
 
+             
+               @if ($user && $user->hasPermission('manage product purchases'))
+                <x-new-nav-link-dropdown title="Add Product" bi_icon="bi-bag-check" route="admin.add-products*">
+                    <x-new-nav-link title="Add Product List" bi_icon="" route="admin.add-products.index" />
+                    @if ($user && $user->hasPermission('create permission'))
+                        <x-new-nav-link title="Create Add Product" bi_icon="" route="admin.add-products.create" />
+                    @endif
+                </x-new-nav-link-dropdown>
+            @endif
+
 {{-- 
          
 
