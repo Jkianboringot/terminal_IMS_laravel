@@ -106,11 +106,11 @@
                                     @foreach ($productList as $key => $listItem)
                                         <tr>
                                             <td scope="row">{{ App\Models\Product::find($listItem['product_id'])->id }}</td>
-                                            <td>
+                                            <!-- <td>
                                                 {{ App\Models\Product::find($listItem['product_id'])->name }} <br>
                                                 <small
                                                     class="text-muted">{{ App\Models\Product::find($listItem['product_id'])->quantity . App\Models\Product::find($listItem['product_id'])->unit->name }}</small>
-                                            </td>
+                                            </td> -->
                                             <td class="text-center"><strong >{{ $listItem['quantity'] }}</strong></td>
                                           
                                           
@@ -149,7 +149,7 @@
                  
                             <button
                         onclick="confirm('Are you sure you wish to make the Purchase')||event.stopImmediatePropagation()"
-                        wire:click='makePurchase' class="btn btn-dark text-inv-secondary w-100">Add to Product list</button>
+                        wire:click='addProductToList' class="btn btn-dark text-inv-secondary w-100">Add to Product list</button>
                       
                     </div>
                 </div>

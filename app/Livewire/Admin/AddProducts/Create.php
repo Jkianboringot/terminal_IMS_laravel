@@ -15,7 +15,7 @@ class Create extends Component
     public $selectedProductId;
 
     public $quantity;
-    public $price;
+
 
 
     public AddProduct $addProduct;
@@ -105,7 +105,7 @@ class Create extends Component
         }
     }
 
-    function makePurchase(){
+    function addProductToList(){
         
         try {
             $this->validate();

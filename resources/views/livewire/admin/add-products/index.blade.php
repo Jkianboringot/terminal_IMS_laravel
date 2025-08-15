@@ -52,7 +52,7 @@
                             <button
                                 onclick="confirm('Are you sure you wish to DELETE this Purchase?')||event.stopImmediatePropagation()"
                                 class="btn btn-danger" wire:click='delete({{ $addProduct->id }})'>
-                                <i class="bi bi-trash-fill">e</i>
+                                <i class="bi bi-trash-fill"></i>
                             </button>
                          
                         </td>

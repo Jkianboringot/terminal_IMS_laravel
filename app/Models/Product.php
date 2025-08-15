@@ -45,6 +45,11 @@ class Product extends Model
         return $this->belongsToMany(Purchase::class, 'product_purchase')->withPivot(['quantity', 'unit_price']);
     }
 
+    function add_products()
+    {
+        return $this->belongsToMany(Purchase::class, 'add_products_to_list')->withPivot(['quantity']);
+    }
+
     function quotations()
     {
         return $this->belongsToMany(Quotation::class, 'product_quotation')->withPivot(['quantity', 'unit_price']);

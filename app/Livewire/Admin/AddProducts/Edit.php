@@ -42,7 +42,7 @@ class Edit extends Component
                 [
                     'product_id' => $product->id,
                     'quantity' => $product->pivot->quantity,
-                    'price' => $product->pivot->unit_price
+                 
                 ]
             );
 
@@ -136,7 +136,7 @@ function addToList()
         foreach ($this->productList as $listItem) {
             $this->addProduct->products()->attach($listItem['product_id'], [
                 'quantity' => $listItem['quantity'],
-                'unit_price' => $listItem['price']
+                
             ]);
         }
 

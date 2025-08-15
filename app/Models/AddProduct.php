@@ -16,7 +16,7 @@ class AddProduct extends Model
     }
     function products()
     {
-        return $this->belongsToMany(Product::class, 'product_purchase')->withPivot(['quantity', 'unit_price']);
+        return $this->belongsToMany(Product::class, 'add_products_to_list')->withPivot(['quantity']);
     }
 
       public function getTotalValueAttribute()
