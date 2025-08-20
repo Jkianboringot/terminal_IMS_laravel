@@ -19,6 +19,8 @@ class Create extends Component
 
 
     public AddProduct $addProduct;
+
+    
     public $productList = [];
 
 

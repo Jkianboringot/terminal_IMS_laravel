@@ -3,6 +3,7 @@
     namespace App\Livewire\Admin\AddProducts;
 
     use App\Models\AddProduct;
+    use App\Models\Product;
     use Livewire\Component;
     use Livewire\WithPagination;
 
@@ -50,8 +51,11 @@
         ->orderBy('add_products.purchase_date', 'desc')
         ->paginate(10);
 
+
     return view('livewire.admin.add-products.index', [
-        'addProducts' => $addProducts
+        'addProducts' => $addProducts,
+        'products' => Product::all(),
+
     ]);
 }
 
