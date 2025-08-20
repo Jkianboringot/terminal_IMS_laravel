@@ -23,7 +23,9 @@ class Index extends Component
         try {
             $product = Product::findOrFail($id);
 
-            if ($product->purchases()->exists() || $product->sales()->exists()) {
+
+            if ($product->purchases()->exists() || $product->sales()->exists() ||
+            $product->add_products()->exists()) {
                 throw new \Exception("Permission: This product has been bought and/or sold.");
             }
 

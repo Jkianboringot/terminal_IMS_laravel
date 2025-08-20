@@ -81,13 +81,13 @@ class Create extends Component
                
             ]);
 
-            foreach ($this->productList as $key => $listItem) {
-                if ($listItem['product_id']==$this->selectedProductId ) {
-                    $this->productList[$key]['quantity']+=$this->quantity;
-                return;
-                    # code...
-                }
-            }
+         foreach ($this->productList as $key => $listItem) {
+    if ($listItem['product_id']==$this->selectedProductId ) {
+        $this->productList[$key]['quantity']+=$this->quantity;
+        return;
+    }
+}
+
 
 
             array_push($this->productList, [
