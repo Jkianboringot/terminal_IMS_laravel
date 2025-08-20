@@ -47,7 +47,7 @@ class Product extends Model
 
     function add_products()
     {
-        return $this->belongsToMany(Purchase::class, 'add_products_to_list')->withPivot(['quantity']);
+        return $this->belongsToMany(AddProduct::class, 'add_products_to_list')->withPivot(['quantity']);
     }
 
     function quotations()
@@ -84,6 +84,15 @@ class Product extends Model
         return $amount;
     }
 
+    function getTotalAddProductCountAttribute()
+    {
+        $amount = 0;
+        foreach ($this->add_products as $addproduct) {
+            $amount += ($addproduct->pivot->quantity  );
+
+        }
+        return $amount;
+    }
     function getTotalSalesCountAttribute()
     {
         $amount = 0;
@@ -93,10 +102,15 @@ class Product extends Model
         return $amount;
     }
 
-    function getInventoryBalanceAttribute()
-    {
-        return $this->total_purchase_count - $this->total_sales_count;
-    }
+ function getInventoryBalanceAttribute()
+{
+    return $this->total_add_product_count - $this->total_sales_count;
+    // i think i will get rid of total purchase for know since the especifically said that only focus on inventory so i will get 
+    // rid of it for now but i wnat he inventory balance to be also considered on inventroy balance like they order from a supplier instead of 
+    // manually adding then just add this back '$this->total_purchase_count + $this->total_add_product_count - $this->total_sales_count;'
+}
+
+
   public function getManualUrlAttribute()
 {
     if ($this->technical_path && file_exists(public_path($this->technical_path))) {
