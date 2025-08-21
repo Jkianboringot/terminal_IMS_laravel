@@ -37,6 +37,8 @@ class Create extends Component
             'product.quantity' => 'required',
             'product.purchase_price' => 'required',
             'product.sale_price' => 'required',
+            'product.location' => 'nullable|string|max:45',
+
             'manual_image' => 'nullable|image|max:2048',
             
 

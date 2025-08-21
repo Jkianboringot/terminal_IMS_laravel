@@ -3,7 +3,7 @@
 
     <div class="card">
         <div class="card-header bg-inv-primary text-inv-secondary border-0">
-            <h5>Edit  Product</h5>
+            <h5>Create a new Product</h5>
         </div>
         <div class="card-body">
 
@@ -37,7 +37,7 @@
                         @enderror
                     </div>
                 </div>
-
+            <div class="col-md-6 col-12">
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
                     <input wire:model.live='product.name' type="text" class="form-control" name="name" id="name"
@@ -45,6 +45,44 @@
                     @error('product.name')
                     <small id="" class="form-text text-danger">{{ $message }}</small>
                     @enderror
+                </div>
+                </div>
+
+                 <div class="col-md-6 col-12">
+                <div class="mb-3">
+                    <label for="location" class="form-label">Shelf Location</label>
+                    <input wire:model.live='product.location' type="text" class="form-control" name="location" id="location"
+                        aria-describedby="location" placeholder="Enter your Product Shelf Location" />
+                    @error('product.location')
+                    <small id="" class="form-text text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+                </div>
+
+                 <div class="col-md-6 col-12">
+                <div class="mb-3">
+                    <label for="barcode" class="form-label">Barcode</label>
+                    <input wire:model.live='product.barcode' type="text" class="form-control" name="barcode" id="barcode"
+                        aria-describedby="barcode" placeholder="Enter your Product's Barcode" />
+                    @error('product.barcode')
+                    <small id="" class="form-text text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+                </div>
+
+                <div class="col-md-6 col-12">
+                <div class="mb-3">
+                   <label for="" class="form-label">Supplier</label>
+                        <select wire:model.live='product.supplier_id' class="form-select " name="" id="">
+                            <option selected>Select your Product Brand</option>
+                            @foreach ($suppliers as $supplier)
+                            <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('product.supplier_id')
+                        <small id="" class="form-text text-danger">{{ $message }}</small>
+                        @enderror
+                </div>
                 </div>
                 <div class="mb-3">
                     <label for="" class="form-label">Product Description</label>
@@ -54,6 +92,7 @@
                     <small id="" class="form-text text-danger">{{ $message }}</small>
                     @enderror
 
+                    
               
                     <label for="" class="form-label">Manual</label>
                     <input
@@ -69,28 +108,6 @@
                     <img width="150px" class="img-fluid p-3 border border-secondary" src="{{$manual_image->temporaryUrl() }}">
                 </div>
                 @endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
                 <div class="col-md-6 col-12">
@@ -120,7 +137,7 @@
                 </div>
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Purchase Price</label>
+                        <label for="name" class="form-label">Unit Cost</label>
                         <input wire:model.live='product.purchase_price' type="number" min="0" step="0.1"
                             class="form-control" name="purchase_price" id="name" aria-describedby="purchase_price"
                             placeholder="Enter your Product's purchase price" />
@@ -131,7 +148,7 @@
                 </div>
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Sale Price</label>
+                        <label for="name" class="form-label">Salling Price</label>
                         <input wire:model.live='product.sale_price' type="number" min="0" step="0.1"
                             class="form-control" name="sale_price" id="name" aria-describedby="sale_price"
                             placeholder="Enter your Product's sale price" />

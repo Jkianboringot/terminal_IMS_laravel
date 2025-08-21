@@ -35,7 +35,7 @@
              
 
             <small> {{ $note->product->name }}</small>
-           <small >QTY:(<strong class="text-danger">{{ $note->product->quantity }}</strong>)</small>
+           <small >QTY:(<strong class="text-danger">{{ $note->product->inventory_balance }}</strong>)</small>
             </div>
             @empty
             <div class="px-3 py-2 ">No notifications</div>
@@ -44,14 +44,14 @@
             {{-- Low stock products --}}
             
             {{-- Actions --}}
-            <!-- <div class="px-3 py-2 d-flex justify-content-between"> 
+            <div class="px-3 py-2 d-flex justify-content-between"> 
          
      <button wire:click.stop="deleteAllNotifications"
                         class="btn btn-sm btn-outline-danger">
                     Clear All
                 </button>
               
-          </div> -->
+          </div>
         </div>
     </template>
 </li>

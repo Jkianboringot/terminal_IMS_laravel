@@ -116,7 +116,7 @@ class Create extends Component
                 $this->addProduct->products()->attach($listItem['product_id'],[
                     'quantity'=>$listItem['quantity'],
                 
-                ]);
+                ]); 
                 
             }
 

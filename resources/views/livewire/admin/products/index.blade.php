@@ -17,7 +17,7 @@
             <table class="table table-hover">
                 <thead class="thead-inverse">
                     <tr>
-                        <th>ID</th>
+                        <th>Shelf Location</th>
                         <th>Product Details</th>
                         <th>Category</th>
                         <th>Suplies Category</th>
@@ -39,7 +39,7 @@
                     @elseif ($products->isNotEmpty())
                     @foreach ($products as $product)
                     <tr>
-                        <td scope="row">{{ $product->id }}</td>
+                        <td scope="row">{{ $product->location }}</td>
                         <td>
                             <h6>{{ $product->name }}</h6>
                             <small>{{ $product->description }}</small>
@@ -47,10 +47,9 @@
                         <td>{{ $product->category->name }}</td>
                         <td>{{ $product->supplier->name }}</td>
 
-                        <td><strong class=" {{$product->quantity<=10?
-                        "text-cash-red":"text-cash-green"}}
-                      ">{{ $product->quantity }}</strong>  {{ $product->unit->name }}</td>
-                        <td>{{ $product->inventory_balance }}</td>
+                        <td><strong>{{ $product->quantity }}</strong>  {{ $product->unit->name }}</td>
+                        <td><strong class='{{$product->inventory_balance<=10?
+                        "text-cash-red":"text-cash-green"}}'>{{ $product->inventory_balance }}</strong></td>
                         <td>
                               @if ($product->manual_url)
                             <img
