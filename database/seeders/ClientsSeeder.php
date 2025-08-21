@@ -39,8 +39,6 @@ class ClientsSeeder extends Seeder
                 'phone_number' => $faker->unique()->phoneNumber,
                 'registration_number' => $registrationNumber,
                 'tax_id' => $taxId,
-                'bank_id' => $faker->numberBetween(1, 10), // Assume you have 10 banks in the `banks` table
-                'account_number' => $faker->bankAccountNumber,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];

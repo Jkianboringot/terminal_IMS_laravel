@@ -38,18 +38,15 @@ class Index extends Component
     {
          $search = trim($this->search);
 
-    $supplier = Supplier::with(['bank:id,name'])
-        ->when($search, fn ($query) =>
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%$search%")
-                  ->orWhereHas('bank', fn ($q2) =>
-                      $q2->where('name', 'like', "%$search%")
-                  );
-            })
-        )
-        ->orderBy('name')
-        ->paginate(10);
+$suppliers = Supplier::when($search, fn ($query) =>
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%$search%");
+        })
+    )
+    ->orderBy('name')
+    ->get();
+
         return view('livewire.admin.suppliers.index',[
-    'suppliers'=>$supplier]);
+    'suppliers'=>$suppliers]);
     }
 }

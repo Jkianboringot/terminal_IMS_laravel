@@ -69,19 +69,7 @@
                     @enderror
                 </div>
 
-                <div class="mb-3">
-                    <label for="bank_id" class="form-label">Bank</label>
-                    <select wire:model.live='supplier.bank_id' class="form-select " name="bank_id"
-                        id="bank_id">
-                        <option selected>Select your Bank</option>
-                        @foreach ($banks as $bank)
-                            <option value="{{ $bank->id }}">{{ $bank->name }}</option>
-                        @endforeach
-                    </select>
-                    @error('supplier.bank_id')
-                        <small id="" class="form-text text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
+              
                 <div class="mb-3">
                     <label for="account_number" class="form-label">Account Number</label>
                     <input wire:model.live='supplier.account_number' type="text" class="form-control" name="account_number"

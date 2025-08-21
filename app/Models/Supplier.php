@@ -6,10 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Supplier extends Model
 {
-    function bank()
-    {
-        return $this->belongsTo(Bank::class);
-    }
+   
     function purchases()
     {
         return $this->hasMany(Purchase::class);

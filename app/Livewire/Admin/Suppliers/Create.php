@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Admin\Suppliers;
 
-use App\Models\Bank;
 use App\Models\Supplier;
 use Livewire\Component;
 
@@ -19,7 +18,6 @@ class Create extends Component
             'supplier.phone_number' => "required",
             'supplier.registration_number' => "nullable",
             'supplier.tax_id' => "required",
-            'supplier.bank_id' => "required",
             'supplier.account_number' => "required",
         ];
     }
@@ -47,10 +45,7 @@ class Create extends Component
     public function render()
     {
         return view(
-            'livewire.admin.suppliers.create',
-            [
-                'banks' => Bank::all()
-            ]
+            'livewire.admin.suppliers.create'
         );
     }
 }

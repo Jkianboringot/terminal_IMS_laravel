@@ -6,6 +6,8 @@ use App\Models\Quotation;
 use \Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin;
+use App\Livewire\Admin\Dashboard;
+
 use App\Models\Product;
 
 Route::get('/', function () {
@@ -63,17 +65,6 @@ Route::middleware([
 
         // i need to understand what this do  like this it make pdf file or make them
 
-
-
-
-
-
-
-
-
-
-
-
     Route::get('/dashboard', Admin\Dashboard::class)->name('dashboard');
     // Route::get('/accounts-summary', Admin\AccountsSummary::class)->name('accounts-summary');
 
@@ -83,11 +74,7 @@ Route::middleware([
         Route::get('{id}/edit', Admin\Users\Edit::class)->name('edit');
     });
 
-    Route::prefix('banks')->middleware('permission:manage banks')->name('banks.')->group(function () {
-        Route::get('/', Admin\Banks\Index::class)->name('index');
-        Route::get('/create', Admin\Banks\Create::class)->middleware('permission:create permission')->name('create');
-        Route::get('{id}/edit', Admin\Banks\Edit::class)->name('edit');
-    });
+ 
 
     Route::prefix('brands')->middleware('permission:manage brands')->name('brands.')->group(function () {
         Route::get('/', Admin\Brands\Index::class)->name('index');

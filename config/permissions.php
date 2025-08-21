@@ -4,8 +4,6 @@ return [
     'permissions'=>[
         'manage roles',
         'manage users',
-        'manage banks',
-        'manage brands',
         'manage clients',
         'manage suppliers',
        

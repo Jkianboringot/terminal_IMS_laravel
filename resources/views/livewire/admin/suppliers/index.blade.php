@@ -46,10 +46,7 @@
                             <small><strong>TAX ID:</strong>{{ $supplier->tax_id }}</small><br>
                             <small><strong>Reg NO :</strong>{{ $supplier->registration_number??'N/A' }}</small>
                         </td>
-                        <td>
-                            <small><strong>Bank:</strong>{{ $supplier->bank->name }}</small><br>
-                            <small><strong>A/c NO:</strong>{{ $supplier->account_number }}</small>
-                        </td>
+                        
                         <td>
                             {{ $supplier->purchases->count() }}
                         </td>

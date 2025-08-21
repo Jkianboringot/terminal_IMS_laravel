@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Admin\Clients;
 
-use App\Models\Bank;
 use App\Models\Client;
 use Illuminate\Validation\Rules\Unique;
 use Livewire\Component;
@@ -20,7 +19,6 @@ class Edit extends Component
                 'client.phone_number'=>'nullable',
                 'client.registration_number'=>'nullable',
                 'client.tax_id'=>'required',
-                'client.bank_id'=>'required',
                 'client.account_number'=>'required',
                
 
@@ -48,8 +46,7 @@ class Edit extends Component
     }
    public function render()
     {
-        return view('livewire.admin.clients.create',[
-    'banks'=>Bank::all()]
+        return view('livewire.admin.clients.create'
 );
     }
 }

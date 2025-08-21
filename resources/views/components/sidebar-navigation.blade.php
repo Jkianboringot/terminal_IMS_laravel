@@ -27,14 +27,6 @@
                 </x-new-nav-link-dropdown>
             @endif
 
-            @if ($user && $user->hasPermission('manage banks'))
-                <x-new-nav-link-dropdown title="Banks" bi_icon="bi-bank" route="admin.banks*">
-                    <x-new-nav-link title="Bank List" bi_icon="" route="admin.banks.index" />
-                    @if ($user && $user->hasPermission('create permission'))
-                        <x-new-nav-link title="Create Bank" bi_icon="" route="admin.banks.create" />
-                    @endif
-                </x-new-nav-link-dropdown>
-            @endif
 
             @if ($user && $user->hasPermission('manage clients'))
                 <li class="nav-header">CRM</li>

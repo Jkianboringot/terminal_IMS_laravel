@@ -21,7 +21,6 @@
                         <th>Basic Details</th>
                         <th>Address</th>
                         <th>Business Details</th>
-                        <th>Accounts Details</th>
                         <th>Purchases Made</th>
                            <th>Total Purchases Value</th>
                       @if ($user && $user->hasPermission('edit permission') || $user->hasPermission('delete permission'))
@@ -45,10 +44,7 @@
                                 <small><strong>TAX ID:</strong>{{ $client->tax_id }}</small><br>
                                 <small><strong>Reg NO :</strong>{{ $client->registration_number??'N/A' }}</small>
                             </td>
-                             <td>
-                                <small><strong>Bank:</strong>{{ $client->bank->name }}</small><br>
-                                <small><strong>A/c NO:</strong>{{ $client->account_number }}</small>
-                            </td>
+                           
                             <td>
                                 {{ $client->sales->count() }}
                             </td>

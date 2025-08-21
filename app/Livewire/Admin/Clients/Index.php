@@ -35,21 +35,18 @@ class Index extends Component
     }
     public function render()
     {
-       $search = trim($this->search);
+      $search = trim($this->search);
 
-    $client = Client::with(['bank:id,name'])
-        ->when($search, fn ($query) =>
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%$search%")
-                  ->orWhereHas('bank', fn ($q2) =>
-                      $q2->where('name', 'like', "%$search%")
-                  );
-            })
-        )
-        ->orderBy('name')
-        ->paginate(10);
+$clients = Client::when($search, fn ($query) =>
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%$search%");
+        })
+    )
+    ->orderBy('name')
+    ->get();
+
 
         return view('livewire.admin.clients.index',[
-            'clients'=>$client]);
+            'clients'=>$clients]);
     }
 }
