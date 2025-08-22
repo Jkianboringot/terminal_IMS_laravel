@@ -32,7 +32,8 @@ class Create extends Component
 
         
             'product.description' => 'required',
-            'product.unit_id' => 'required',
+            'product.unit_id' => 'required|integer|exists:units,id',
+                // do this for every validation but becarefull it might impact the perfomacne
             'product.product_category_id' => 'required',
             'product.quantity' => 'required',
             'product.purchase_price' => 'required',

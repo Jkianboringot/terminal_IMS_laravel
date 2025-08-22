@@ -44,7 +44,7 @@ $suppliers = Supplier::when($search, fn ($query) =>
         })
     )
     ->orderBy('name')
-    ->get();
+    ->paginate(10);
 
         return view('livewire.admin.suppliers.index',[
     'suppliers'=>$suppliers]);

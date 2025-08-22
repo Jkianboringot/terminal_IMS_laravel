@@ -17,10 +17,11 @@
             <table class="table table-hover ">
                 <thead class="thead-inverse">
                     <tr>
-                        <th>ID</th>
                         <th>Basic Details</th>
                         <th>Address</th>
-                        <th>Business Details</th>
+                        <th>Business Registration</th>
+                        <th>Organization Type</th>
+
                         <th>Purchases Made</th>
                            <th>Total Purchases Value</th>
                       @if ($user && $user->hasPermission('edit permission') || $user->hasPermission('delete permission'))
@@ -32,19 +33,17 @@
                 <tbody>
                     @foreach($clients as $client)
                         <tr>
-                            <td scope="row">{{ $client->id }}</td>
                             <td>
                                 <h6> {{ $client->name }}</p>
                                     <small> {{ $client->email }}</small><br>
-                                    <small> {{ $client->number??'N/A' }}</small>
+                                    <small> {{ $client->phone_number??'N/A' }}</small>
 
                             </td>
                             <td>{{ $client->address??'N/A' }}</td>
                             <td>
-                                <small><strong>TAX ID:</strong>{{ $client->tax_id }}</small><br>
-                                <small><strong>Reg NO :</strong>{{ $client->registration_number??'N/A' }}</small>
+                                <small><strong>TIN ID:</strong>{{ $client->tax_id }}</small><br>
                             </td>
-                           
+                           <td>{{ $client->organization_type??'N/A' }}</td>
                             <td>
                                 {{ $client->sales->count() }}
                             </td>

@@ -12,15 +12,15 @@ class Edit extends Component
 
     function rules(){
             return [
-                'client.name'=>'required',
-                'client.email'=>'required', 
-                // this migth cause some shit by getting rid of the email being Unique but fuck it its annoying
-                'client.address'=>'nullable',
-                'client.phone_number'=>'nullable',
-                'client.registration_number'=>'nullable',
+                 'client.name'=>'required',
+                'client.email'=>'required',
+                'client.address'=>'nullable|string|max:85',
+                'client.phone_number'=>'nullable|string|max:20',
                 'client.tax_id'=>'required',
                 'client.account_number'=>'required',
-               
+                'client.organization_type'=>'nullable|string', // i will allow this to be null incase customer is not affiated with an org
+                    
+
 
 
             ];
@@ -44,9 +44,12 @@ class Edit extends Component
                 $this->dispatch('done',error:'Something went wrong: '.$th->getMessage());
             }
     }
-   public function render()
+    public function render()
     {
-        return view('livewire.admin.clients.create'
-);
+        $organization_types=['Government','Private','NGO','COOPERATIVE'];
+        
+        return view('livewire.admin.clients.create',[
+            'organization_types'=>$organization_types
+        ]);
     }
 }

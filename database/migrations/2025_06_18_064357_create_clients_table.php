@@ -17,7 +17,8 @@ return new class extends Migration {
           $table->string('email')->unique();
           $table->text('address');
           $table->string('phone_number');
-          $table->string('registration_number')->nullable();
+          $table->string('organization_type')->nullable();  
+
           $table->string('tax_id');
           $table->string('account_number');
             $table->timestamps();

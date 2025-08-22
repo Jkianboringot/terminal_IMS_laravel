@@ -114,7 +114,7 @@
                     <div class="mb-3">
                         <label for="" class="form-label">Product Measure Unit</label>
                         <select wire:model.live='product.unit_id' class="form-select " name="" id="">
-                            <option selected>Select your Product Unit</option>
+                            <option value="" selected>Select your Product Unit</option>
                             @foreach ($units as $unit)
                             <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                             @endforeach

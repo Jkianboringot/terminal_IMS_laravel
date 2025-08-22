@@ -1,9 +1,9 @@
 <div>
-    <x-slot:header>Clients</x-slot:header>
+    <x-slot:header>Customers</x-slot:header>
 
     <div class="card">
         <div class="card-header bg-inv-primary text-inv-secondary border-0">
-            <h5>Create a new Client</h5>
+            <h5>Create a new Customer</h5>
         </div>
         <div class="card-body">
 
@@ -41,18 +41,25 @@
 
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
-                        <label for="registration_number" class="form-label">Registration Number</label>
-                        <input wire:model.live='client.registration_number' type="text" class="form-control"
-                            name="nregistration_numberame" id="registration_number" aria-describedby=""
-                            placeholder="Enter Business Registration Number" />
-                        @error('client.registration_number')
+                        <label for="organization_type" class="form-label">Organization Type</label>
+                        <select wire:model.live='client.organization_type'  class="form-select" >
+                        <option value="" selected>Select the Organization Type</option>
+                        @foreach ($organization_types as $organization_type )
+                        <option value="{{$organization_type}}">{{ $organization_type }}</option>
+                          @endforeach
+                        </select>
+                      
+            
+                        @error('client.organization_type')
                             <small id="" class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
+
+               
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
-                        <label for="tax_id" class="form-label">Tax ID</label>
+                        <label for="tax_id" class="form-label">TIN ID</label>
                         <input wire:model.live='client.tax_id' type="text" class="form-control" name="tax_id"
                             id="tax_id" aria-describedby="" placeholder="Enter Tax ID" />
                         @error('client.tax_id')

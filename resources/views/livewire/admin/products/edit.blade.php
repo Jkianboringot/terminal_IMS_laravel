@@ -12,7 +12,7 @@
                     <div class="mb-3">
                         <label for="" class="form-label">Product Category</label>
                         <select wire:model.live='product.product_category_id' class="form-select " name="" id="">
-                            <option selected>Select your Product Category</option>
+                            <option  value="" selected>Select your Product Category</option>
                             @foreach ($productCategories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
@@ -27,7 +27,7 @@
                     <div class="mb-3">
                         <label for="" class="form-label">Product Brand</label>
                         <select wire:model.live='product.brand_id' class="form-select " name="" id="">
-                            <option selected>Select your Product Brand</option>
+                            <option value="" selected>Select your Product Brand</option>
                             @foreach ($brands as $brand)
                             <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                             @endforeach
@@ -74,7 +74,7 @@
                 <div class="mb-3">
                    <label for="" class="form-label">Supplier</label>
                         <select wire:model.live='product.supplier_id' class="form-select " name="" id="">
-                            <option selected>Select your Product Brand</option>
+                            <option  value="" selected>Select your Product Brand</option>
                             @foreach ($suppliers as $supplier)
                             <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                             @endforeach
@@ -114,7 +114,7 @@
                     <div class="mb-3">
                         <label for="" class="form-label">Product Measure Unit</label>
                         <select wire:model.live='product.unit_id' class="form-select " name="" id="">
-                            <option selected>Select your Product Unit</option>
+                            <option value='' selected>Select your Product Unit</option>
                             @foreach ($units as $unit)
                             <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                             @endforeach

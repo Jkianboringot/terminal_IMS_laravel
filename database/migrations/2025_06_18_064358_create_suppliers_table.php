@@ -17,8 +17,7 @@ return new class extends Migration
           $table->string('email')->unique();
           $table->text('address');
           $table->string('phone_number');
-          $table->string('registration_number')->nullable();
-          $table->string('tax_id');
+          $table->string('tax_id'); //change this to tin in the future but basicaly the same
           $table->string('account_number');
             $table->timestamps();
         });

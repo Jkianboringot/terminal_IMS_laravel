@@ -43,10 +43,13 @@ $clients = Client::when($search, fn ($query) =>
         })
     )
     ->orderBy('name')
-    ->get();
+    ->paginate(10);
+    
 
 
         return view('livewire.admin.clients.index',[
             'clients'=>$clients]);
     }
 }
+
+// Change all client name to Customer

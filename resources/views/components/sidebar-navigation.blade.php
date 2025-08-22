@@ -30,10 +30,10 @@
 
             @if ($user && $user->hasPermission('manage clients'))
                 <li class="nav-header">CRM</li>
-                <x-new-nav-link-dropdown title="Clients" bi_icon="bi-person-badge" route="admin.clients*">
-                    <x-new-nav-link title="Client List" bi_icon="" route="admin.clients.index" />
+                <x-new-nav-link-dropdown title="Customers" bi_icon="bi-person-badge" route="admin.clients*">
+                    <x-new-nav-link title="Customer List" bi_icon="" route="admin.clients.index" />
                     @if ($user && $user->hasPermission('create permission'))
-                        <x-new-nav-link title="Create Client" bi_icon="" route="admin.clients.create" />
+                        <x-new-nav-link title="Create Customer" bi_icon="" route="admin.clients.create" />
                     @endif
                 </x-new-nav-link-dropdown>
             @endif

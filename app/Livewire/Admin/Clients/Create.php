@@ -14,11 +14,13 @@ class Create extends Component
             return [
                 'client.name'=>'required',
                 'client.email'=>'required|unique:clients,email',
-                'client.address'=>'nullable',
-                'client.phone_number'=>'nullable',
-                'client.registration_number'=>'nullable',
+                'client.address'=>'nullable|string|max:85',
+                'client.phone_number'=>'nullable|string|max:20',
                 'client.tax_id'=>'required',
                 'client.account_number'=>'required',
+                'client.organization_type'=>'nullable|string', // i will allow this to be null incase customer is not affiated with an org
+                    
+
                
 
 
@@ -45,6 +47,10 @@ class Create extends Component
     }
     public function render()
     {
-        return view('livewire.admin.clients.create');
+        $organization_types=['Government','Private','NGO','COOPERATIVE'];
+        
+        return view('livewire.admin.clients.create',[
+            'organization_types'=>$organization_types
+        ]);
     }
 }

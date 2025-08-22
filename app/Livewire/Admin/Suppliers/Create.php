@@ -16,7 +16,6 @@ class Create extends Component
             'supplier.email' => "required|unique:suppliers,email",
             'supplier.address' => "required",
             'supplier.phone_number' => "required",
-            'supplier.registration_number' => "nullable",
             'supplier.tax_id' => "required",
             'supplier.account_number' => "required",
         ];

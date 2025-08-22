@@ -39,20 +39,10 @@
                     </div>
                 </div>
 
+               
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
-                        <label for="registration_number" class="form-label">Registration Number</label>
-                        <input wire:model.live='supplier.registration_number' type="text" class="form-control"
-                            name="nregistration_numberame" id="registration_number" aria-describedby=""
-                            placeholder="Enter Business Registration Number" />
-                        @error('supplier.registration_number')
-                            <small id="" class="form-text text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-md-6 col-12">
-                    <div class="mb-3">
-                        <label for="tax_id" class="form-label">Tax ID</label>
+                        <label for="tax_id" class="form-label">TIN ID</label>
                         <input wire:model.live='supplier.tax_id' type="text" class="form-control" name="tax_id"
                             id="tax_id" aria-describedby="" placeholder="Enter Tax ID" />
                         @error('supplier.tax_id')

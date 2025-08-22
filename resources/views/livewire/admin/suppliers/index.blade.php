@@ -18,11 +18,10 @@
             <table class="table table-hover ">
                 <thead class="thead-inverse">
                     <tr>
-                        <th>ID</th>
-                        <th>Basic Details</th>
+                        <th>Supplier Name</th>
                         <th>Address</th>
                         <th>Business Details</th>
-                        <th>Accounts Details</th>
+                        <th>Accounts Number</th>
                         <th>Purchases Made</th>
                         <th>Total Purchases Value</th>
                         @if ($user && $user->hasPermission('edit permission') || $user->hasPermission('delete permission'))
@@ -34,19 +33,19 @@
                 <tbody>
                     @foreach($suppliers as $supplier)
                     <tr>
-                        <td scope="row">{{ $supplier->id }}</td>
                         <td>
                             <h6> {{ $supplier->name }}</p>
                                 <small> {{ $supplier->email }}</small> <br>
-                                <small> {{ $supplier->number??'N/A' }}</small>
+                                <small> {{ $supplier->phone_number??'N/A' }}</small>
 
                         </td>
                         <td>{{ $supplier->address??'N/A' }}</td>
                         <td>
-                            <small><strong>TAX ID:</strong>{{ $supplier->tax_id }}</small><br>
-                            <small><strong>Reg NO :</strong>{{ $supplier->registration_number??'N/A' }}</small>
+                            <small><strong>TIN Number:</strong>{{ $supplier->tax_id }}</small><br>
                         </td>
-                        
+                          <td>
+                            <small><strong>A/c NO:</strong>{{ $supplier->account_number }}</small>
+                        </td>
                         <td>
                             {{ $supplier->purchases->count() }}
                         </td>
