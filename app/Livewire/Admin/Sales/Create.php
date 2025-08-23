@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin\Sales;
 
-use App\Models\Client;
+use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Sale;
 use Livewire\Component;
@@ -10,7 +10,7 @@ use Livewire\Component;
 class Create extends Component
 {
 
-    public $clientSearch;
+    public $customerSearch;
     public $productSearch;
 
     public $selectedProductId;
@@ -27,7 +27,7 @@ class Create extends Component
     {
         return [
             'sale.sale_date' => 'required',
-            'sale.client_id' => 'required',
+            'sale.customer_id' => 'required',
         ];
     }
 
@@ -58,10 +58,10 @@ class Create extends Component
     }
 
 
-    function selectClient($id)
+    function selectCustomer($id)
     {
-        $this->sale->client_id = $id;
-        $this->clientSearch=$this->sale->client->name;
+        $this->sale->customer_id = $id;
+        $this->customerSearch=$this->sale->customer->name;
 
     }
 
@@ -157,13 +157,13 @@ class Create extends Component
 
     public function render()
     {
-        $clients = Client::where('name', 'like', '%' . $this->clientSearch . '%')->get();
+        $customers = Customer::where('name', 'like', '%' . $this->customerSearch . '%')->get();
         $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
 
         return view(
             'livewire.admin.sales.create',
             [
-                'clients' => $clients,
+                'customers' => $customers,
                 'products' => $products,
 
             ]

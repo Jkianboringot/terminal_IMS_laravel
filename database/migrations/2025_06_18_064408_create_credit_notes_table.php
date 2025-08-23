@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('credit_notes', function (Blueprint $table) {
               $table->id();
-            $table->foreignId('client_id')->constrained();
+            $table->foreignId('customer_id')->constrained();
             $table->timestamps();
         });
     }

@@ -108,7 +108,17 @@
                     <img width="150px" class="img-fluid p-3 border border-secondary" src="{{$manual_image->temporaryUrl() }}">
                 </div>
                 @endif
-
+  <div class="col-md-6 col-12">
+                    <div class="mb-3">
+                        <label for="inventory_threshold" class="form-label">Inventory Threshold</label>
+                        <input wire:model.live='product.inventory_threshold' type="number" min="0" step="1" class="form-control"
+                            name="inventory_threshold" id="name" aria-describedby="inventory_threshold"
+                            placeholder="Enter minimum stock before alert" />
+                        @error('product.inventory_threshold')
+                        <small id="" class="form-text text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
 
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
@@ -148,7 +158,7 @@
                 </div>
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Salling Price</label>
+                        <label for="name" class="form-label">Selling Price</label>
                         <input wire:model.live='product.sale_price' type="number" min="0" step="0.1"
                             class="form-control" name="sale_price" id="name" aria-describedby="sale_price"
                             placeholder="Enter your Product's sale price" />

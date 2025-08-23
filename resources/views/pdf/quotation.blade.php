@@ -114,11 +114,11 @@
 
         <div class="details">
             <div>
-                <h3>Client Details</h3>
-                <p><strong>Name:</strong> {{ $quotation->client->name }}</p>
-                <p><strong>Address:</strong> {{ $quotation->client->address }}</p>
-                <p><strong>Email:</strong> {{ $quotation->client->email }}</p>
-                <p><strong>Phone:</strong> {{ $quotation->client->phone_number }}</p>
+                <h3>Customer Details</h3>
+                <p><strong>Name:</strong> {{ $quotation->customer->name }}</p>
+                <p><strong>Address:</strong> {{ $quotation->customer->address }}</p>
+                <p><strong>Email:</strong> {{ $quotation->customer->email }}</p>
+                <p><strong>Phone:</strong> {{ $quotation->customer->phone_number }}</p>
             </div>
 
             <div style="margin-left:auto">

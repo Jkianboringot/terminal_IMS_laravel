@@ -41,14 +41,14 @@ class Index extends Component
     $search = trim($this->search);
 
     $sales = Sale::select('sales.*')
-        ->join('clients', 'sales.client_id', '=', 'clients.id')
+        ->join('customers', 'sales.customer_id', '=', 'customers.id')
         ->when($search, fn ($query) =>
             $query->where(function ($sub) use ($search) {
                 $sub->where('sales.sale_date', 'like', "%$search%")
-                    ->orWhere('clients.name', 'like', "%$search%");
+                    ->orWhere('customers.name', 'like', "%$search%");
             })
         )
-        ->with(['client:id,name']) // Only load needed fields
+        ->with(['customer:id,name']) // Only load needed fields
         ->orderBy('sales.sale_date', 'desc')
         ->paginate(10);
 

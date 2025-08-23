@@ -9,9 +9,9 @@ class Invoice extends Model
        protected $appends = [
         'total_amount'
     ];
-    function client()
+    function customer()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Customer::class);
     }
     function products()
     {

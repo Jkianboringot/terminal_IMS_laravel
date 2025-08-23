@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin\Invoices;
 
-use App\Models\Client;
+use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\Product;
 
@@ -12,7 +12,7 @@ class Create extends Component
 {
 
     
-    public $clientSearch;
+    public $customerSearch;
     public $productSearch;
     
     public $selectedProductId;
@@ -28,7 +28,7 @@ class Create extends Component
     function rules(){
         return [
             'invoice.invoice_date'=>'required',
-            'invoice.client_id'=>'required',
+            'invoice.customer_id'=>'required',
         ];
     }
 
@@ -58,10 +58,10 @@ class Create extends Component
     }
    
 
-    function selectClient($id)
+    function selectCustomer($id)
     {
-        $this->invoice->client_id = $id;
-        $this->clientSearch=$this->invoice->client->name;
+        $this->invoice->customer_id = $id;
+        $this->customerSearch=$this->invoice->customer->name;
 
     }
 
@@ -128,13 +128,13 @@ class Create extends Component
     }
     public function render()
     {
-        $clients = Client::where('name', 'like', '%' . $this->clientSearch . '%')->get();
+        $customers = Customer::where('name', 'like', '%' . $this->customerSearch . '%')->get();
         $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
 
         return view(
             'livewire.admin.invoices.create',
             [
-                'clients' => $clients,
+                'customers' => $customers,
                 'products' => $products,
 
             ]

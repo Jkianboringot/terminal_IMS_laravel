@@ -4,7 +4,7 @@
         <div class="col-md-6 col-4 ">
             <div class="card">
                 <div class="card-header  bg-inv-primary text-inv-secondary border-0">
-                    <h5>Set Date & Client</h5>
+                    <h5>Set Date & Customer</h5>
                 </div>
                 <div class="card-body ">
                     <div class="row">
@@ -31,15 +31,15 @@
 
 
                         <div class="mb-3">
-                            <label for="" class="form-label">Client Search</label>
-                            <input type="text" wire:model.live='clientSearch' class="form-control" />
-                            @error('sale_payment.client_id')
+                            <label for="" class="form-label">Customer Search</label>
+                            <input type="text" wire:model.live='customerSearch' class="form-control" />
+                            @error('sale_payment.customer_id')
                                 <small id="helpId" class="form-text text-danger">{{ $message }}</small>
                             @enderror
                             <ul class="list-group mt-2 w-100">
-                                @if ($clientSearch != '')
-                                    @foreach ($clients as $client)
-                                        <x-client-payment-list-item :client="$client"
+                                @if ($customerSearch != '')
+                                    @foreach ($customers as $customer)
+                                        <x-customer-payment-list-item :customer="$customer"
                                             :sale_payment="$sale_payment" />
                                     @endforeach
                                 @endif
@@ -71,8 +71,8 @@
                         id=""
                     >
                     <option value=""></option>
-                     @if ($sale_payment->client)
-                       @foreach ($sale_payment->client->sales as $sale )
+                     @if ($sale_payment->customer)
+                       @foreach ($sale_payment->customer->sales as $sale )
                          <option value="{{ $sale->id }}">Sale #{{ $sale->id }} <br> Balance: PISO {{number_format( $sale->total_balance) }}</option>
                         @endforeach
                      @endif
@@ -130,7 +130,7 @@
                                     @foreach ($saleList as $key => $listItem)
                                         <tr>
                                             <td scope="row">{{ App\Models\Sale::find($listItem['sale_id'])->id }}</td>
-                                        <td scope="row">{{ App\Models\Sale::find($listItem['sale_id'])->client->name}}</td>
+                                        <td scope="row">{{ App\Models\Sale::find($listItem['sale_id'])->customer->name}}</td>
 
                                             <td>
                                                 {{ Carbon\Carbon::parse(App\Models\Sale::find($listItem['sale_id'])->sale_date)->format('jS F,Y')}} <br>
@@ -187,4 +187,4 @@
 
 
 
-        <!-- after this make the client id and product a drop down and search because its annoying just being able to searcjh -->
+        <!-- after this make the customer id and product a drop down and search because its annoying just being able to searcjh -->

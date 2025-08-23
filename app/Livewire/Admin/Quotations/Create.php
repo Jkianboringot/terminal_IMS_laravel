@@ -4,14 +4,14 @@ namespace App\Livewire\Admin\Quotations;
 
 use App\Models\Quotation;
 use App\Models\Product;
-use App\Models\Client;
+use App\Models\Customer;
 use Livewire\Component;
 
 class Create extends Component
 {
 
     
-    public $clientSearch;
+    public $customerSearch;
     public $productSearch;
     
     public $selectedProductId;
@@ -27,7 +27,7 @@ class Create extends Component
     function rules(){
         return [
             'quotation.quotation_date'=>'required',
-            'quotation.client_id'=>'required',
+            'quotation.customer_id'=>'required',
         ];
     }
 
@@ -57,10 +57,10 @@ class Create extends Component
     }
    
 
-    function selectClient($id)
+    function selectCustomer($id)
     {
-        $this->quotation->client_id = $id;
-        $this->clientSearch=$this->quotation->client->name;
+        $this->quotation->customer_id = $id;
+        $this->customerSearch=$this->quotation->customer->name;
 
     }
 
@@ -127,13 +127,13 @@ class Create extends Component
     }
     public function render()
     {
-        $clients = Client::where('name', 'like', '%' . $this->clientSearch . '%')->get();
+        $customers = Customer::where('name', 'like', '%' . $this->customerSearch . '%')->get();
         $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
 
         return view(
             'livewire.admin.quotations.create',
             [
-                'clients' => $clients,
+                'customers' => $customers,
                 'products' => $products,
 
             ]

@@ -4,7 +4,7 @@ return [
     'permissions'=>[
         'manage roles',
         'manage users',
-        'manage clients',
+        'manage customers',
         'manage suppliers',
        
         'manage invoices','manage orders',

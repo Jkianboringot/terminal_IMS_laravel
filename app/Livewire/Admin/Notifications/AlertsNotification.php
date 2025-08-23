@@ -16,46 +16,41 @@ class AlertsNotification extends Component
         $this->loadNotifications();
     }
    
+public function checkLowStock()
+{
+    // Fetch all products
+    $products = Product::all();
 
-    
-                 
-    public function checkLowStock()
-    {
-       // assume notifications table has product_id column and unique index on product_id
-$low = Product::where('quantity', '<', 10)->get();
-$lowIds = $low->pluck('id')->all();
+    // Separate into low and okay stock
+    $lowProducts = $products->filter(function ($product) {
+        return $product->inventory_balance <= ($product->inventory_threshold ?? 10);
+    });
 
+    $okProducts = $products->filter(function ($product) {
+        return $product->inventory_balance > ($product->inventory_threshold ?? 10);
+    });
 
+    $lowIds = $lowProducts->pluck('id')->all();
 
-// TOBE FIX
-// problem with Notification on why its not checking inventory balance is maybe becuase 
-// inventory balance is not part of product is jst a proerty of it so i need to get in 
-// thier somehow and access it but tis function go directly to teh data base to check fo low balnace
-// which is not bad its just that it wounldnt work for inventory balance unless i make it 
-// an column which its not so either make it a column or accesss it 
+    // Check which notifications already exist
+    $existingIds = Notification::whereIn('product_id', $lowIds)
+        ->pluck('product_id')
+        ->all();
 
-
-
-
-
-
-
-
-$existingIds = Notification::whereIn('product_id', $lowIds)
-    ->pluck('product_id')
-    ->all();
-
-foreach ($low as $p) {
-    if (! in_array($p->id, $existingIds)) {
-        Notification::create([
-            'product_id' => $p->id,
-           'message' => "Low stock: {$p->name} (Qty:{$p->inventory_balance})"
-                    // dont think this i a goodidea to do this but it will do for now
-        ]);
+    // Create notifications for low stock
+    foreach ($lowProducts as $p) {
+        if (! in_array($p->id, $existingIds)) {
+            Notification::create([
+                'product_id' => $p->id,
+                'message'    => "Low stock: {$p->name} (Qty: {$p->inventory_balance})"
+            ]);
+        }
     }
+
+    // 🧹 Remove notifications for products that are back in stock
+    Notification::whereIn('product_id', $okProducts->pluck('id'))->delete();
 }
 
-    }
 
     public function loadNotifications()
     {

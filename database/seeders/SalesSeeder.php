@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Client;
+use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Sale;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -37,7 +37,7 @@ class SalesSeeder extends Seeder
             $products = Product::all();
 
             $sale = new Sale();
-            $sale->client_id = rand(1, count(Client::all()));
+            $sale->customer_id = rand(1, count(Customer::all()));
             $sale->sale_date = $date;
             $sale->save();
 

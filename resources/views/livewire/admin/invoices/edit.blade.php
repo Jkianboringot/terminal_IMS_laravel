@@ -6,7 +6,7 @@
         @endif">
             <div class="card">
                 <div class="card-header  bg-inv-primary text-inv-secondary binvoice-0">
-                    <h5>Set Date & Client</h5>
+                    <h5>Set Date & Customer</h5>
                 </div>
                 <div class="card-body ">
                     <div class="mb-3">
@@ -18,17 +18,17 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="" class="form-label">Client Search</label>
-                        <input type="text" wire:model.live="clientSearch" class="form-control" />
-                          @error('invoice.client_id')
+                        <label for="" class="form-label">Customer Search</label>
+                        <input type="text" wire:model.live="customerSearch" class="form-control" />
+                          @error('invoice.customer_id')
                             <small id="helpId" class="form-text text-danger">{{ $message }} </small>
                         @enderror
-                        @if ($clientSearch != '')
-                            @foreach ($clients as $client)
+                        @if ($customerSearch != '')
+                            @foreach ($customers as $customer)
                                 <ul class="list-group mt-2 w-100">
-                                    <li wire:click="selectClient({{ $client->id }})"
-                                        class="list-group-item {{ $client->id == $invoice->client_id ? 'active' : '' }}">
-                                        {{ $client->name }}
+                                    <li wire:click="selectCustomer({{ $customer->id }})"
+                                        class="list-group-item {{ $customer->id == $invoice->customer_id ? 'active' : '' }}">
+                                        {{ $customer->name }}
                                     </li>
                                 </ul>
                             @endforeach
@@ -186,4 +186,4 @@
 </div>
 
 
-<!-- after this make the client id and product a drop down and search because its annoying just being able to searcjh -->
+<!-- after this make the customer id and product a drop down and search because its annoying just being able to searcjh -->

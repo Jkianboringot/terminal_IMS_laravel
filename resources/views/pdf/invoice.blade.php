@@ -114,11 +114,11 @@
 
         <div class="details">
             <div>
-                <h3>Client Details</h3>
-                <p><strong>Name:</strong> {{ $invoice->client->name }}</p>
-                <p><strong>Address:</strong> {{ $invoice->client->address }}</p>
-                <p><strong>Email:</strong> {{ $invoice->client->email }}</p>
-                <p><strong>Phone:</strong> {{ $invoice->client->phone_number }}</p>
+                <h3>Customer Details</h3>
+                <p><strong>Name:</strong> {{ $invoice->customer->name }}</p>
+                <p><strong>Address:</strong> {{ $invoice->customer->address }}</p>
+                <p><strong>Email:</strong> {{ $invoice->customer->email }}</p>
+                <p><strong>Phone:</strong> {{ $invoice->customer->phone_number }}</p>
             </div>
 
             <div style="margin-left:auto">

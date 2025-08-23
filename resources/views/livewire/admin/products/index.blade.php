@@ -17,12 +17,15 @@
             <table class="table table-hover">
                 <thead class="thead-inverse">
                     <tr>
+                        <th>Barcode</th>
                         <th>Shelf Location</th>
                         <th>Product Details</th>
+                          <th>Suppliers</th>
                         <th>Category</th>
-                        <th>Suplies Category</th>
-                        <th>Measurement</th>
+                      
+                      
                         <th>Inventory Balance</th>
+                          <th>Measurement</th>
                         <th>Manual</th>
 
                         @if ($user && $user->hasPermission('edit permission') || $user->hasPermission('delete permission'))
@@ -39,17 +42,21 @@
                     @elseif ($products->isNotEmpty())
                     @foreach ($products as $product)
                     <tr>
-                        <td scope="row">{{ $product->location }}</td>
+                        <td>|||</td>
+                        <td scope="row">{{ $product->location??'N/A' }}</td>
                         <td>
                             <h6>{{ $product->name }}</h6>
                             <small>{{ $product->description }}</small>
+                            
                         </td>
+                            <td>{{ $product->supplier->name }}</td>
                         <td>{{ $product->category->name }}</td>
-                        <td>{{ $product->supplier->name }}</td>
+                    
 
-                        <td><strong>{{ $product->quantity }}</strong>  {{ $product->unit->name }}</td>
+
                         <td><strong class='{{$product->inventory_balance<=10?
                         "text-cash-red":"text-cash-green"}}'>{{ $product->inventory_balance }}</strong></td>
+                                                <td><strong>{{ $product->quantity }}</strong>  {{ $product->unit->name }}</td>
                         <td>
                               @if ($product->manual_url)
                             <img

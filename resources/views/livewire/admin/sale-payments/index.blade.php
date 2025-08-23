@@ -19,7 +19,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Date & Time</th>
-                        <th>Client</th>
+                        <th>Customer</th>
                         <th>Transaction Reference</th>
                         <th>Attached Sales</th>
                         <th>Amount paid</th>
@@ -36,8 +36,8 @@
                                 <h6>{{ Carbon\Carbon::parse($payment->payment_time)->format('jS F,Y h:i:sA') }}</h6>
                             </td>
                             <td>
-                                <h5>{{ $payment->client->name }}</h5>
-                                <h6>Balance: <strong>PISO {{ number_format($payment->client->balance, 2) }}</strong>
+                                <h5>{{ $payment->customer->name }}</h5>
+                                <h6>Balance: <strong>PISO {{ number_format($payment->customer->balance, 2) }}</strong>
                                 </h6>
                             </td>
                             <td>

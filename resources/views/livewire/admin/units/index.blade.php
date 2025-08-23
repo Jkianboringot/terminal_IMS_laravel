@@ -11,7 +11,7 @@
             <table class="table table-hover  ">
                 <thead class="thead-inverse">
                     <tr>
-                        <th>ID</th>
+                      
                         <th>Name</th>
                         <th>Symbol</th>
                         <th>Number of Products</th>
@@ -23,7 +23,7 @@
                 <tbody>
                     @foreach ($units as $unit)
                     <tr>
-                        <td scope="row">{{ $unit->id }}</td>
+                      
                         <td>{{ $unit->name }}</td>
                         <td>{{ $unit->symbol }}</td>
                         <td>{{ $unit->products->count() }}</td>

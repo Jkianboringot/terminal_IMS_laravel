@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Livewire\Admin\Clients;
+namespace App\Livewire\Admin\Customers;
 
-use App\Models\Client;
+use App\Models\Customer;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -19,15 +19,15 @@ class Index extends Component
       function delete($id)
     {
         try {
-            $client = Client::findOrFail($id);
-            if (count($client->sales) >0 ) {
-                throw new \Exception("Permission : This Client has Bought from you {$client->sales->count()} Client ", 1);
+            $customer = Customer::findOrFail($id);
+            if (count($customer->sales) >0 ) {
+                throw new \Exception("Permission : This Customer has Bought from you {$customer->sales->count()} Customer ", 1);
             }
 
        
-            $client->delete();
+            $customer->delete();
 
-            $this->dispatch('done', success: "Successfully Deleted this Client");
+            $this->dispatch('done', success: "Successfully Deleted this Customer");
         } catch (\Throwable $th) {
             //throw $th;
             $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
@@ -37,7 +37,7 @@ class Index extends Component
     {
       $search = trim($this->search);
 
-$clients = Client::when($search, fn ($query) =>
+$customers = Customer::when($search, fn ($query) =>
         $query->where(function ($q) use ($search) {
             $q->where('name', 'like', "%$search%");
         })
@@ -47,9 +47,9 @@ $clients = Client::when($search, fn ($query) =>
     
 
 
-        return view('livewire.admin.clients.index',[
-            'clients'=>$clients]);
+        return view('livewire.admin.customers.index',[
+            'customers'=>$customers]);
     }
 }
 
-// Change all client name to Customer
+// Change all customer name to Customer

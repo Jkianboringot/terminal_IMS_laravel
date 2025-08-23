@@ -40,12 +40,12 @@ class Index extends Component
           $search = trim($this->search);
 
     $quotation = Quotation::select('quotations.*')
-        ->join('clients', 'quotations.client_id', '=', 'clients.id')
+        ->join('customers', 'quotations.customer_id', '=', 'customers.id')
         ->when($search, fn ($query) =>
-            $query->where('clients.name', 'like', "%$search%")
+            $query->where('customers.name', 'like', "%$search%")
         )
-        ->with(['client:id,name']) // Only if you display client info in the view
-        ->orderBy('clients.name')
+        ->with(['customer:id,name']) // Only if you display customer info in the view
+        ->orderBy('customers.name')
         ->paginate(10);
 
         return view('livewire.admin.quotations.index',[

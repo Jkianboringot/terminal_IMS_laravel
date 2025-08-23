@@ -1,0 +1,42 @@
+goal:
+1.change all 'client' terms to customer
+	-relationships
+		1.qoutation
+		2.orders
+		3.invoices
+		4.salespayment
+		5.purchasepayment
+2.fix notication make it point to inventory balance not quantity
+	-i actually wnat to add this threshold thing, that i dint even though of this before
+	example:
+		image this you have a store with different product toys,jewlery,food and so you have a noti
+	system that constantly checks the inventry level and you could make it so that all of them the
+	same threshold that when meet give you an alert like 'hey this product qty is low' let say all of them
+	has a 10 threshold meaning if their qty hit 10 it will alert you of the product that hit 10, and that
+	good easy to comprehend and make but thier is one problem supply and demand, not all of the demand 
+	for them are the same meaning their are product that might go well with 10 as a threshold such as 
+	jewelry,toys because they dont get buy out as fast, but that should'nt be done on foods why , because most commonly food are the fasted
+	the fast consumtion or buy out ,so if everytime you wait for the quantity of you food ingredient to get to 10qty 
+	before resupplying, that can cause you a loss in money becuase what if customer buys more than what you
+	are capable of making becuase of your stock being low but what if you can make the threshold customazable
+	like food can have a threshold of 50qty then it give you an alert, this can help you with not being 
+	under stock with different product base on their demand and so this is why u want to put this
+	in the app
+	- test if threshold works same with location and oragnization_type
+
+
+i really need to get good at class in php i will need it alot in laravel databse
+
+
+
+
+
+
+
+
+
+
+
+ok i will try changing everyhting to customer it might waste my time but it could be worth it to not confuse me or 
+have the risk of me not being able to maintain the thing because i dont know what client is for on for
+30m after that and somehting broke and i could not fix it i will stop

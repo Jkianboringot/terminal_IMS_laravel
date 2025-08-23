@@ -2,14 +2,14 @@
 
 namespace App\Livewire\Admin\Sales;
 
-use App\Models\Client;
+use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Sale;
 use Livewire\Component;
 
 class Edit extends Component
 {
-    public $clientSearch;
+    public $customerSearch;
     public $productSearch;
 
     public $selectedProductId;
@@ -26,7 +26,7 @@ class Edit extends Component
     {
         return [
             'sale.sale_date' => 'required',
-            'sale.client_id' => 'required',
+            'sale.customer_id' => 'required',
         ];
     }
 
@@ -47,7 +47,7 @@ class Edit extends Component
             );
 
         }
-        $this->clientSearch = $this->sale->client->name;
+        $this->customerSearch = $this->sale->customer->name;
     }
     function deleteCartItem($key)
     {
@@ -69,10 +69,10 @@ class Edit extends Component
 
 
 
-    function selectClient($id)
+    function selectCustomer($id)
     {
-        $this->sale->client_id = $id;
-        $this->clientSearch=$this->sale->client->name;
+        $this->sale->customer_id = $id;
+        $this->customerSearch=$this->sale->customer->name;
 
     }
 
@@ -144,8 +144,8 @@ public function cancelEdit()
 {
     try {
         // Manual lightweight validation
-        if (!$this->sale->sale_date || !$this->sale->client_id) {
-            throw new \Exception("Sale date and client are required.");
+        if (!$this->sale->sale_date || !$this->sale->customer_id) {
+            throw new \Exception("Sale date and customer are required.");
         }
 
         // Validate inventory for all items
@@ -187,13 +187,13 @@ public function cancelEdit()
 
     public function render()
     {
-        $clients = Client::where('name', 'like', '%' . $this->clientSearch . '%')->get();
+        $customers = Customer::where('name', 'like', '%' . $this->customerSearch . '%')->get();
         $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
 
         return view(
             'livewire.admin.sales.edit',
             [
-                'clients' => $clients,
+                'customers' => $customers,
                 'products' => $products,
 
             ]

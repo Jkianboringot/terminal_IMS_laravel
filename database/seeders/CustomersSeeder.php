@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class ClientsSeeder extends Seeder
+class CustomersSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,33 +17,33 @@ class ClientsSeeder extends Seeder
     {
         $faker = Factory::create();
 
-        $clients = [];
+        $customers = [];
         for ($i = 1; $i <= 20; $i++) {
-            // Determine if the client is an individual or a business
+            // Determine if the customer is an individual or a business
             $isBusiness = $faker->boolean(50); // 50% chance
 
             if ($isBusiness) {
                 $name = $faker->company;
-                $registrationNumber = 'PVT-' . strtoupper(Str::random(8));
+           
                 $taxId = 'P' . $faker->numerify('#########') . $faker->randomLetter;
             } else {
                 $name = $faker->name;
-                $registrationNumber = 'BN-' . strtoupper(Str::random(8));
+
                 $taxId = 'A' . $faker->numerify('#########') . $faker->randomLetter;
             }
 
-            $clients[] = [
+            $customers[] = [
                 'name' => $name,
                 'email' => $faker->unique()->safeEmail,
                 'address' => $faker->address,
                 'phone_number' => $faker->unique()->phoneNumber,
-                'registration_number' => $registrationNumber,
+              
                 'tax_id' => $taxId,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
         }
 
-        DB::table('clients')->insert($clients);
+        DB::table('customers')->insert($customers);
     }
 }

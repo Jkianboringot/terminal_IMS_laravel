@@ -4,14 +4,14 @@ namespace App\Livewire\Admin\SalePayments;
 
 use App\Models\Sale;
 use App\Models\SalePayment;
-use App\Models\Client;
+use App\Models\Customer;
 use App\Models\SalesPayment;
 use Carbon\Carbon;
 use Livewire\Component;
 
 class Create extends Component
 {
-    public $clientSearch;
+    public $customerSearch;
     public $selectedSaleId;
     public $amount;
     public SalesPayment $sale_payment;
@@ -21,17 +21,17 @@ class Create extends Component
     function rules()
     {
         return [
-            'sale_payment.client_id' => 'required',
+            'sale_payment.customer_id' => 'required',
             'sale_payment.transaction_reference' => 'required',
             'sale_payment.payment_time' => 'required',
             'sale_payment.amount' => 'required',
         ];
     }
 
-    function selectClient($id)
+    function selectCustomer($id)
     {
-        $this->sale_payment->client_id = $id;
-        $this->clientSearch = $this->sale_payment->client->name;
+        $this->sale_payment->customer_id = $id;
+        $this->customerSearch = $this->sale_payment->customer->name;
     }
 
     function takeBalance()
@@ -126,9 +126,9 @@ class Create extends Component
     }
     public function render()
     {
-        $clients = Client::where('name', 'like', '%' . $this->clientSearch . '%')->get();
+        $customers = Customer::where('name', 'like', '%' . $this->customerSearch . '%')->get();
         return view('livewire.admin.sale-payments.create', [
-            'clients' => $clients
+            'customers' => $customers
         ]);
     }
 }

@@ -4,13 +4,13 @@ namespace App\Livewire\Admin\Invoices;
 
 use App\Models\Invoice;
 use App\Models\Product;
-use App\Models\Client;
+use App\Models\Customer;
 use Livewire\Component;
 
 class Edit extends Component
 {
 
-    public $clientSearch;
+    public $customerSearch;
     public $productSearch;
 
     public $selectedProductId;
@@ -27,7 +27,7 @@ class Edit extends Component
     {
         return [
             'invoice.invoice_date' => 'required',
-            'invoice.client_id' => 'required',
+            'invoice.customer_id' => 'required',
         ];
     }
 
@@ -48,7 +48,7 @@ class Edit extends Component
             );
 
         }
-        $this->clientSearch = $this->invoice->client->name;
+        $this->customerSearch = $this->invoice->customer->name;
     }
     function deleteCartItem($key)
     {
@@ -70,10 +70,10 @@ class Edit extends Component
 
 
 
-    function selectClient($id)
+    function selectCustomer($id)
     {
-        $this->invoice->client_id = $id;
-        $this->clientSearch = $this->quotation->client->name;
+        $this->invoice->customer_id = $id;
+        $this->customerSearch = $this->quotation->customer->name;
 
     }
 
@@ -143,13 +143,13 @@ class Edit extends Component
     }
     public function render()
     {
-        $clients = Client::where('name', 'like', '%' . $this->clientSearch . '%')->get();
+        $customers = Customer::where('name', 'like', '%' . $this->customerSearch . '%')->get();
         $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
 
         return view(
             'livewire.admin.invoices.edit',
             [
-                'clients' => $clients,
+                'customers' => $customers,
                 'products' => $products,
 
             ]

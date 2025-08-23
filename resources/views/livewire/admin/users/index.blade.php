@@ -13,7 +13,7 @@
             <table class="table table-hover">
                 <thead class="thead-inverse">
                     <tr>
-                        <th>ID</th>
+                       
                         <th>Name</th>
                         <th>Email</th>
                         <th>Role</th>
@@ -28,7 +28,7 @@
                             $targetIsSuperAdmin = $user->roles->contains('title', 'Super Administrator');
                         @endphp
                         <tr>
-                            <td scope="row">{{ $user->id }}</td>
+                           
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>

@@ -19,7 +19,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Invoice Date</th>
-                        <th>Client</th>
+                        <th>Customer</th>
                         <th>Total Amount</th>
                         <th>Status</th>
 
@@ -35,7 +35,7 @@
                         <td>
                             <h6>{{Carbon\Carbon::parse($invoice->invoice_date)->format('jS F,Y') }}</h6>
                         </td>
-                        <td>{{ $invoice->client->name }}</td>
+                        <td>{{ $invoice->customer->name }}</td>
                         <td> <small>PISO {{ number_format($invoice->total_amount, 2)}}</small></td>
                         <td>
                             <span class={{ $invoice->is_paid ? 'text-success' : 'text-danger' }} style="font: bold">

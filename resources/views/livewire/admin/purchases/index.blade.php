@@ -17,7 +17,7 @@
             <table class="table table-hover  ">
                 <thead class="thead-inverse">
                     <tr>
-                        <th>ID</th>
+                       
                         <th>Purchase Date</th>
                         <th>Supplier</th>
                         <th>No. of Unit Bought</th>
@@ -37,7 +37,7 @@
                 <tbody>
                     @foreach ($purchases as $purchase)
                     <tr>
-                        <td scope="row">{{ $purchase->id }}</td>
+                       
                         <td>
                             <h6>{{Carbon\Carbon::parse($purchase->purchase_date)->format('jS F,Y') }}</h6>
                         </td>

@@ -15,7 +15,7 @@
             <table class="table table-hover mb-0">
                 <thead class="thead-inverse">
                     <tr>
-                        <th>ID</th>
+                     
                         <th>Title</th>
                         <th>Users</th>
                         <th class="text-center">Permissions</th>
@@ -32,7 +32,7 @@
                         @endphp 
 
                         <tr>
-                            <td>{{ $role->id }}</td>
+                          
                             <td>{{ $role->title }}</td>
                             <td>{{ count($role->users) }}</td>
 

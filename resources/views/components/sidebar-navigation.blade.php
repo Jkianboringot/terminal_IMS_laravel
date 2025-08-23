@@ -28,12 +28,12 @@
             @endif
 
 
-            @if ($user && $user->hasPermission('manage clients'))
+            @if ($user && $user->hasPermission('manage customers'))
                 <li class="nav-header">CRM</li>
-                <x-new-nav-link-dropdown title="Customers" bi_icon="bi-person-badge" route="admin.clients*">
-                    <x-new-nav-link title="Customer List" bi_icon="" route="admin.clients.index" />
+                <x-new-nav-link-dropdown title="Customers" bi_icon="bi-person-badge" route="admin.customers*">
+                    <x-new-nav-link title="Customer List" bi_icon="" route="admin.customers.index" />
                     @if ($user && $user->hasPermission('create permission'))
-                        <x-new-nav-link title="Create Customer" bi_icon="" route="admin.clients.create" />
+                        <x-new-nav-link title="Create Customer" bi_icon="" route="admin.customers.create" />
                     @endif
                 </x-new-nav-link-dropdown>
             @endif
@@ -105,7 +105,7 @@
                 </x-new-nav-link-dropdown>
             @endif
 
-{{-- 
+
          
 
             @if ($user && $user->hasPermission('manage sales'))
@@ -116,7 +116,7 @@
                     @endif
                 </x-new-nav-link-dropdown>
             @endif
-
+{{-- 
             @if ($user && $user->hasPermission('manage orders'))
                 <x-new-nav-link-dropdown title="Orders" bi_icon="bi-cart-check" route="admin.orders*">
                     <x-new-nav-link title="Order List" bi_icon="" route="admin.orders.index" />

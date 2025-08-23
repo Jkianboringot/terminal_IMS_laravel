@@ -4,14 +4,14 @@ namespace App\Livewire\Admin\SalePayments;
 
 use App\Models\Sale;
 use App\Models\SalePayment;
-use App\Models\Client;
+use App\Models\Customer;
 use App\Models\SalesPayment;
 use Carbon\Carbon;
 use Livewire\Component;
 
 class Edit extends Component
 {
-    public $clientSearch;
+    public $customerSearch;
     public $selectedSaleId;
     public $amount;
     public SalesPayment $sale_payment;
@@ -21,17 +21,17 @@ class Edit extends Component
     function rules()
     {
         return [
-            'sale_payment.client_id' => 'required',
+            'sale_payment.customer_id' => 'required',
             'sale_payment.transaction_reference' => 'required',
             'sale_payment.payment_time' => 'required',
             'sale_payment.amount' => 'required',
         ];
     }
 
-    function selectClient($id)
+    function selectCustomer($id)
     {
-        $this->sale_payment->client_id = $id;
-        $this->clientSearch = $this->sale_payment->client->name;
+        $this->sale_payment->customer_id = $id;
+        $this->customerSearch = $this->sale_payment->customer->name;
     }
 
     function takeBalance()
@@ -64,7 +64,7 @@ class Edit extends Component
                 'amount' => $sale->pivot->amount,
             ]);
         }
-        $this->clientSearch = $this->sale_payment->client->name;
+        $this->customerSearch = $this->sale_payment->customer->name;
     }
 
     function addToList()
@@ -113,14 +113,14 @@ class Edit extends Component
     {
         try {
             // $this->validate([
-            //     'sale_payment.client_id' => 'required',
+            //     'sale_payment.customer_id' => 'required',
             //     'sale_payment.transaction_reference' => 'required',
             //     'sale_payment.payment_time' => 'required',
             //     'sale_payment.amount' => 'required',
             // ]);
             foreach ($this->saleList as $key => $listItem) {
-                if (!in_array($listItem['sale_id'], Client::find($this->sale_payment->client_id)->sales()->pluck('id')->toArray())) {
-                    throw new \Exception("This Client doesn't have all these sales", 1);
+                if (!in_array($listItem['sale_id'], Customer::find($this->sale_payment->customer_id)->sales()->pluck('id')->toArray())) {
+                    throw new \Exception("This Customer doesn't have all these sales", 1);
                 }
             }
             $this->sale_payment->save();
@@ -137,9 +137,9 @@ class Edit extends Component
     }
     public function render()
     {
-        $clients = Client::where('name', 'like', '%' . $this->clientSearch . '%')->get();
+        $customers = Customer::where('name', 'like', '%' . $this->customerSearch . '%')->get();
         return view('livewire.admin.sale-payments.edit', [
-            'clients' => $clients
+            'customers' => $customers
         ]);
     }
 }

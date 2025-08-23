@@ -49,7 +49,7 @@ class Index extends Component
         ->when($search, fn ($query) =>
             $query->where('suppliers.name', 'like', "%$search%")
         )
-        ->with(['supplier:id,name']) // Only if you display client info in the view
+        ->with(['supplier:id,name']) // Only if you display customer info in the view
         ->orderBy('suppliers.name')
         ->paginate(10);
 

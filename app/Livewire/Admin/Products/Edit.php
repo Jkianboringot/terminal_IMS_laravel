@@ -34,6 +34,9 @@ class Edit extends Component
             'product.product_category_id' => 'required',
             'product.quantity' => 'required',
             'product.purchase_price' => 'required',
+                        'product.inventory_threshold' => 'nullable|integer|min:0|max:999',
+
+
             'product.sale_price' => 'required',
             'manual_image' => 'nullable|image|max:2048',
 

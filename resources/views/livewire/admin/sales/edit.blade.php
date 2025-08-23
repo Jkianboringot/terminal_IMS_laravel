@@ -4,7 +4,7 @@
         <div class="col-md-4 col-6 @if (!$productList) w-50 @endif">
             <div class="card">
                 <div class="card-header  bg-inv-primary text-inv-secondary border-0">
-                    <h5>Set Date & Client</h5>
+                    <h5>Set Date & Customer</h5>
                 </div>
                 <div class="card-body ">
                     <div class="mb-3">
@@ -16,15 +16,15 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="" class="form-label">Client Search</label>
-                        <input type="text" wire:model.live="clientSearch" class="form-control" />
-                          @error('sale.client_id')
+                        <label for="" class="form-label">Customer Search</label>
+                        <input type="text" wire:model.live="customerSearch" class="form-control" />
+                          @error('sale.customer_id')
                             <small id="helpId" class="form-text text-danger">{{ $message }} </small>
                         @enderror
                           <ul class="list-group mt-2 w-100">
-                        @if ($clientSearch != '')
-                            @foreach ($clients as $client)
-                                     <x-client-list-item :client="$client" :sale="$sale"/>
+                        @if ($customerSearch != '')
+                            @foreach ($customers as $customer)
+                                     <x-customer-list-item :customer="$customer" :sale="$sale"/>
                             @endforeach
                         @endif
                         
@@ -180,4 +180,4 @@
 
 
 
-<!-- after this make the client id and product a drop down and search because its annoying just being able to searcjh -->
+<!-- after this make the customer id and product a drop down and search because its annoying just being able to searcjh -->

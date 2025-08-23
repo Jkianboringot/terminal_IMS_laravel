@@ -18,7 +18,7 @@
                 
                 <thead class="thead-inverse">
                     <tr>
-                        <th>ID</th>
+                  
                         <th class="text-center">Name</th>
                         <th>Logo</th>
                         @if ($user && $user->hasPermission('edit permission') || $user->hasPermission('delete permission'))
@@ -29,7 +29,7 @@
                 <tbody>
                     @foreach($brands as $brand)
                     <tr>
-                        <td scope="row">{{ $brand->id }}</td>
+                       
                         <td class="text-center">{{ $brand->name }}</td>
                         <td>
                             <img

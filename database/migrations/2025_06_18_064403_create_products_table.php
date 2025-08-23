@@ -20,11 +20,12 @@ return new class extends Migration
             $table->foreignId('product_category_id')->constrained();
             $table->string('name');
             $table->text('description');
+             $table->integer('inventory_threshold')->nullable();
 
             $table->foreignId('unit_id')->constrained();
-       $table->decimal('quantity', 10, 2)->unsigned();
-$table->decimal('purchase_price', 10, 2)->unsigned();
-$table->decimal('sale_price', 10, 2)->unsigned();
+            $table->decimal('quantity', 10, 2)->unsigned();
+            $table->decimal('purchase_price', 10, 2)->unsigned();
+            $table->decimal('sale_price', 10, 2)->unsigned();
 
 
             $table->string('technical_path')->nullable();

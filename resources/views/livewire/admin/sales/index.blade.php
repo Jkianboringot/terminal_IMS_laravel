@@ -17,9 +17,9 @@
             <table class="table table-hover  ">
                 <thead class="thead-inverse">
                     <tr>
-                        <th>ID</th>
+                   
                         <th>Sale Date</th>
-                        <th>Client</th>
+                        <th>Customer</th>
                         <th>No. of Unit Sold</th>
                         <th>Total Amount</th>
                         <th>Total Paid</th>
@@ -35,11 +35,11 @@
                 <tbody>
                     @foreach ($sales as $sale)
                     <tr>
-                        <td scope="row">{{ $sale->id }}</td>
+                     
                         <td>
                         <h6>{{Carbon\Carbon::parse($sale->sale_date)->format('jS F,Y') }}</h6>
                         </td>
-                        <td>{{ $sale->client->name }}</td>
+                        <td>{{ $sale->customer->name }}</td>
                         <td> <small> {{ number_format($sale->total_quantity, 2)}}</small></td>
                         <td> <small>PISO {{ number_format($sale->total_amount, 2)}}</small></td>
                         <td> <small>PISO {{ number_format($sale->total_paid, 2)}}</small></td>

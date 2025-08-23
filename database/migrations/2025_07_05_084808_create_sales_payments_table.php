@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('sales_payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('client_id')->constrained();
+            $table->foreignId('customer_id')->constrained();
             $table->string('transaction_reference');
 
             $table->dateTime('payment_time');

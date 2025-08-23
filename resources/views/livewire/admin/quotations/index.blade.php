@@ -20,7 +20,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Quotation Date</th>
-                        <th>Client</th>
+                        <th>Customer</th>
                         <th>Total Amount</th>
                         @if ($user && $user->hasPermission('edit permission') || $user->hasPermission('delete permission'))
                         <th class="text-center">Actions</th>
@@ -35,7 +35,7 @@
                             <h6>{{ Carbon\Carbon::parse($quotation->quotation_date)->format('jS F,Y') }}</h6>
                         </td>
                         <td>
-                            {{ $quotation->client->name }}
+                            {{ $quotation->customer->name }}
                         </td>
                         <td>
                             <small>PISO {{ number_format($quotation->total_amount, 2) }}</small>

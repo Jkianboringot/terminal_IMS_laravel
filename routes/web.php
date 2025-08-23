@@ -82,10 +82,10 @@ Route::middleware([
         Route::get('{id}/edit', Admin\Brands\Edit::class)->name('edit');
     });
 
-    Route::prefix('clients')->middleware('permission:manage clients')->name('clients.')->group(function () {
-        Route::get('/', Admin\Clients\Index::class)->name('index');
-        Route::get('/create', Admin\Clients\Create::class)->middleware('permission:create permission')->name('create');
-        Route::get('{id}/edit', Admin\Clients\Edit::class)->name('edit');
+    Route::prefix('customers')->middleware('permission:manage customers')->name('customers.')->group(function () {
+        Route::get('/', Admin\Customers\Index::class)->name('index');
+        Route::get('/create', Admin\Customers\Create::class)->middleware('permission:create permission')->name('create');
+        Route::get('{id}/edit', Admin\Customers\Edit::class)->name('edit');
     });
 
     // Route::prefix('credit-notes')->middleware('permission:manage credit notes')->name('creditnotes.')->group(function () {
@@ -146,13 +146,13 @@ Route::middleware([
         Route::get('/', Admin\Roles\Index::class)->name('index');
         Route::get('/create', Admin\Roles\Create::class)->middleware('permission:create permission')->name('create');
         Route::get('{id}/edit', Admin\Roles\Edit::class)->name('edit');
-    });
+});
 
-    // Route::prefix('sales')->middleware('permission:manage sales')->name('sales.')->group(function () {
-    //     Route::get('/', Admin\Sales\Index::class)->name('index');
-    //     Route::get('/create', Admin\Sales\Create::class)->middleware('permission:create permission')->name('create');
-    //     Route::get('{id}/edit', Admin\Sales\Edit::class)->name('edit');
-    // });
+    Route::prefix('sales')->middleware('permission:manage sales')->name('sales.')->group(function () {
+        Route::get('/', Admin\Sales\Index::class)->name('index');
+        Route::get('/create', Admin\Sales\Create::class)->middleware('permission:create permission')->name('create');
+        Route::get('{id}/edit', Admin\Sales\Edit::class)->name('edit');
+    });
 
     Route::prefix('suppliers')->middleware('permission:manage suppliers')->name('suppliers.')->group(function () {
         Route::get('/', Admin\Suppliers\Index::class)->name('index');

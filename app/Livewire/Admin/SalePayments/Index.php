@@ -39,12 +39,12 @@ class Index extends Component
 
     $salesPayments = SalesPayment::query()
         ->select('sales_payments.*')
-        ->join('clients', 'sales_payments.client_id', '=', 'clients.id')
+        ->join('customers', 'sales_payments.customer_id', '=', 'customers.id')
         ->when($search, fn($q) => $q->where(function ($sub) use ($search) {
             $sub->where('sales_payments.transaction_reference', 'like', "%{$search}%")
-                ->orWhere('clients.name', 'like', "%{$search}%");
+                ->orWhere('customers.name', 'like', "%{$search}%");
         }))
-        ->with(['client:id,name']) // Only name needed
+        ->with(['customer:id,name']) // Only name needed
         ->orderBy('sales_payments.payment_time', 'desc')
         ->paginate(10);
 

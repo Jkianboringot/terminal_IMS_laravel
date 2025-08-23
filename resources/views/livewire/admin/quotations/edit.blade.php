@@ -6,7 +6,7 @@
 
             <div class="card">
                 <div class="card-header bg-inv-primary text-inv-secondary quotation-0">
-                    <h5>Set Date & Client</h5>
+                    <h5>Set Date & Customer</h5>
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
@@ -18,15 +18,15 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="" class="form-label">Client Search</label>
-                        <input type="text" wire:model.live='clientSearch' class="form-control" />
-                        @error('quotation.client_id')
+                        <label for="" class="form-label">Customer Search</label>
+                        <input type="text" wire:model.live='customerSearch' class="form-control" />
+                        @error('quotation.customer_id')
                             <small id="helpId" class="form-text text-danger">{{ $message }}</small>
                         @enderror
                         <ul class="list-group mt-2 w-100">
-                            @if ($clientSearch != '')
-                                @foreach ($clients as $client)
-                                    <x-client-quotation-list-item :client="$client" :quotation="$quotation" />
+                            @if ($customerSearch != '')
+                                @foreach ($customers as $customer)
+                                    <x-customer-quotation-list-item :customer="$customer" :quotation="$quotation" />
                                 @endforeach
                             @endif
                         </ul>

@@ -19,7 +19,7 @@ class SuppliersSeeder extends Seeder
                 'email' => 'info@pldt.com.ph',
                 'address' => 'Makati City, Philippines, Ramon Cojuangco Building',
                 'phone_number' => '+63 2 8888 8171',
-                'registration_number' => 'CS200812345',
+               
                 'tax_id' => '000-123-456-789',
                 'account_number' => '1234567890',
                 'created_at' => now(),
@@ -30,7 +30,7 @@ class SuppliersSeeder extends Seeder
                 'email' => 'info@philippineairlines.com',
                 'address' => 'Pasay City, Philippines, PAL Gate 1, Andrews Avenue',
                 'phone_number' => '+63 2 8855 8888',
-                'registration_number' => 'CS198945678',
+            
                 'tax_id' => '000-987-654-321',
                 'account_number' => '0987654321',
                 'created_at' => now(),
@@ -41,7 +41,7 @@ class SuppliersSeeder extends Seeder
                 'email' => 'contact@sanmiguel.com.ph',
                 'address' => 'Ortigas Center, Mandaluyong City, Philippines',
                 'phone_number' => '+63 2 8632 3000',
-                'registration_number' => 'CS199102345',
+               
                 'tax_id' => '000-456-789-123',
                 'account_number' => '1122334455',
                 'created_at' => now(),
@@ -52,7 +52,6 @@ class SuppliersSeeder extends Seeder
                 'email' => 'corporate@jollibee.com.ph',
                 'address' => 'Pasig City, Philippines, Jollibee Plaza, Ortigas Center',
                 'phone_number' => '+63 2 8634 1111',
-                'registration_number' => 'CS199912345',
                 'tax_id' => '000-234-567-890',
                 'account_number' => '2233445566',
                 'created_at' => now(),
@@ -63,7 +62,6 @@ class SuppliersSeeder extends Seeder
                 'email' => 'info@abs-cbn.com',
                 'address' => 'Quezon City, Philippines, Mother Ignacia Street',
                 'phone_number' => '+63 2 3415 2272',
-                'registration_number' => 'CS200001234',
                 'tax_id' => '000-345-678-901',
                 'account_number' => '3344556677',
                 'created_at' => now(),
