@@ -25,8 +25,8 @@ class Edit extends Component
     function rules()
     {
         return [
-            'add_products.purchase_date' => 'required',
-            'add_products.supplier_id' => 'required',
+            'add_products.purchase_date' => 'nullable',
+            'add_products.supplier_id' => 'nullalbe',
         ];
     }
 
@@ -114,39 +114,63 @@ function addToList()
     }
 }
 
-   function makePurchase()
+  function addProductToList()
 {
     try {
-        // Manual checks instead of $this->validate()
-        if (!$this->addProduct->purchase_date || !$this->addProduct->supplier_id) {
-            throw new \Exception('Purchase Date and Supplier are required.');
-        }
-
-        if (empty($this->productList)) {
-            throw new \Exception('You must add at least one product to the list.');
-        }
-
-        // Save the updated addProduct info
+        $this->validate();
         $this->addProduct->save();
 
-        // Detach old products
-        $this->addProduct->products()->detach();
-
-        // Re-attach updated products from productList
         foreach ($this->productList as $listItem) {
-            $this->addProduct->products()->attach($listItem['product_id'], [
-                'quantity' => $listItem['quantity'],
-                
+            // Check if the product already exists in pivot
+            $existing = $this->addProduct->products()
+                ->where('product_id', $listItem['product_id'])
+                ->first();
+
+            $oldQuantity = $existing ? $existing->pivot->quantity : 0;
+            $newQuantity = $listItem['quantity'];
+
+            // Attach or update pivot
+            $this->addProduct->products()->syncWithoutDetaching([
+                $listItem['product_id'] => [
+                    'quantity' => $newQuantity,
+                ]
+            ]);
+
+            // Determine if there's a change
+            if ($newQuantity > $oldQuantity) {
+                $action = 'stock_added';
+                $changeQty = $newQuantity - $oldQuantity;
+            } elseif ($newQuantity < $oldQuantity) {
+                $action = 'stock_removed';
+                $changeQty = $oldQuantity - $newQuantity;
+            } else {
+                continue; // No change → skip logging
+            }
+
+            // ✅ Log Stock Change
+            \App\Models\ActivityLog::create([
+                'user_id' => auth()->id(),
+                'action' => $action,
+                'model' => 'Product',
+                'model_id' => $listItem['product_id'],
+                'changes' => json_encode([
+                    'old_quantity' => $oldQuantity,
+                    'new_quantity' => $newQuantity,
+                    'change' => $changeQty,
+                ]),
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->header('User-Agent'),
             ]);
         }
 
-        // Redirect to index after successful update
         return redirect()->route('admin.add-products.index');
 
     } catch (\Throwable $th) {
         $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
     }
 }
+
+
     public function render()
     {
         $suppliers = Supplier::where('name', 'like', '%' . $this->supplierSearch . '%')->get();

@@ -106,26 +106,37 @@ class Create extends Component
              $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
         }
     }
+function addProductToList()
+{
+    try {
+        $this->validate();
+        $this->addProduct->save();
 
-    function addProductToList(){
-        
-        try {
-            $this->validate();
-            $this->addProduct->save();
-            foreach ($this->productList as $key => $listItem) {
-                $this->addProduct->products()->attach($listItem['product_id'],[
-                    'quantity'=>$listItem['quantity'],
-                
-                ]); 
-                
-            }
+        foreach ($this->productList as $key => $listItem) {
+            $this->addProduct->products()->attach($listItem['product_id'], [
+                'quantity' => $listItem['quantity'],
+            ]);
 
-            return redirect()->route('admin.add-products.index');
-        } catch (\Throwable $th) {
-             $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
+            // ✅ Log Stock Adjustment
+            \App\Models\ActivityLog::create([
+                'user_id' => auth()->id(),
+                'action' => 'stock_added',
+                'model' => 'Product',
+                'model_id' => $listItem['product_id'],
+                'changes' => json_encode([
+                    'added_quantity' => $listItem['quantity'],
+                ]),
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->header('User-Agent'),
+            ]);
         }
-      
+
+        return redirect()->route('admin.add-products.index');
+    } catch (\Throwable $th) {
+        $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
     }
+}
+
     public function render()
     {
         $suppliers = Supplier::where('name', 'like', '%' . $this->supplierSearch . '%')->get();

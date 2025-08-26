@@ -55,28 +55,65 @@ class Edit extends Component
     {    
         $this->validate();
     }
+function save()
+{
+    try {
+        $this->validate();
 
-    function save()
-    {
-        // return redirect()->route('admin.products.index');
-        try {
-               $this->validate();
-
-                if ($this->manual_image) {
-                $productManual = Str::slug($this->product->name) . '-logo.' . $this->manual_image->extension();
-
-                $this->manual_image->storeAs('product_manual/', $productManual, 'public');
-
-                $this->product->technical_path = "product_manual/" . $productManual;
-            }
-
-            $this->product->update();
-
-            return redirect()->route('admin.products.index');
-        } catch (\Throwable $th) {
-            $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
+        // Handle manual image upload if any
+        if ($this->manual_image) {
+            $productManual = Str::slug($this->product->name) . '-logo.' . $this->manual_image->extension();
+            $this->manual_image->storeAs('product_manual/', $productManual, 'public');
+            $this->product->technical_path = "product_manual/" . $productManual;
         }
+
+        // ✅ Get old quantity before update
+        $oldQty = $this->product->getOriginal('quantity');
+
+        // ✅ Update the product
+        $this->product->update();
+
+        // ✅ Compare quantities and log stock changes
+        $newQty = $this->product->quantity;
+
+        if ($newQty > $oldQty) {
+            $diff = $newQty - $oldQty;
+            \App\Models\ActivityLog::create([
+                'user_id' => auth()->id(),
+                'action' => 'stock_added',
+                'model' => 'Product',
+                'model_id' => $this->product->id,
+                'changes' => json_encode([
+                    'added_quantity' => $diff,
+                    'old_quantity' => $oldQty,
+                    'new_quantity' => $newQty
+                ]),
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->header('User-Agent'),
+            ]);
+        } elseif ($newQty < $oldQty) {
+            $diff = $oldQty - $newQty;
+            \App\Models\ActivityLog::create([
+                'user_id' => auth()->id(),
+                'action' => 'stock_removed',
+                'model' => 'Product',
+                'model_id' => $this->product->id,
+                'changes' => json_encode([
+                    'removed_quantity' => $diff,
+                    'old_quantity' => $oldQty,
+                    'new_quantity' => $newQty
+                ]),
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->header('User-Agent'),
+            ]);
+        }
+
+        return redirect()->route('admin.products.index');
+    } catch (\Throwable $th) {
+        $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
     }
+}
+
     public function render()
     {
         return view('livewire.admin.products.edit', [

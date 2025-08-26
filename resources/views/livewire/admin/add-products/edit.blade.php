@@ -149,7 +149,7 @@
                  
                             <button
                         onclick="confirm('Are you sure you wish to make the Purchase')||event.stopImmediatePropagation()"
-                        wire:click='makePurchase' class="btn btn-dark text-inv-secondary w-100">Add to Product list</button>
+                        wire:click='addProductToList' class="btn btn-dark text-inv-secondary w-100">Add to Product list</button>
                       
                     </div>
                 </div>
