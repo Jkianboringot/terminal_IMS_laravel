@@ -10,8 +10,8 @@
        x-ref="toggle"
        @click.prevent="open = !open"
     >
-        <span class="d-none d-md-inline">
-            Notes
+        <span class="d-none d-md-inline"><i class="bi bi-card-list text-danger"></i>
+           Reminder
             <span class="badge bg-danger ms-1" >{{ $noteCount }}</span>
         </span>
     </a>

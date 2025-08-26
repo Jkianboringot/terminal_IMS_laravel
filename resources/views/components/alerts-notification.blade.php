@@ -8,8 +8,8 @@
         class="nav-link"
         x-ref="toggle"
         @click.prevent="open = !open">
-        <span class="d-none d-md-inline">
-            Notifications
+        <span class="d-none d-md-inline"><i class="bi bi-bell-fill text-primary"></i>
+       
             <span class="badge bg-danger ms-1">
                 {{ $notifications->count() }}
             </span>
