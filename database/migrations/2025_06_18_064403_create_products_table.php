@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('brand_id')->constrained();
+            $table->foreignId('brand_id')->nullable()->constrained(); 
             $table->foreignId('supplier_id')->constrained();
 
 
-            $table->foreignId('product_category_id')->constrained();
+            $table->foreignId('product_category_id')->nullable()->constrained();
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
              $table->integer('inventory_threshold')->nullable();
 
             $table->foreignId('unit_id')->constrained();
@@ -30,6 +30,8 @@ return new class extends Migration
 
             $table->string('technical_path')->nullable();
             $table->string('location')->nullable();
+            $table->string('barcode')->nullable();
+
 
 
             $table->timestamps();

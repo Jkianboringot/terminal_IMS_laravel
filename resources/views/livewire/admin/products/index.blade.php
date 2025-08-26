@@ -21,6 +21,8 @@
                         <th>Shelf Location</th>
                         <th>Product Details</th>
                           <th>Suppliers</th>
+                        <th>Brand</th>
+
                         <th>Category</th>
                       
                       
@@ -46,11 +48,13 @@
                         <td scope="row">{{ $product->location??'N/A' }}</td>
                         <td>
                             <h6>{{ $product->name }}</h6>
-                            <small>{{ $product->description }}</small>
+                            <small>{{ $product->description??'N/A' }}</small>
                             
                         </td>
                             <td>{{ $product->supplier->name }}</td>
-                        <td>{{ $product->category->name }}</td>
+                            <td>{{ $product->brand->name ??'N/A'}}</td>
+
+                        <td>{{ $product->category->name??'N/A' }}</td>
                     
 
 

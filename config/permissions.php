@@ -6,7 +6,7 @@ return [
         'manage users',
         'manage customers',
         'manage suppliers',
-       
+        'manage brands',
         'manage invoices','manage orders',
         'manage product categories','manage products',
         'manage product purchases','manage sales',

@@ -25,19 +25,23 @@ class Edit extends Component
     function rules()
     {
         return [
-            'product.name' => 'required',
-            'product.brand_id' => 'required',
+           'product.name' => 'required',
+            'product.brand_id' => 'nullable|string',
             'product.supplier_id' => 'required',
-           
-            'product.description' => 'required',
-            'product.unit_id' => 'required',
-            'product.product_category_id' => 'required',
+
+            'product.description' => 'nullable|string',
+            'product.unit_id' => 'required|integer|exists:units,id',
+                // do this for every validation but becarefull it might impact the perfomacne
+            'product.product_category_id' => 'nullable|string',
             'product.quantity' => 'required',
             'product.purchase_price' => 'required',
-                        'product.inventory_threshold' => 'nullable|integer|min:0|max:999',
-
-
             'product.sale_price' => 'required',
+            'product.location' => 'nullable|string|max:45',
+            'product.barcode' => 'nullable|string|max:45',
+
+            'product.inventory_threshold' => 'nullable|integer|min:0|max:999',
+
+
             'manual_image' => 'nullable|image|max:2048',
 
         ];
