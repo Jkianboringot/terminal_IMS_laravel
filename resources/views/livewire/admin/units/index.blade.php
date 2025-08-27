@@ -8,7 +8,11 @@
             <h5>Units' List</h5>
         </div>
         <div class="card-body table-responsive">
-            <table class="table table-hover  ">
+             <input type="text"
+                   wire:model.live.debounce.300ms="search"
+                   placeholder="Search by product name..."
+                   class="form-control mb-3 @if($search) border border-primary @endif"></tr>
+            <table class="table table-hover">
                 <thead class="thead-inverse">
                     <tr>
                       

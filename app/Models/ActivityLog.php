@@ -16,12 +16,12 @@ class ActivityLog extends Model
         'user_agent'
     ];
 
-    // If you want to automatically cast 'changes' JSON to array
+    
     protected $casts = [
         'changes' => 'array',
     ];
 
-    // Relationship to User
+  
     public function user()
     {
         return $this->belongsTo(User::class);

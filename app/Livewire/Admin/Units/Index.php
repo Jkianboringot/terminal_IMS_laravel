@@ -10,6 +10,12 @@ class Index extends Component
 {
 
     use WithPagination;
+    public string $search = '';
+    public function updatingSearch()
+    {
+        // Reset pagination when search input changes
+        $this->resetPage();
+    }
     function delete($id)
     {
         try {
@@ -27,8 +33,22 @@ class Index extends Component
     }
     public function render()
     {
+
+
+        $search = trim($this->search);
+
+        $units = Unit::when(
+            $search,
+            fn($query) =>
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%");
+            })
+        )
+            ->orderBy('name')
+            ->paginate(10);
+
         return view('livewire.admin.units.index', [
-            'units' => Unit::paginate(10)
+            'units' => $units
         ]);
     }
 }

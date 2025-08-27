@@ -166,6 +166,12 @@ Route::middleware([
         Route::get('{id}/edit', Admin\Units\Edit::class)->name('edit');
     });
 
+ Route::prefix('activity-logs')->name('activity-logs.')->group(function () {
+       Route::get('/', \App\Livewire\Admin\ActivityLogs\Index::class)
+    ->name('index');
+    });
+
+
 
 //   Route::prefix('purchase-payments')->middleware('permission:manage payments')->name('purchase-payments.')->group(function () {
 //         Route::get('/', Admin\PurchasePayments\Index::class)->name('index');

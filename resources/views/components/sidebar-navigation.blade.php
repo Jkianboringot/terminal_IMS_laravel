@@ -116,6 +116,8 @@
                     @endif
                 </x-new-nav-link-dropdown>
             @endif
+
+
 {{-- 
             @if ($user && $user->hasPermission('manage orders'))
                 <x-new-nav-link-dropdown title="Orders" bi_icon="bi-cart-check" route="admin.orders*">
@@ -161,6 +163,8 @@
                     @endif
                 </x-new-nav-link-dropdown>
             @endif --}}
+
+            <x-new-nav-link title="Activity Log" bi_icon="bi bi-clock-history" route="admin.activity-logs.index" />
 
 
         </ul>
