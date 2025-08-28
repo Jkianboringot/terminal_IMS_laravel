@@ -70,7 +70,7 @@ class User extends Authenticatable
 
     function hasPermission($permission){
         foreach ($this->roles as $key => $role) {
-            $permissions = json_decode($role->permissions,true)??[];
+            $permissions = $role->permissions??[];
             if (in_array($permission, $permissions)) {
                 return true;
             }

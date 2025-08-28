@@ -166,7 +166,7 @@ Route::middleware([
         Route::get('{id}/edit', Admin\Units\Edit::class)->name('edit');
     });
 
- Route::prefix('activity-logs')->name('activity-logs.')->group(function () {
+ Route::prefix('activity-logs')->middleware('permission:manage activity logs')->name('activity-logs.')->group(function () {
        Route::get('/', \App\Livewire\Admin\ActivityLogs\Index::class)
     ->name('index');
     });

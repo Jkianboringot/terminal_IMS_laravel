@@ -14,7 +14,7 @@ class Index extends Component
     public function updatingSearch()
     {
         // Reset pagination when search input changes
-        $this->resetPage();
+        $this->resetPage(); 
     }
     function delete($id)
     {

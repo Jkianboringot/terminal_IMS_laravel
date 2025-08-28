@@ -38,7 +38,7 @@
 
                             <td>
                                 <ul class="row list-unstyled mb-0">
-                                    @foreach (json_decode($role->permissions) as $permission)
+                                    @foreach ($role->permissions as $permission)
                                         <li class="col-md-4 col-sm-6 col-12">{{ $permission }}</li>
                                     @endforeach
                                 </ul>

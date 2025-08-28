@@ -61,7 +61,7 @@ class Create extends Component
     {
         $this->validate();
         try {
-            $this->role->permissions=json_encode($this->selected_permissions);
+            $this->role->permissions=$this->selected_permissions;
             
             $this->role->save();
             // if this is big letter it does not allow you to save for somereason

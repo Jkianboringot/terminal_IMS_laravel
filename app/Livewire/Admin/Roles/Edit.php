@@ -33,7 +33,7 @@ class Edit extends Component
             abort(403, 'Unauthorized');
         }
 
-        $this->selected_permissions = json_decode($this->role->permissions);
+        $this->selected_permissions = $this->role->permissions;
     }
     function addToList($permission)
     {
@@ -69,7 +69,7 @@ class Edit extends Component
                if ($this->role->id == 1) {
             throw new \Exception("Super Admin role cannot be edited.", 1);
         }
-            $this->role->permissions=json_encode($this->selected_permissions);
+            $this->role->permissions=$this->selected_permissions;
             
             $this->role->update();
             // if this is big letter it does not allow you to save for somereason
