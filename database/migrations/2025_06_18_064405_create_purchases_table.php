@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -15,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('supplier_id')->constrained();
 
-            $table->date('purchase_date');
+            $table->date('purchase_date')->nullable();
             $table->timestamps();
         });
     }

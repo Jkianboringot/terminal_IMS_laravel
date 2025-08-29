@@ -40,7 +40,7 @@
                         <tr>
 
                             <td>
-                                <h6>{{ \Carbon\Carbon::parse($addProduct->purchase_date)->format('jS F, Y') }}</h6>
+                                <h6>{{ \Carbon\Carbon::parse($addProduct->add_product_date)->format('jS F, Y') }}</h6>
                             </td>
                             <td>
                                 <p>Products:

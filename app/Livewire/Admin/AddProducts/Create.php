@@ -26,7 +26,7 @@ class Create extends Component
 
     function rules(){
         return [
-            'addProduct.purchase_date'=>'required',
+            'addProduct.add_product_date'=>'required',
             'addProduct.supplier_id'=>'required',
         ];
     }
@@ -36,6 +36,8 @@ class Create extends Component
     function mount()
     {
         $this->addProduct = new AddProduct();
+    $this->addProduct->add_product_date = now()->toDateString();
+
     }
 
 
@@ -110,6 +112,12 @@ function addProductToList()
 {
     try {
         $this->validate();
+
+        if (empty($this->addProduct->add_product_date)) {
+       $this->addProduct->add_product_date = now()->toDateString();
+
+        }   
+
         $this->addProduct->save();
 
         foreach ($this->productList as $key => $listItem) {
@@ -117,7 +125,7 @@ function addProductToList()
                 'quantity' => $listItem['quantity'],
             ]);
 
-            // ✅ Log Stock Adjustment
+          //make this a function
             \App\Models\ActivityLog::create([
                 'user_id' => auth()->id(),
                 'action' => 'stock_added',

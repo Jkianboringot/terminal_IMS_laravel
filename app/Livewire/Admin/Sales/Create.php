@@ -36,6 +36,8 @@ class Create extends Component
     function mount()
     {
         $this->sale = new Sale();
+     
+    $this->sale->sale_date = now()->toDateString();
     }
 
 
@@ -87,6 +89,9 @@ class Create extends Component
                 'price' => 'required',
             ]);
 
+            if (empty($this->sale->sale_date)) {
+            $this->sale->sale_date = now()->toDateString();
+        }
 
             if (
                 Product::find($this->selectedProductId)->inventory_balance < $this->quantity

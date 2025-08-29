@@ -34,6 +34,8 @@ class Create extends Component
     function mount()
     {
         $this->purchase = new Purchase();
+            $this->purchase->purchase_date = now()->toDateString();
+
     }
 
 
@@ -109,6 +111,10 @@ class Create extends Component
         
         try {
             $this->validate();
+
+            if (empty($this->purchase->purchase_date)) {
+            $this->purchase->purchase_date = now()->toDateString();
+        }
             $this->purchase->save();
             foreach ($this->productList as $key => $listItem) {
                 $this->purchase->products()->attach($listItem['product_id'],[

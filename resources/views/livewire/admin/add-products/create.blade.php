@@ -11,8 +11,8 @@
                 <div class="card-body ">
                     <div class="mb-3">
                         <label for="" class="form-label">Date of Purchase</label>
-                        <input wire:model.live="addProduct.purchase_date" type="date" class="form-control" />
-                        @error('addProduct.purchase_date')
+                        <input wire:model.live="addProduct.add_product_date" type="date" class="form-control" />
+                        @error('addProduct.add_product_date')
                             <small id="helpId" class="form-text text-danger">{{ $message }} </small>
                         @enderror
                     </div>

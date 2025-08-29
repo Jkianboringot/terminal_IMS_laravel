@@ -47,7 +47,7 @@ class Product extends Model
 
     function add_products()
     {
-        return $this->belongsToMany(AddProduct::class, 'add_products_to_list')->withPivot(['quantity']);
+        return $this->belongsToMany(AddProduct::class, 'add_products_to_list')->withPivot(['quantity'])->withTimestamps();;
     }
 
     function quotations()

@@ -10,6 +10,8 @@ class Purchase extends Model
     protected $appends = [
         'total_amount'
     ];
+
+   
     function supplier()
     {
         return $this->belongsTo(Supplier::class);

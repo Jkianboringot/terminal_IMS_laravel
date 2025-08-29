@@ -10,6 +10,7 @@ class Sale extends Model
     protected $appends = [
         'total_amount'
     ];
+  
     function customer()
     {
         return $this->belongsTo(Customer::class);

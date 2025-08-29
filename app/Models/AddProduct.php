@@ -7,53 +7,36 @@ use Illuminate\Database\Eloquent\Model;
 class AddProduct extends Model
 {
    
-    protected $appends = [
-        'total_amount'
-    ];
+    
+
     function supplier()
     {
         return $this->belongsTo(Supplier::class);
     }
     function products()
     {
-        return $this->belongsToMany(Product::class, 'add_products_to_list')->withPivot(['quantity']);
+        return $this->belongsToMany(Product::class, 'add_products_to_list')->withPivot(['quantity'])->withTimestamps();;
     }
 
-      public function getTotalValueAttribute()
-    { #added the get cause its causing someshit
-        return $this->products()->get()->sum(function ($product) {
-            return $product->pivot->quantity * $product;
-        });
-    }
-
-    public function getTotalAmountAttribute()
-    {
-        return $this->products->sum(function ($product) {
-            return $product->pivot->quantity * $product;
-        });
-    }
+    //   public function getTotalValueAttribute()
+    // { #added the get cause its causing someshit
+    //     return $this->products()->get()->sum(function ($product) {
+    //         return $product->pivot->quantity * $product;
+    //     });
+    // }
+    
+    // public function getTotalAmountAttribute()
+    // {
+    //     return $this->products->sum(function ($product) {
+    //         return $product->pivot->quantity * $product;
+    //     });
+    // }
        public function getTotalQuantityAttribute()
     {
         return $this->products()->get()->sum(function ($product) {
             return $product->pivot->quantity ;
         });
     }
-     function getTotalBalanceAttribute(){
-            return $this->total_amount- $this->total_paid ;
-        }
-        function getIsPaidAttribute(){
-            return $this->total_balance <= 0;
-            
-        }
-
-        function getTotalPaidAttribute(){
-            return $this->payments->sum(function ($payment){
-            return $payment->pivot->amount;
-        });
-        }
-
-          function payments(){
-        return $this->belongsToMany(PurchasePayment::class,'purchase_purchase_payment')->withPivot('amount');
-    }
+    
 
 }
