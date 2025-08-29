@@ -1,5 +1,5 @@
 <div>
-  
+
 
     <input type="text" wire:model="search" class="form-control mb-3" placeholder="Search logs...">
 
@@ -30,8 +30,15 @@
 
                     @if(is_array($changes) && count($changes) > 0)
                     @foreach($changes as $key => $value)
-                    <strong>{{ ucfirst($key) }}:</strong> {{ $value }}<br>
+                    <strong>{{ ucfirst($key) }}:</strong>
+                    @if(is_array($value))
+                    {{ json_encode($value) }}
+                    @else
+                    {{ $value }}
+                    @endif
+                    <br>
                     @endforeach
+
                     @else
                     <em>No changes recorded</em>
                     @endif
