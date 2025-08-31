@@ -23,7 +23,7 @@ return new class extends Migration
             [
                 'id' => 1,
                 'title' => "Super Administrator",
-                'permissions'=> json_encode(config('permissions.permissions')),
+                'permissions'=> json_encode(config('permissions.Admin/Owner')),
                 'created_at' => now()->toDateTimeString(),
             ],
         ]);

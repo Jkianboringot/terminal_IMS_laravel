@@ -21,36 +21,18 @@
                 </div>
 
                 <div class="col-md-6 col-12">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Permissions</label>
-                        <input wire:model.live='search' type="search" class="form-control" name="search"
-                            placeholder="Search your Permission" />
-                        @error('search')
-                            <small id="" class="form-text text-danger">{{ $message }}</small>
-                        @enderror
-                        <!-- Horizontal under breakpoint -->
-                        <div class="list-group">
-
-                            @foreach ($filtered_permissions as $perm)
-                                <button
-                                    class="list-group-item btn @if (in_array($perm, $selected_permissions)) bg-inv-secondary disabled @endif"
-                                    wire:click="addToList('{{ $perm }}')">
-                                    {{ $perm }}
-                                </button>
-                            @endforeach
-
-                        </div>
+                  <div class="mb-3">
+                        <label for="staticpermissions" class="form-label">Permission</label>
+                        <select wire:model.live='selected_permissions'  class="form-select" >
+                        <option value="" selected>Select the Role Permission </option>
+                        @foreach ($staticpermissions as $staticpermission )
+                        <option value="{{$staticpermission}}">{{ $staticpermission }}</option>
+                          @endforeach
+                        </select>
 
 
                     </div>
-                    @foreach ($selected_permissions as $key => $permission)
-                        <span class="badge rounded-pill bg-inv-primary ">
-                            {{ $permission }}
-                            <a href="javascript:void(0)" wire:click="subtractFromList('{{ $key }}')">
-                                <i class="bi bi-trash-fill"></i>
-                            </a>
-                        </span>
-                    @endforeach
+                  
                 </div>
             </div>
 
