@@ -24,7 +24,7 @@
                   <div class="mb-3">
                         <label for="staticpermissions" class="form-label">Permission</label>
                         <select wire:model.live='selected_permissions'  class="form-select" >
-                        <option value="" selected>Select the Role Permission </option>
+                        <option value="null" selected>Select the Role Permission </option>
                         @foreach ($staticpermissions as $staticpermission )
                         <option value="{{$staticpermission}}">{{ $staticpermission }}</option>
                           @endforeach

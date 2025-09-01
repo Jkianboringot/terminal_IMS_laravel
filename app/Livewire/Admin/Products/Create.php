@@ -32,7 +32,7 @@ class Create extends Component
 
             'product.description' => 'nullable|string',
             'product.unit_id' => 'required|integer|exists:units,id',
-                // do this for every validation but becarefull it might impact the perfomacne
+            // do this for every validation but becarefull it might impact the perfomacne
             'product.product_category_id' => 'nullable|string',
             'product.quantity' => 'required',
             'product.purchase_price' => 'required',
@@ -44,7 +44,7 @@ class Create extends Component
 
 
             'manual_image' => 'nullable|image|max:2048',
-            
+
 
 
         ];
@@ -64,7 +64,7 @@ class Create extends Component
         try {
             $this->validate();
 
-               if ($this->manual_image) {
+            if ($this->manual_image) {
                 $logoName = Str::slug($this->product->name) . '-logo.' . $this->manual_image->extension();
 
                 $this->manual_image->storeAs('product_manual/', $logoName, 'public');

@@ -43,7 +43,7 @@
                     <div class="mb-3">
                         <label for="organization_type" class="form-label">Organization Type</label>
                         <select wire:model.live='customer.organization_type'  class="form-select" >
-                        <option value="" selected>Select the Organization Type</option>
+                        <option value="null" selected>Select the Organization Type</option>
                         @foreach ($organization_types as $organization_type )
                         <option value="{{$organization_type}}">{{ $organization_type }}</option>
                           @endforeach

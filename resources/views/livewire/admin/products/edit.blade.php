@@ -3,181 +3,191 @@
 
     <div class="card">
         <div class="card-header bg-inv-primary text-inv-secondary border-0">
-            <h5>Create a new Product</h5>
+            <h5>Edit Product</h5>
         </div>
         <div class="card-body">
 
             <div class="row">
+
+                <!-- Product Category -->
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
-                        <label for="" class="form-label">Product Category</label>
-                        <select wire:model.live='product.product_category_id' class="form-select " name="" id="">
-                            <option value="" selected>Select your Product Category</option>
+                        <label class="form-label">Product Category</label>
+                        <select wire:model.lazy='product.product_category_id' class="form-select">
+                            <option value="">Select Category</option>
                             @foreach ($productCategories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
                         @error('product.product_category_id')
-                        <small id="" class="form-text text-danger">{{ $message }}</small>
+                            <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
 
+                <!-- Product Brand -->
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
-                        <label for="" class="form-label">Product Brand</label>
-                        <select wire:model.live='product.brand_id' class="form-select " name="" id="">
-                            <option value="" selected>Select your Product Brand</option>
+                        <label class="form-label">Product Brand</label>
+                        <select wire:model.lazy='product.brand_id' class="form-select">
+                            <option value="">Select Brand</option>
                             @foreach ($brands as $brand)
-                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                             @endforeach
                         </select>
                         @error('product.brand_id')
-                        <small id="" class="form-text text-danger">{{ $message }}</small>
+                            <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
+
+                <!-- Name -->
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input wire:model.live='product.name' type="text" class="form-control" name="name" id="name"
-                            aria-describedby="name" placeholder="Enter your Product's Name" />
+                        <label class="form-label">Name</label>
+                        <input wire:model.lazy='product.name' type="text" class="form-control"
+                               placeholder="Enter Product Name" />
                         @error('product.name')
-                        <small id="" class="form-text text-danger">{{ $message }}</small>
+                            <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
 
+                <!-- Location -->
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
-                        <label for="location" class="form-label">Shelf Location</label>
-                        <input wire:model.live='product.location' type="text" class="form-control" name="location" id="location"
-                            aria-describedby="location" placeholder="Enter your Product Shelf Location" />
+                        <label class="form-label">Shelf Location</label>
+                        <input wire:model.lazy='product.location' type="text" class="form-control"
+                               placeholder="Enter Product Shelf Location" />
                         @error('product.location')
-                        <small id="" class="form-text text-danger">{{ $message }}</small>
+                            <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
 
+                <!-- Barcode -->
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
-                        <label for="barcode" class="form-label">Barcode</label>
-                        <input wire:model.live='product.barcode' type="text" class="form-control" name="barcode" id="barcode"
-                            aria-describedby="barcode" placeholder="Enter your Product's Barcode" />
+                        <label class="form-label">Barcode</label>
+                        <input wire:model.lazy='product.barcode' type="text" class="form-control"
+                               placeholder="Enter Product Barcode" />
                         @error('product.barcode')
-                        <small id="" class="form-text text-danger">{{ $message }}</small>
+                            <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
 
+                <!-- Supplier -->
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
-                        <label for="" class="form-label">Supplier</label>
-                        <select wire:model.live='product.supplier_id' class="form-select " name="" id="">
-                            <option value="" selected>Select your Product Brand</option>
+                        <label class="form-label">Supplier</label>
+                        <select wire:model.lazy='product.supplier_id' class="form-select">
+                            <option value="">Select Supplier</option>
                             @foreach ($suppliers as $supplier)
-                            <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                                <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                             @endforeach
                         </select>
                         @error('product.supplier_id')
-                        <small id="" class="form-text text-danger">{{ $message }}</small>
+                            <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
-                <div class="mb-3">
-                    <label for="" class="form-label">Product Description</label>
-                    <textarea wire:model.live='product.description' class="form-control" name="" id=""
-                        rows="3"></textarea>
+
+                <!-- Description -->
+                <div class="col-12 mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea wire:model.lazy='product.description' class="form-control" rows="3"></textarea>
                     @error('product.description')
-                    <small id="" class="form-text text-danger">{{ $message }}</small>
+                        <small class="form-text text-danger">{{ $message }}</small>
                     @enderror
+                </div>
 
-
-
-                    <label for="" class="form-label">Manual</label>
-                    <input
-                        wire:model.live='manual_image'
-                        type="file"
-                        class="form-control" />
-                    @error('brand.manual_image')
-                    <small id="" class="form-text text-danger">{{ $message }}</small>
+                <!-- Manual Upload -->
+                <div class="col-12 mb-3">
+                    <label class="form-label">Manual</label>
+                    <input wire:model.lazy='manual_image' type="file" class="form-control" />
+                    @error('manual_image')
+                        <small class="form-text text-danger">{{ $message }}</small>
                     @enderror
                 </div>
                 @if($manual_image)
-                <div class="mb-3">
-                    <img width="150px" class="img-fluid p-3 border border-secondary" src="{{$manual_image->temporaryUrl() }}">
-                </div>
+                    <div class="col-12 mb-3">
+                        <img width="150px" class="img-fluid p-3 border border-secondary"
+                             src="{{ $manual_image->temporaryUrl() }}">
+                    </div>
                 @endif
+
+                <!-- Inventory Threshold -->
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
-                        <label for="inventory_threshold" class="form-label">Inventory Threshold</label>
-                        <input wire:model.live='product.inventory_threshold' type="number" min="0" step="1" class="form-control"
-                            name="inventory_threshold" id="name" aria-describedby="inventory_threshold"
-                            placeholder="Enter minimum stock before alert" />
+                        <label class="form-label">Inventory Threshold</label>
+                        <input wire:model.lazy='product.inventory_threshold' type="number" min="0" step="1"
+                               class="form-control" placeholder="Minimum stock before alert" />
                         @error('product.inventory_threshold')
-                        <small id="" class="form-text text-danger">{{ $message }}</small>
+                            <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
 
+                <!-- Unit -->
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
-                        <label for="" class="form-label">Product Measure Unit</label>
-                        <select wire:model.live='product.unit_id' class="form-select " name="" id="">
-                            <option value='' selected>Select your Product Unit</option>
+                        <label class="form-label">Unit</label>
+                        <select wire:model.lazy='product.unit_id' class="form-select">
+                            <option value="">Select Unit</option>
                             @foreach ($units as $unit)
-                            <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                                <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                             @endforeach
                         </select>
                         @error('product.unit_id')
-                        <small id="" class="form-text text-danger">{{ $message }}</small>
+                            <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
+
+                <!-- Quantity -->
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Quantity</label>
-                        <input wire:model.live='product.quantity' type="number" min="0" step="0.1" class="form-control"
-                            name="quantity" id="name" aria-describedby="quantity"
-                            placeholder="Enter your Product's quantity per unit" />
+                        <label class="form-label">Quantity</label>
+                        <input wire:model.lazy='product.quantity' type="number" min="0" step="0.1"
+                               class="form-control" placeholder="Product quantity" />
                         @error('product.quantity')
-                        <small id="" class="form-text text-danger">{{ $message }}</small>
+                            <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
+
+                <!-- Purchase Price -->
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Unit Cost</label>
-                        <input wire:model.live='product.purchase_price' type="number" min="0" step="0.1"
-                            class="form-control" name="purchase_price" id="name" aria-describedby="purchase_price"
-                            placeholder="Enter your Product's purchase price" />
+                        <label class="form-label">Unit Cost</label>
+                        <input wire:model.lazy='product.purchase_price' type="number" min="0" step="0.1"
+                               class="form-control" placeholder="Purchase price" />
                         @error('product.purchase_price')
-                        <small id="" class="form-text text-danger">{{ $message }}</small>
+                            <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
+
+                <!-- Sale Price -->
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Selling Price</label>
-                        <input wire:model.live='product.sale_price' type="number" min="0" step="0.1"
-                            class="form-control" name="sale_price" id="name" aria-describedby="sale_price"
-                            placeholder="Enter your Product's sale price" />
+                        <label class="form-label">Selling Price</label>
+                        <input wire:model.lazy='product.sale_price' type="number" min="0" step="0.1"
+                               class="form-control" placeholder="Sale price" />
                         @error('product.sale_price')
-                        <small id="" class="form-text text-danger">{{ $message }}</small>
+                            <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
-
-
-
-
 
             </div>
 
-
-
-            <button onclick="confirm('Are you sure you wish to create this Product')||event.stopImmediatePropagation()"
-                wire:click='save' class="btn btn-dark text-inv-secondary">Save</button>
+            <button wire:click='save'
+                    onclick="confirm('Are you sure you want to save changes?') || event.stopImmediatePropagation()"
+                    class="btn btn-dark text-inv-secondary mt-3">
+                Save
+            </button>
         </div>
     </div>
 </div>

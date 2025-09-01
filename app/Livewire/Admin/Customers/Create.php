@@ -16,9 +16,14 @@ class Create extends Component
                 'customer.email'=>'required|unique:customers,email',
                 'customer.address'=>'nullable|string|max:85',
                 'customer.phone_number'=>'nullable|string|max:20',
-                'customer.tax_id'=>'required',
-                'customer.account_number'=>'required',
+                'customer.tax_id'=>'required|unique:customers,tax_id',
                 'customer.organization_type'=>'nullable|string', // i will allow this to be null incase customer is not affiated with an org
+                // 'customer.account_number'=>'nullable', 
+                // this is the problem on why its not creating customer
+                    // its pretty much interfering because not only those it not exist but also its required so it 
+                    // will not proceed to make anythig but if uncomment it and amke it nullable it will let me creaate
+                    // but most like it will give me an error taht acc number is not a column in my db
+                    // the problem was how livewire handle requied rules 
                     
 
                

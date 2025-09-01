@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Supplier;
 use Livewire\Component;
+use App\Models\ActivityLog;
 
 class Edit extends Component
 {
@@ -113,11 +114,9 @@ function addToList()
         $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
     }
 }
-
-   function makePurchase()
+function makePurchase()
 {
     try {
-        // Manual checks instead of $this->validate()
         if (!$this->purchase->purchase_date || !$this->purchase->supplier_id) {
             throw new \Exception('Purchase Date and Supplier are required.');
         }
@@ -126,28 +125,68 @@ function addToList()
             throw new \Exception('You must add at least one product to the list.');
         }
 
-        // Save the updated purchase info
+        // Save parent purchase record
         $this->purchase->save();
 
-        // Detach old products
-        $this->purchase->products()->detach();
+        // Get the old pivot data before sync
+        $oldProducts = $this->purchase->products()
+            ->get()
+            ->mapWithKeys(function ($p) {
+                return [$p->id => [
+                    'quantity'   => $p->pivot->quantity,
+                    'unit_price' => $p->pivot->unit_price,
+                ]];
+            })
+            ->toArray();
 
-        // Re-attach updated products from productList
+        // Prepare new pivot data
+        $newProducts = [];
         foreach ($this->productList as $listItem) {
-            $this->purchase->products()->attach($listItem['product_id'], [
-                'quantity' => $listItem['quantity'],
-                'unit_price' => $listItem['price']
+            $newProducts[$listItem['product_id']] = [
+                'quantity'   => $listItem['quantity'],
+                'unit_price' => $listItem['price'],
+            ];
+        }
+
+        // Sync products
+        $this->purchase->products()->sync($newProducts);
+
+        // Detect changes
+        $changes = [
+            'added'   => array_diff_key($newProducts, $oldProducts),
+            'removed' => array_diff_key($oldProducts, $newProducts),
+            'updated' => [],
+        ];
+
+        foreach ($newProducts as $id => $data) {
+            if (isset($oldProducts[$id]) && $oldProducts[$id] != $data) {
+                $changes['updated'][$id] = [
+                    'old' => $oldProducts[$id],
+                    'new' => $data,
+                ];
+            }
+        }
+
+        // Only log if there are changes
+        if (!empty($changes['added']) || !empty($changes['removed']) || !empty($changes['updated'])) {
+            ActivityLog::create([
+                'user_id'   => auth()->id(),
+                'action'    => 'purchase_updated',
+                'model'     => 'Purchase',
+                'model_id'  => $this->purchase->id,
+                'changes'   => json_encode($changes),
+                'ip_address'=> request()->ip(),
+                'user_agent'=> request()->header('User-Agent'),
             ]);
         }
 
-        // Redirect to index after successful update
         return redirect()->route('admin.purchases.index');
 
     } catch (\Throwable $th) {
         $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
     }
 }
-    public function render()
+        public function render()
     {
         $suppliers = Supplier::where('name', 'like', '%' . $this->supplierSearch . '%')->get();
         $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();

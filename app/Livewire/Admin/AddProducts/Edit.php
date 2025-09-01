@@ -25,8 +25,8 @@ class Edit extends Component
     function rules()
     {
         return [
-            'add_products.purchase_date' => 'nullable',
-            'add_products.supplier_id' => 'nullalbe',
+           'addProduct.add_product_date'=>'required',
+            'addProduct.supplier_id'=>'required',
         ];
     }
 

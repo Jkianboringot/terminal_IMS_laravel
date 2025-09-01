@@ -70,7 +70,7 @@
                         name=""
                         id=""
                     >
-                    <option value=""></option>
+                    <option value="null"></option>
                      @if ($purchase_payment->supplier)
                        @foreach ($purchase_payment->supplier->purchases as $purchase )
                          <option value="{{ $purchase->id }}">Purchase #{{ $purchase->id }} <br> Balance: PISO {{number_format( $purchase->total_balance) }}</option>

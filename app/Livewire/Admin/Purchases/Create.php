@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Purchases;
 
+use App\Models\ActivityLog;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Supplier;
@@ -107,29 +108,44 @@ class Create extends Component
         }
     }
 
-    function makePurchase(){
-        
-        try {
-            $this->validate();
+function makePurchase()
+{
+    try {
+        $this->validate();
 
-            if (empty($this->purchase->purchase_date)) {
+        if (empty($this->purchase->purchase_date)) {
             $this->purchase->purchase_date = now()->toDateString();
         }
-            $this->purchase->save();
-            foreach ($this->productList as $key => $listItem) {
-                $this->purchase->products()->attach($listItem['product_id'],[
-                    'quantity'=>$listItem['quantity'],
-                    'unit_price'=>$listItem['price']
-                ]);
-                
-            }
 
-            return redirect()->route('admin.purchases.index');
-        } catch (\Throwable $th) {
-             $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
+        $this->purchase->save();
+
+        foreach ($this->productList as $key => $listItem) {
+            $this->purchase->products()->attach($listItem['product_id'], [
+                'quantity'   => $listItem['quantity'],
+                'unit_price' => $listItem['price'],
+            ]);
+
+            // ✅ Log activity
+            ActivityLog::create([
+                'user_id'    => auth()->id(),
+                'action'     => 'purchase_product_added',
+                'model'      => 'Purchase',
+                'model_id'   => $this->purchase->id,
+                'changes'    => json_encode([
+                    'product_id' => $listItem['product_id'],
+                    'quantity'   => $listItem['quantity'],
+                    'unit_price' => $listItem['price'],
+                ]),
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->header('User-Agent'),
+            ]);
         }
-      
+
+        return redirect()->route('admin.purchases.index');
+    } catch (\Throwable $th) {
+        $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
     }
+}
     public function render()
     {
         $suppliers = Supplier::where('name', 'like', '%' . $this->supplierSearch . '%')->get();

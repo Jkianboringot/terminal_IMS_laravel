@@ -43,7 +43,7 @@
                     <div class="mb-3">
                         <label for="organization_type" class="form-label">Organization Type</label>
                         <select wire:model.live='customer.organization_type'  class="form-select" >
-                        <option value="" selected>Select the Organization Type</option>
+                        <option value="null" selected>Select the Organization Type</option>
                         @foreach ($organization_types as $organization_type )
                         <option value="{{$organization_type}}">{{ $organization_type }}</option>
                           @endforeach
@@ -82,7 +82,7 @@
 
 
 
-            <button onclick="confirm('Are you sure you wish to update this Customer')||event.stopImmediatePropagation()"
+            <button onclick="confirm('Are you sure you wish to Create this Customer')||event.stopImmediatePropagation()"
                 wire:click='save' class="btn btn-dark text-inv-secondary">Save</button>
         </div>
     </div>

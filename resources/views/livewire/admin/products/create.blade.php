@@ -12,7 +12,7 @@
                     <div class="mb-3">
                         <label for="" class="form-label">Product Category</label>
                         <select wire:model.live='product.product_category_id' class="form-select " name="" id="">
-                            <option selected>Select your Product Category</option>
+                            <option value="null" selected>Select your Product Category</option>
                             @foreach ($productCategories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
@@ -124,7 +124,7 @@
                     <div class="mb-3">
                         <label for="" class="form-label">Product Measure Unit</label>
                         <select wire:model.live='product.unit_id' class="form-select " name="" id="">
-                            <option value="" selected>Select your Product Unit</option>
+                            <option value="null" selected>Select your Product Unit</option>
                             @foreach ($units as $unit)
                             <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                             @endforeach
