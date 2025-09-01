@@ -22,13 +22,13 @@ class Edit extends Component
     {
         return [
             'product.name' => 'required',
-            'product.brand_id' => 'nullable|string',
+            'product.brand_id' => 'nullable',
             'product.supplier_id' => 'required',
 
             'product.description' => 'nullable|string',
             'product.unit_id' => 'required|integer|exists:units,id',
             // do this for every validation but becarefull it might impact the perfomacne
-            'product.product_category_id' => 'nullable|string',
+            'product.product_category_id' => 'nullable',
             'product.quantity' => 'required',
             'product.purchase_price' => 'required',
             'product.sale_price' => 'required',

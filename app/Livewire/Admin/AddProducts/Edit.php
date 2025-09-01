@@ -25,7 +25,7 @@ class Edit extends Component
     function rules()
     {
         return [
-           'addProduct.add_product_date'=>'required',
+            'addProduct.add_product_date'=>'required',
             'addProduct.supplier_id'=>'required',
         ];
     }
@@ -120,43 +120,19 @@ function addToList()
         $this->validate();
         $this->addProduct->save();
 
-        foreach ($this->productList as $listItem) {
-            // Check if the product already exists in pivot
-            $existing = $this->addProduct->products()
-                ->where('product_id', $listItem['product_id'])
-                ->first();
-
-            $oldQuantity = $existing ? $existing->pivot->quantity : 0;
-            $newQuantity = $listItem['quantity'];
-
-            // Attach or update pivot
-            $this->addProduct->products()->syncWithoutDetaching([
-                $listItem['product_id'] => [
-                    'quantity' => $newQuantity,
-                ]
+        foreach ($this->productList as $key => $listItem) {
+            $this->addProduct->products()->attach($listItem['product_id'], [
+                'quantity' => $listItem['quantity'],
             ]);
 
-            // Determine if there's a change
-            if ($newQuantity > $oldQuantity) {
-                $action = 'stock_added';
-                $changeQty = $newQuantity - $oldQuantity;
-            } elseif ($newQuantity < $oldQuantity) {
-                $action = 'stock_removed';
-                $changeQty = $oldQuantity - $newQuantity;
-            } else {
-                continue; // No change → skip logging
-            }
-
-            // ✅ Log Stock Change
+            // ✅ Log Stock Adjustment
             \App\Models\ActivityLog::create([
                 'user_id' => auth()->id(),
-                'action' => $action,
+                'action' => 'stock_added',
                 'model' => 'Product',
                 'model_id' => $listItem['product_id'],
                 'changes' => json_encode([
-                    'old_quantity' => $oldQuantity,
-                    'new_quantity' => $newQuantity,
-                    'change' => $changeQty,
+                    'added_quantity' => $listItem['quantity'],
                 ]),
                 'ip_address' => request()->ip(),
                 'user_agent' => request()->header('User-Agent'),
@@ -164,12 +140,10 @@ function addToList()
         }
 
         return redirect()->route('admin.add-products.index');
-
     } catch (\Throwable $th) {
         $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
     }
 }
-
 
     public function render()
     {
