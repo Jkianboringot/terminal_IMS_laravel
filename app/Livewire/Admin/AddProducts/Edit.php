@@ -25,7 +25,7 @@ class Edit extends Component
     function rules()
     {
         return [
-            'addProduct.add_product_date'=>'required',
+         'addProduct.add_product_date'=>'required',
             'addProduct.supplier_id'=>'required',
         ];
     }
@@ -48,9 +48,7 @@ class Edit extends Component
 
         }
         $this->supplierSearch = $this->addProduct->supplier->name;
-    $this->addProduct->add_product_date = now()->toDateString();
-    
-
+          $this->addProduct->add_product_date = now()->toDateString();
     }
     function deleteCartItem($key)
     {
@@ -89,15 +87,10 @@ class Edit extends Component
 function addToList()
 {
     try {
-
-        
-        if (empty($this->addProduct->add_product_date)) {
+ if (empty($this->addProduct->add_product_date)) {
        $this->addProduct->add_product_date = now()->toDateString();
 
-        }   
-
-        
-        // Manual checks to replace validate()
+        }           // Manual checks to replace validate()
         if (!$this->selectedProductId || !$this->quantity || !$this->price) {
             throw new \Exception('All product fields are required.');
         }
@@ -124,58 +117,62 @@ function addToList()
         $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
     }
 }
-function addProductToList()
+
+  function addProductToList()
 {
     try {
-        // ✅ Validate product list
-        if (empty($this->productList)) {
-            throw new \Exception("At least one product is required.");
-        }
-
-        foreach ($this->productList as $item) {
-            if (empty($item['product_id']) || empty($item['quantity'])) {
-                throw new \Exception("Each product must have an ID and a quantity.");
-            }
-
-            if (!is_numeric($item['quantity']) || $item['quantity'] <= 0) {
-                throw new \Exception("Quantity must be a positive number.");
-            }
-        }
-
-        // ✅ Save AddProduct
+      
         $this->addProduct->update();
 
-        // ✅ Build sync array
-        $pivotData = [];
         foreach ($this->productList as $listItem) {
-            $pivotData[$listItem['product_id']] = [
-                'quantity' => $listItem['quantity'],
-            ];
+            // Check if the product already exists in pivot
+            $existing = $this->addProduct->products()
+                ->where('product_id', $listItem['product_id'])
+                ->first();
 
-            // ✅ Log stock adjustment
+            $oldQuantity = $existing ? $existing->pivot->quantity : 0;
+            $newQuantity = $listItem['quantity'];
+
+            // Attach or update pivot
+            $this->addProduct->products()->syncWithoutDetaching([
+                $listItem['product_id'] => [
+                    'quantity' => $newQuantity,
+                ]
+            ]);
+
+            // Determine if there's a change
+            if ($newQuantity > $oldQuantity) {
+                $action = 'stock_added';
+                $changeQty = $newQuantity - $oldQuantity;
+            } elseif ($newQuantity < $oldQuantity) {
+                $action = 'stock_removed';
+                $changeQty = $oldQuantity - $newQuantity;
+            } else {
+                continue; // No change → skip logging
+            }
+
+            // ✅ Log Stock Change
             \App\Models\ActivityLog::create([
                 'user_id' => auth()->id(),
-                'action' => 'stock_update',
+                'action' => $action,
                 'model' => 'Product',
                 'model_id' => $listItem['product_id'],
                 'changes' => json_encode([
-                    'added_quantity' => $listItem['quantity'],
+                    'old_quantity' => $oldQuantity,
+                    'new_quantity' => $newQuantity,
+                    'change' => $changeQty,
                 ]),
                 'ip_address' => request()->ip(),
                 'user_agent' => request()->header('User-Agent'),
             ]);
         }
 
-            // add a proper prev quantity and after quanitity to see clearly what change
-
-        $this->addProduct->products()->sync($pivotData);
-
         return redirect()->route('admin.add-products.index');
+
     } catch (\Throwable $th) {
         $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
     }
 }
-
 
 
     public function render()

@@ -23,9 +23,9 @@
                 <div class="col-md-6 col-12">
                   <div class="mb-3">
                         <label for="statispermissions" class="form-label">Permission</label>
-                        <select wire:model.live='role.permissions'  class="form-select" >
+                        <select wire:model.live='selected_permissions'  class="form-select" >
                         <option value="null" selected>Select the Role Permission </option>
-                        @foreach ($statispermissions as $statispermission )
+                        @foreach ($staticpermissions as $statispermission )
                         <option value="{{$statispermission}}">{{ $statispermission }}</option>
                           @endforeach
                         </select>
@@ -34,6 +34,10 @@
                     </div>
                   
                 </div>
+
+
+
+                
             </div>
 
 
