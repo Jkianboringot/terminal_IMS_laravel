@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\AddProduct;
+use App\Models\Brand;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Product;
 use App\Models\Purchase;
@@ -12,6 +13,7 @@ use App\Models\Customer;
 use App\Models\ProductCategory;
 use App\Models\Role;
 use App\Models\Supplier;
+use App\Models\Unit;
 use App\Models\User;
 use App\Observers\ActivityObserver;
 class AppServiceProvider extends ServiceProvider
@@ -34,10 +36,13 @@ public function boot()
     Customer::observe(ActivityObserver::class);
     Supplier::observe(ActivityObserver::class);
     User::observe(ActivityObserver::class);
-    AddProduct::observe(ActivityObserver::class);
+    // AddProduct::observe(ActivityObserver::class);
     Role::observe(ActivityObserver::class);
-    Purchase::observe(ActivityObserver::class);
-    Sale::observe(ActivityObserver::class);
+    // Purchase::observe(ActivityObserver::class);
+    // Sale::observe(ActivityObserver::class);
     ProductCategory::observe(ActivityObserver::class);
+    Unit::observe(ActivityObserver::class);
+    Brand::observe(ActivityObserver::class);
+
 }
 }

@@ -107,10 +107,10 @@ class Edit extends Component
     public function render()
     {
         return view('livewire.admin.products.edit', [
-            'productCategories' => ProductCategory::all(),
-            'units' => Unit::all(),
-            'brands' => Brand::all(),
-            'suppliers' => Supplier::all()
+            'productCategories' => ProductCategory::select(['id','name'])->get(),
+            'units' => Unit::select(['id','name'])->get(),
+            'brands' => Brand::select(['id','name'])->get(),
+            'suppliers' => Supplier::select(['id','name'])->get()
         ]);
     }
 }

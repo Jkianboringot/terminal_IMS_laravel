@@ -8,6 +8,7 @@ use App\Models\Supplier;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\Unit;
+use FontLib\Table\Type\name;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
@@ -83,11 +84,11 @@ class Create extends Component
     public function render()
     {
         return view('livewire.admin.products.create', [
-            'productCategories' => ProductCategory::all(),
-            'units' => Unit::all(),
-            'brands' => Brand::all(),
-            'suppliers' => Supplier::all()
-
+            'productCategories' => ProductCategory::select(['id','name'])->get(),
+            'units' => Unit::select(['id','name'])->get(),
+            'brands' => Brand::select(['id','name'])->get(),
+            'suppliers' => Supplier::select(['id','name'])->get()
+                    // from all to select
         ]);
     }
 }

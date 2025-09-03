@@ -142,10 +142,10 @@ function addToList()
 
             // Determine if there's a change
             if ($newQuantity > $oldQuantity) {
-                $action = 'stock_added';
+               
                 $changeQty = $newQuantity - $oldQuantity;
             } elseif ($newQuantity < $oldQuantity) {
-                $action = 'stock_removed';
+                
                 $changeQty = $oldQuantity - $newQuantity;
             } else {
                 continue; // No change → skip logging
@@ -154,8 +154,8 @@ function addToList()
             // ✅ Log Stock Change
             \App\Models\ActivityLog::create([
                 'user_id' => auth()->id(),
-                'action' => $action,
-                'model' => 'Product',
+                'action' => 'Update',
+                'model' => 'AddProduct',
                 'model_id' => $listItem['product_id'],
                 'changes' => json_encode([
                     'old_quantity' => $oldQuantity,

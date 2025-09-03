@@ -53,20 +53,45 @@ class Edit extends Component
     {
         $this->validate();
     }
+function save()
+{
+    $this->validate();
 
-    function save()
-    {
-        $this->validate();
-        try {
-            $this->user->update();
-            $this->user->roles()->detach();
-            $this->user->roles()->attach($this->selectedRoles);
+    try {
+        // Save basic user details
+        $this->user->save();
 
-            return redirect()->route('admin.users.index');
-        } catch (\Throwable $th) {
-            $this->dispatch('done', error: 'Something went wrong: ' . $th->getMessage());
-        }
+        // Sync roles directly (no detach-then-attach needed)
+     
+        $oldrole= $this->user->roles()->pluck('title')->first();
+        $this->user->roles()->detach(); 
+
+        $this->user->roles()->attach($this->selectedRoles);
+        $Newrole= $this->user->roles()->pluck('title')->first();
+
+        // Example ActivityLog (adapt fields to your needs)
+        \App\Models\ActivityLog::create([
+            'user_id' => auth()->id(),
+            'action' => 'Update',
+            'model' => 'User',
+            'model_id' => $this->user->id,
+            'changes' => json_encode([
+                'Old' => $oldrole,
+                'New' =>   $Newrole
+
+
+            ]),
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->header('User-Agent'),
+        ]);
+
+        return redirect()->route('admin.users.index');
+
+    } catch (\Throwable $th) {
+        $this->dispatch('done', error: 'Something went wrong: ' . $th->getMessage());
     }
+}
+
     public function render()
     {
         return view(

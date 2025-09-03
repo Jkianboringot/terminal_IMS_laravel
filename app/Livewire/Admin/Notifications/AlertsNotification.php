@@ -18,10 +18,10 @@ class AlertsNotification extends Component
    
 public function checkLowStock()
 {
-    // Fetch all products
-    $products = Product::all();
+    
+   $products = Product::select('id', 'name', 'inventory_threshold')->get();
 
-    // Separate into low and okay stock
+
     $lowProducts = $products->filter(function ($product) {
         return $product->inventory_balance <= ($product->inventory_threshold ?? 10);
     });
@@ -30,14 +30,12 @@ public function checkLowStock()
         return $product->inventory_balance > ($product->inventory_threshold ?? 10);
     });
 
-    $lowIds = $lowProducts->pluck('id')->all();
+    $lowIds = $lowProducts->pluck('id');//->all();
 
-    // Check which notifications already exist
     $existingIds = Notification::whereIn('product_id', $lowIds)
-        ->pluck('product_id')
-        ->all();
-
-    // Create notifications for low stock
+        ->pluck('product_id')->toArray();
+        //->all();
+    // just  uncomment the all if shit goes wrong
     foreach ($lowProducts as $p) {
         if (! in_array($p->id, $existingIds)) {
             Notification::create([

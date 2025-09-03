@@ -54,7 +54,6 @@
 
     return view('livewire.admin.add-products.index', [
         'addProducts' => $addProducts,
-        'products' => Product::all(),
 
     ]);
 }

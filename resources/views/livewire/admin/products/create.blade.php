@@ -26,7 +26,8 @@
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
                         <label for="" class="form-label">Product Brand</label>
-                        <select wire:model.live='product.brand_id' class="form-select " name="" id="">
+                     
+                        
                             <option selected>Select your Product Brand</option>
                             @foreach ($brands as $brand)
                             <option value="{{ $brand->id }}">{{ $brand->name }}</option>
