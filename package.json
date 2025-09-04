@@ -4,7 +4,8 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+          "dev-all": "concurrently \"php artisan serve\" \"npm run dev\""
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.7",
@@ -26,4 +27,6 @@
         "sass": "^1.89.2",
         "sweetalert2": "^11.22.0"
     }
+  
+
 }

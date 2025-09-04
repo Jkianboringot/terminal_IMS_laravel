@@ -11,6 +11,10 @@ class Purchase extends Model
         'total_amount'
     ];
 
+    protected $casts = [
+    'is_paid' => 'boolean',
+];
+
    
     function supplier()
     {

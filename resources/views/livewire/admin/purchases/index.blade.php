@@ -20,11 +20,9 @@
                        
                         <th>Purchase Date</th>
                         <th>Supplier</th>
-                        <th>No. of Unit Bought</th>
-                        <th>Total Amount</th>
-                        <th>Total Paid</th>
-                        <th>Total Balance</th>
+                        <th>Amount</th>
                         <th>Status</th>
+                        <th>Date Settled</th>
                         @if ($user && $user->hasPermission('edit permission') || $user->hasPermission('delete permission'))
                         <th class="text-center">Actions</th>
                         @endif
@@ -42,14 +40,12 @@
                             <h6>{{Carbon\Carbon::parse($purchase->purchase_date)->format('jS F,Y') }}</h6>
                         </td>
                         <td>{{ $purchase->supplier->name }}</td>
-                        <td> <small>{{ number_format($purchase->total_quantity, 2)}}</small></td>
                         <td> <small>PISO {{ number_format($purchase->total_amount, 2)}}</small></td>
-                        <td> <small>PISO {{ number_format($purchase->total_paid, 2)}}</small></td>
-                        <td> <small>PISO {{ number_format($purchase->total_balance, 2)}}</small></td>
                         <td>
                             <span class={{ $purchase->is_paid ? 'text-success' : 'text-danger' }} style="font: bold">
                                 {{ $purchase->is_paid ? 'Paid' : 'Not Paid' }}</span>
                         </td>
+                        <td><p class="form-control-plaintext">{{ date('Y-m-d') }}</p></td>
                         <td class="text-center">
 
 

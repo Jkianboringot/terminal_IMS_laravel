@@ -22,9 +22,7 @@
         {
             try {
                 $purchase = AddProduct::findOrFail($id);
-                if ($purchase->is_paid) {
-                    throw new \Exception("Error Processing request: This Purchase has already been paid for", 1);
-                }
+               
 
                 $purchase->products()->detach();
                 $purchase->delete();
