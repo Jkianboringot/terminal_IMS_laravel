@@ -157,8 +157,9 @@
                                 </td>
                                 <td>{{ $listItem['quantity'] }}</td>
                                 <td>PISO {{ number_format($listItem['price'], 2) }}</td>
-                                <td>PISO {{ number_format($listItem['quantity'] * $listItem['price'], 2) }}</td>
                                <td>{{ $purchase->is_paid }}</td>
+
+                                <td>PISO {{ number_format($listItem['quantity'] * $listItem['price'], 2) }}</td>
 
                                 <td class="text-center">
                                     @if ($listItem['quantity'] > 1)

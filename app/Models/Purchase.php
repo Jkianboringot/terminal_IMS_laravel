@@ -45,16 +45,16 @@ class Purchase extends Model
      function getTotalBalanceAttribute(){
             return $this->total_amount- $this->total_paid ;
         }
-        function getIsPaidAttribute(){
-            return $this->total_balance <= 0;
+        // function getIsPaidAttribute(){
+        //     return $this->total_balance <= 0;
             
-        }
+        // }
 
-        function getTotalPaidAttribute(){
-            return $this->payments->sum(function ($payment){
-            return $payment->pivot->amount;
-        });
-        }
+        // function getTotalPaidAttribute(){
+        //     return $this->payments->sum(function ($payment){
+        //     return $payment->pivot->amount;
+        // });
+        // }
 
           function payments(){
         return $this->belongsToMany(PurchasePayment::class,'purchase_purchase_payment')->withPivot('amount');
