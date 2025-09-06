@@ -43,6 +43,9 @@ class PurchasesSeeder extends Seeder
             $purchaseId = DB::table('purchases')->insertGetId([
                 'supplier_id' => rand(1, count(Supplier::all())),
                 'purchase_date' => $date,
+                'date_settled' => $date,
+                'is_paid' => false,
+
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -58,6 +61,7 @@ class PurchasesSeeder extends Seeder
                 DB::table('product_purchase')->insert([
                     'product_id' => $product->id,
                     'purchase_id' => $id,
+                  
                     'quantity' => rand(20, 1000),
                     'unit_price' => rand($product->purchase_price, $product->sale_price),
                     'created_at' => now(),

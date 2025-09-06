@@ -27,11 +27,19 @@ class Edit extends Component
     {
         return [
             'purchase.purchase_date' => 'required',
+            'purchase.date_settled' => 'required',
             'purchase.supplier_id' => 'required',
+            'purchase.is_paid' => 'nullable',
+
         ];
     }
 
-
+    public function togglePaid($id)
+    {
+        $purchase = Purchase::findOrFail($id);
+        $purchase->is_paid = !$purchase->is_paid;
+        $purchase->save();
+    }
 
     function mount($id)
     {
@@ -46,7 +54,6 @@ class Edit extends Component
                     'price' => $product->pivot->unit_price
                 ]
             );
-
         }
         $this->supplierSearch = $this->purchase->supplier->name;
     }
@@ -59,13 +66,11 @@ class Edit extends Component
     {
         $this->productList[$key]['quantity']++;
     }
-   function subtractQuantity($key)
+    function subtractQuantity($key)
     {
-            if ( $this->productList[$key]['quantity'] > 1) {
-                 $this->productList[$key]['quantity']--;
-            }
-         
-       
+        if ($this->productList[$key]['quantity'] > 1) {
+            $this->productList[$key]['quantity']--;
+        }
     }
 
 
@@ -73,134 +78,139 @@ class Edit extends Component
     function selectSupplier($id)
     {
         $this->purchase->supplier_id = $id;
-               $this->supplierSearch = $this->purchase->supplier->name;
-        
-
+        $this->supplierSearch = $this->purchase->supplier->name;
     }
 
     function selectProduct($id)
     {
         $this->selectedProductId = $id;
-        $this->productSearch=Product::find($id)->name;
-
+        $this->productSearch = Product::find($id)->name;
     }
-function addToList()
-{
-    try {
-        // Manual checks to replace validate()
-        if (!$this->selectedProductId || !$this->quantity || !$this->price) {
-            throw new \Exception('All product fields are required.');
-        }
-
-        // Try to merge with an existing entry (same product and price)
-        foreach ($this->productList as $key => $item) {
-            if ($item['product_id'] == $this->selectedProductId && $item['price'] == $this->price) {
-                $this->productList[$key]['quantity'] += $this->quantity;
-                $this->reset(['selectedProductId', 'productSearch', 'quantity', 'price']);
-                return;
+    function addToList()
+    {
+        try {
+            // Manual checks to replace validate()
+            if (!$this->selectedProductId || !$this->quantity || !$this->price) {
+                throw new \Exception('All product fields are required.');
             }
-        }
 
-        // Add new item to list
-        $this->productList[] = [
-            'product_id' => $this->selectedProductId,
-            'quantity' => $this->quantity,
-            'price' => $this->price
-        ];
+            // Try to merge with an existing entry (same product and price)
+            foreach ($this->productList as $key => $item) {
+                if ($item['product_id'] == $this->selectedProductId && $item['price'] == $this->price) {
+                    $this->productList[$key]['quantity'] += $this->quantity;
+                    $this->reset(['selectedProductId', 'productSearch', 'quantity', 'price']);
+                    return;
+                }
+            }
 
-        // Clean up input fields
-        $this->reset(['selectedProductId', 'productSearch', 'quantity', 'price']);
-    } catch (\Throwable $th) {
-        $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
-    }
-}
-function makePurchase()
-{
-    try {
-        if (!$this->purchase->purchase_date || !$this->purchase->supplier_id) {
-            throw new \Exception('Purchase Date and Supplier are required.');
-        }
-
-        if (empty($this->productList)) {
-            throw new \Exception('You must add at least one product to the list.');
-        }
-
-        // Save parent purchase record
-        $this->purchase->save();
-
-        // Get the old pivot data before sync
-        $oldProducts = $this->purchase->products()
-            ->get()
-            ->mapWithKeys(function ($p) {
-                return [$p->id => [
-                    'quantity'   => $p->pivot->quantity,
-                    'unit_price' => $p->pivot->unit_price,
-                ]];
-            })
-            ->toArray();
-
-        // Prepare new pivot data
-        $newProducts = [];
-        foreach ($this->productList as $listItem) {
-            $newProducts[$listItem['product_id']] = [
-                'quantity'   => $listItem['quantity'],
-                'unit_price' => $listItem['price'],
+            // Add new item to list
+            $this->productList[] = [
+                'product_id' => $this->selectedProductId,
+                'quantity' => $this->quantity,
+                'price' => $this->price
             ];
+
+            // Clean up input fields
+            $this->reset(['selectedProductId', 'productSearch', 'quantity', 'price']);
+        } catch (\Throwable $th) {
+            $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
         }
+    }
+    function makePurchase()
+    {
+        try {
+            if (!$this->purchase->purchase_date || !$this->purchase->supplier_id) {
+                throw new \Exception('Purchase Date and Supplier are required.');
+            }
 
-        // Sync products
-        $this->purchase->products()->sync($newProducts);
+            if (empty($this->productList)) {
+                throw new \Exception('You must add at least one product to the list.');
+            }
 
-        // Detect changes
-        $changes = [
-            'added'   => array_diff_key($newProducts, $oldProducts),
-            'removed' => array_diff_key($oldProducts, $newProducts),
-            'updated' => [],
-        ];
+            // Save parent purchase record
+            $this->purchase->save();
 
-        foreach ($newProducts as $id => $data) {
-            if (isset($oldProducts[$id]) && $oldProducts[$id] != $data) {
-                $changes['updated'][$id] = [
-                    'old' => $oldProducts[$id],
-                    'new' => $data,
+            // Get the old pivot data before sync
+            $oldProducts = $this->purchase->products()
+                ->get()
+                ->mapWithKeys(function ($p) {
+                    return [$p->id => [
+                        'quantity'   => $p->pivot->quantity,
+                        'unit_price' => $p->pivot->unit_price,
+                    ]];
+                })
+                ->toArray();
+
+            // Prepare new pivot data
+            $newProducts = [];
+            foreach ($this->productList as $listItem) {
+                $newProducts[$listItem['product_id']] = [
+                    'quantity'   => $listItem['quantity'],
+                    'unit_price' => $listItem['price'],
                 ];
             }
+
+            // Sync products
+            $this->purchase->products()->sync($newProducts);
+
+            // Detect changes
+            $changes = [
+                'added'   => array_diff_key($newProducts, $oldProducts),
+                'removed' => array_diff_key($oldProducts, $newProducts),
+                'updated' => [],
+            ];
+
+            foreach ($newProducts as $id => $data) {
+                if (isset($oldProducts[$id]) && $oldProducts[$id] != $data) {
+                    $changes['updated'][$id] = [
+                        'old' => $oldProducts[$id],
+                        'new' => $data,
+                    ];
+                }
+            }
+
+            // Only log if there are changes
+            if (!empty($changes['added']) || !empty($changes['removed']) || !empty($changes['updated'])) {
+                ActivityLog::create([
+                    'user_id'   => auth()->id(),
+                    'action'    => 'purchase_updated',
+                    'model'     => 'Purchase',
+                    'model_id'  => $this->purchase->id,
+                    'changes'   => json_encode($changes),
+                    'ip_address' => request()->ip(),
+                    'user_agent' => request()->header('User-Agent'),
+                ]);
+            }
+
+            return redirect()->route('admin.purchases.index');
+        } catch (\Throwable $th) {
+            $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
         }
-
-        // Only log if there are changes
-        if (!empty($changes['added']) || !empty($changes['removed']) || !empty($changes['updated'])) {
-            ActivityLog::create([
-                'user_id'   => auth()->id(),
-                'action'    => 'purchase_updated',
-                'model'     => 'Purchase',
-                'model_id'  => $this->purchase->id,
-                'changes'   => json_encode($changes),
-                'ip_address'=> request()->ip(),
-                'user_agent'=> request()->header('User-Agent'),
-            ]);
-        }
-
-        return redirect()->route('admin.purchases.index');
-
-    } catch (\Throwable $th) {
-        $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
     }
-}
-        public function render()
+    public function render()
     {
         $suppliers = Supplier::where('name', 'like', '%' . $this->supplierSearch . '%')->get();
         $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
-
+        $paidOptions = [
+            'Paid',
+            'Unpaid / Pending',
+            'Partially Paid',
+            'Overdue',
+            'Failed',
+            'Refunded',
+            'Canceled / Voided',
+            'Processing'
+        ];
         return view(
             'livewire.admin.purchases.edit',
             [
                 'suppliers' => $suppliers,
                 'products' => $products,
+                'paidOptions' => $paidOptions,
 
             ]
         );
     }
-
 }
 
 // if something brike look at make purchase funstion i change it from atteach to detach

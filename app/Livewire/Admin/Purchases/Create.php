@@ -26,12 +26,20 @@ class Create extends Component
     function rules(){
         return [
             'purchase.purchase_date'=>'required',
+            'purchase.date_settled'=>'nullable',
             'purchase.supplier_id'=>'required',
+            'purchase.is_paid'=>'required',
+
         ];
     }
 
 
-
+ public function togglePaid($id)
+    {
+        $purchase = Purchase::findOrFail($id);
+        $purchase->is_paid = !$purchase->is_paid;
+        $purchase->save();
+    }
     function mount()
     {
         $this->purchase = new Purchase();
@@ -150,14 +158,17 @@ function makePurchase()
     {
         $suppliers = Supplier::where('name', 'like', '%' . $this->supplierSearch . '%')->get();
         $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
-
+        $paidOptions=['Paid','Unpaid / Pending','Partially Paid','Overdue',
+        'Failed','Refunded','Canceled / Voided','Processing'];
         return view(
             'livewire.admin.purchases.create',
             [
                 'suppliers' => $suppliers,
                 'products' => $products,
+                'paidOptions' => $paidOptions,
 
             ]
         );
     }
 }
+  

@@ -15,36 +15,38 @@
                         <small id="helpId" class="form-text text-danger">{{ $message }} </small>
                         @enderror
                     </div>
-<div class="row">
+                    <div class="row">
                         <div class="col-md-6">
 
                             <div class="mb-3">
                                 <label for="" class="form-label">Paid Status</label>
-                               <select class="form-select " name="" id="">
-                            <option value="null" selected>Select the Paid Status</option>
-                                    <option value="paid">Paid</option>
-                                    <option value="unpaid">Unpaid / Pending</option>
-                                    <option value="unpaid">Partially Paid</option>
-                                    <option value="unpaid">Overdue</option>
-                                    <option value="unpaid">Failed</option>
-                                    <option value="unpaid">Refunded</option>
-                                    <option value="unpaid">Canceled / Voided</option>
-                                    <option value="unpaid">Processing</option>
+
+                                <select wire:model.live="purchase.is_paid" class="form-select " name="" id="">
+                                    <option value="null" selected>Select Status</option>
+                                    @foreach ($paidOptions as $option)
+
+                                    <option value="{{ $option }}">{{ $option }}</option>
                                     <!-- just create an array fro this -->
-                        </select>
-                                @error('')
+                                    @endforeach
+                                </select>
+
+                                @error('purchase.is_paid')
                                 <small id="helpId" class="form-text text-danger">{{ $message }} </small>
                                 @enderror
                             </div>
                         </div>
+
                         <div class="col-md-6">
+                                  @if(in_array($purchase->is_paid, ['Paid', 'Partially Paid']) )
+
                             <div class="mb-3">
                                 <label for="" class="form-label">Date Settled</label>
-                               <input wire:model.live="purchase.purchase_date" type="date" class="form-control" />
-                        @error('purchase.purchase_date')
-                        <small id="helpId" class="form-text text-danger">{{ $message }} </small>
-                        @enderror
+                                <input wire:model.live="purchase.date_settled" type="date" class="form-control" />
+                                @error('purchase.date_settled')
+                                <small id="helpId" class="form-text text-danger">{{ $message }} </small>
+                                @enderror
                             </div>
+                            @endif
                         </div>
                     </div>
 
@@ -62,7 +64,7 @@
                             @endif
                         </ul>
                     </div>
-                  
+
                 </div>
             </div>
 
@@ -70,7 +72,7 @@
                 <div class="card-header bg-inv-primary text-inv-secondary border-0">
                     <h6>Add a Product to List</h6>
                 </div>
-               <div class="card-body ">
+                <div class="card-body ">
                     <div class="mb-3">
                         <label for="" class="form-label">Product Search</label>
                         <input type="text" wire:model.live='productSearch' class="form-control" />
@@ -119,72 +121,82 @@
                 </div>
                 <div class="card-body">
                     @if ($productList && count($productList) > 0)
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Data Settled</th>
-                                    <th>Product Name</th>
-                                    <th>Product Quantity</th>
-                                    <th>Unit Price</th>
-                                    <th>Status</th>
-                                    <th>Total Price</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php $total = 0; @endphp
-                                @foreach ($productList as $key => $listItem)
-                                    <tr>
-                                        <td><p class="form-control-plaintext">{{ date('Y-m-d') }}</p>
-</td>
-                                        <td>
-                                            {{ App\Models\Product::find($listItem['product_id'])->name }} <br>
-                                            <small class="text-muted">
-                                                {{ App\Models\Product::find($listItem['product_id'])->quantity }}
-                                                {{ App\Models\Product::find($listItem['product_id'])->unit->name }}
-                                            </small>
-                                        </td>
-                                        <td>{{ $listItem['quantity'] }}</td>
-                                        <td>PISO {{ number_format($listItem['price'], 2) }}</td>
-                                        <td>PISO {{ number_format($listItem['quantity'] * $listItem['price'], 2) }}</td>
-                                        <td>paid</td>
-                                        <td class="text-center">
-                                            @if ($listItem['quantity'] > 1)
-                                                <button wire:click='subtractQuantity({{ $key }})' class="btn btn-danger">
-                                                    <i class="bi bi-dash"></i>
-                                                </button>
-                                            @endif
-                                            <button wire:click='addQuantity({{ $key }})' class="btn btn-success">
-                                                <i class="bi bi-plus"></i>
-                                            </button>
-                                            <button onclick="confirm('Are you sure you want to delete this Purchase')||event.stopImmediatePropagation()" 
-                                                    wire:click='deleteCartItem({{ $key }})' 
-                                                    class="btn btn-danger">
-                                                <i class="bi bi-trash-fill"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    @php $total += $listItem['quantity'] * $listItem['price']; @endphp
-                                @endforeach
-                                <tr>
-                                    <td colspan="2" style='font-size:18px'><strong>TOTAL</strong></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td style='font-size:18px'>
-                                        <strong>PISO {{ number_format($total, 2) }}</strong>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                  @if(in_array($purchase->is_paid, ['Paid', 'Partially Paid']) )
+                                     <th>Date Settled</th>
+                                    @endif
+                            
 
-                        <button onclick="confirm('Are you sure you wish to make the Purchase')||event.stopImmediatePropagation()" 
-                                wire:click='makePurchase' 
-                                class="btn btn-dark text-inv-secondary w-100">
-                            Purchase
-                        </button>
+                                <th>Product Name</th>
+                                <th>Product Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Status</th>
+                                <th>Total Price</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php $total = 0; @endphp
+                            @foreach ($productList as $key => $listItem)
+                            <tr>
+                                   @if(in_array($purchase->is_paid, ['Paid', 'Partially Paid']) && $purchase->date_settled)
+                                <td>
+                                 
+                                    {{ $purchase->date_settled }}
+                                 
+                                </td>
+                                   @endif
+                                <td>
+                                    {{ App\Models\Product::find($listItem['product_id'])->name }} <br>
+                                    <small class="text-muted">
+                                        {{ App\Models\Product::find($listItem['product_id'])->quantity }}
+                                        {{ App\Models\Product::find($listItem['product_id'])->unit->name }}
+                                    </small>
+                                </td>
+                                <td>{{ $listItem['quantity'] }}</td>
+                                <td>PISO {{ number_format($listItem['price'], 2) }}</td>
+                                <td>PISO {{ number_format($listItem['quantity'] * $listItem['price'], 2) }}</td>
+                               <td>{{ $purchase->is_paid }}</td>
+
+                                <td class="text-center">
+                                    @if ($listItem['quantity'] > 1)
+                                    <button wire:click='subtractQuantity({{ $key }})' class="btn btn-danger">
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+                                    @endif
+                                    <button wire:click='addQuantity({{ $key }})' class="btn btn-success">
+                                        <i class="bi bi-plus"></i>
+                                    </button>
+                                    <button onclick="confirm('Are you sure you want to delete this Purchase')||event.stopImmediatePropagation()"
+                                        wire:click='deleteCartItem({{ $key }})'
+                                        class="btn btn-danger">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            @php $total += $listItem['quantity'] * $listItem['price']; @endphp
+                            @endforeach
+                            <tr>
+                                <td colspan="2" style='font-size:18px'><strong>TOTAL</strong></td>
+                                <td></td>
+                                <td></td>
+                                <td style='font-size:18px'>
+                                    <strong>PISO {{ number_format($total, 2) }}</strong>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <button onclick="confirm('Are you sure you wish to make the Purchase')||event.stopImmediatePropagation()"
+                        wire:click='makePurchase'
+                        class="btn btn-dark text-inv-secondary w-100">
+                        Purchase
+                    </button>
                     @else
-                        <p class="text-center text-muted">Your cart is empty. Add a product to get started.</p>
+                    <p class="text-center text-muted">Your cart is empty. Add a product to get started.</p>
                     @endif
                 </div>
             </div>

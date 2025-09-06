@@ -15,6 +15,9 @@ return new class extends Migration
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
             $table->foreignId('supplier_id')->constrained();
+            $table->date('date_settled')->nullable();
+            $table->string('is_paid');
+
 
             $table->date('purchase_date');
             $table->timestamps();
