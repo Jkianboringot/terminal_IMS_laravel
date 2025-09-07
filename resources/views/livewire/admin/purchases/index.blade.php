@@ -39,7 +39,10 @@
                             <td>
                                 <h6>{{Carbon\Carbon::parse($purchase->purchase_date)->format('jS F,Y') }}</h6>
                             </td>
-                            <td>{{ $purchase->supplier->name }}</td>
+                            <td>
+                                <h7 class='text-inv-secondary'>{{ $purchase->supplier->name }}</h7><br>
+                                <small class='text-muted'>{{ $purchase->supplier->address}} <br>{{ $purchase->supplier->tax_id }}</small>
+                            </td>
                             <td> <small>PISO {{ number_format($purchase->total_amount, 2)}}</small></td>
                             <td>
                                 <span class="{{ in_array($purchase->is_paid, ['Paid', 'Partially Paid']) ? 'text-success' : 'text-danger' }}" style="font-weight: bold;">

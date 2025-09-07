@@ -49,7 +49,7 @@ class Index extends Component
                         ->orWhere('suppliers.name', 'like', "%$search%");
                 })
             )
-            ->with(['supplier:id,name']) // Only load needed fields
+            ->with(['supplier:id,name,address,tax_id']) // Only load needed fields
             ->orderBy('purchases.purchase_date', 'desc')
             ->paginate(10);
 

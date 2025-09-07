@@ -21,21 +21,24 @@
                             <div class="mb-3">
                                 <label for="" class="form-label">Paid Status</label>
 
-                                <select class="form-select " name="" id="">
-                                   
-                                    <option value="null" selected>Select the Paid Status</option>
-                                     @foreach ($paidOptions as $option)
+                                <select wire:model.live="purchase.is_paid" class="form-select " name="" id="">
+                                    <option value="null" selected>Select Status</option>
+                                    @foreach ($paidOptions as $option)
+
                                     <option value="{{ $option }}">{{ $option }}</option>
                                     <!-- just create an array fro this -->
                                     @endforeach
                                 </select>
 
-                                @error('')
+                                @error('purchase.is_paid')
                                 <small id="helpId" class="form-text text-danger">{{ $message }} </small>
                                 @enderror
                             </div>
                         </div>
+
                         <div class="col-md-6">
+                                  @if(in_array($purchase->is_paid, ['Paid', 'Partially Paid']) )
+
                             <div class="mb-3">
                                 <label for="" class="form-label">Date Settled</label>
                                 <input wire:model.live="purchase.date_settled" type="date" class="form-control" />
@@ -43,6 +46,7 @@
                                 <small id="helpId" class="form-text text-danger">{{ $message }} </small>
                                 @enderror
                             </div>
+                            @endif
                         </div>
                     </div>
 
@@ -120,7 +124,11 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Data Settled</th>
+                                  @if(in_array($purchase->is_paid, ['Paid', 'Partially Paid']) )
+                                     <th>Date Settled</th>
+                                    @endif
+                            
+
                                 <th>Product Name</th>
                                 <th>Product Quantity</th>
                                 <th>Unit Price</th>
@@ -133,9 +141,13 @@
                             @php $total = 0; @endphp
                             @foreach ($productList as $key => $listItem)
                             <tr>
+                                   @if(in_array($purchase->is_paid, ['Paid', 'Partially Paid']) && $purchase->date_settled)
                                 <td>
-                                    <p class="form-control-plaintext">{{ date('Y-m-d') }}</p>
+                                 
+                                    {{ $purchase->date_settled }}
+                                 
                                 </td>
+                                   @endif
                                 <td>
                                     {{ App\Models\Product::find($listItem['product_id'])->name }} <br>
                                     <small class="text-muted">
@@ -145,8 +157,10 @@
                                 </td>
                                 <td>{{ $listItem['quantity'] }}</td>
                                 <td>PISO {{ number_format($listItem['price'], 2) }}</td>
+                               <td>{{ $purchase->is_paid }}</td>
+
                                 <td>PISO {{ number_format($listItem['quantity'] * $listItem['price'], 2) }}</td>
-                                <td>paid</td>
+
                                 <td class="text-center">
                                     @if ($listItem['quantity'] > 1)
                                     <button wire:click='subtractQuantity({{ $key }})' class="btn btn-danger">
