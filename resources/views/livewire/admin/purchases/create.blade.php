@@ -21,11 +21,13 @@
                             <div class="mb-3">
                                 <label for="" class="form-label">Paid Status</label>
 
-                                <select wire:model.live="purchase.is_paid" class="form-select " name="" id="">
+                                <select wire:model.live="purchase.is_paid"
+                                    class="form-select" name="" id="">
                                     <option value="null" selected>Select Status</option>
                                     @foreach ($paidOptions as $option)
 
-                                    <option value="{{ $option }}">{{ $option }}</option>
+                                    <option class={{ in_array($option,['Paid','Partially Paid']) ? 'text-success' : 'text-danger'  }}
+                                        value="{{ $option }}">{{ $option }}</option>
                                     <!-- just create an array fro this -->
                                     @endforeach
                                 </select>
@@ -37,7 +39,7 @@
                         </div>
 
                         <div class="col-md-6">
-                                  @if(in_array($purchase->is_paid, ['Paid', 'Partially Paid']) )
+                            @if(in_array($purchase->is_paid, ['Paid', 'Partially Paid']) )
 
                             <div class="mb-3">
                                 <label for="" class="form-label">Date Settled</label>
@@ -124,10 +126,10 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                  @if(in_array($purchase->is_paid, ['Paid', 'Partially Paid']) )
-                                     <th>Date Settled</th>
-                                    @endif
-                            
+                                @if(in_array($purchase->is_paid, ['Paid', 'Partially Paid']) )
+                                <th>Date Settled</th>
+                                @endif
+
 
                                 <th>Product Name</th>
                                 <th>Product Quantity</th>
@@ -141,13 +143,13 @@
                             @php $total = 0; @endphp
                             @foreach ($productList as $key => $listItem)
                             <tr>
-                                   @if(in_array($purchase->is_paid, ['Paid', 'Partially Paid']) && $purchase->date_settled)
+                                @if(in_array($purchase->is_paid, ['Paid', 'Partially Paid']) && $purchase->date_settled)
                                 <td>
-                                 
+
                                     {{ $purchase->date_settled }}
-                                 
+
                                 </td>
-                                   @endif
+                                @endif
                                 <td>
                                     {{ App\Models\Product::find($listItem['product_id'])->name }} <br>
                                     <small class="text-muted">
@@ -157,7 +159,7 @@
                                 </td>
                                 <td>{{ $listItem['quantity'] }}</td>
                                 <td>PISO {{ number_format($listItem['price'], 2) }}</td>
-                               <td>{{ $purchase->is_paid }}</td>
+                                <td>{{ $purchase->is_paid }}</td>
 
                                 <td>PISO {{ number_format($listItem['quantity'] * $listItem['price'], 2) }}</td>
 
