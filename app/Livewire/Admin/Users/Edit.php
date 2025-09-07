@@ -58,10 +58,8 @@ function save()
     $this->validate();
 
     try {
-        // Save basic user details
-        $this->user->save();
+        $this->user->update();
 
-        // Sync roles directly (no detach-then-attach needed)
      
         $oldrole= $this->user->roles()->pluck('title')->first();
         $this->user->roles()->detach(); 

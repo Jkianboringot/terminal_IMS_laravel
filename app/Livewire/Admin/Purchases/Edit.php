@@ -125,10 +125,8 @@ class Edit extends Component
                 throw new \Exception('You must add at least one product to the list.');
             }
 
-            // Save parent purchase record
-            $this->purchase->save();
+            $this->purchase->update();
 
-            // Get the old pivot data before sync
             $oldProducts = $this->purchase->products()
                 ->get()
                 ->mapWithKeys(function ($p) {

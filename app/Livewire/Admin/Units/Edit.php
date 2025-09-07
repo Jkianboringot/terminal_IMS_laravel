@@ -31,7 +31,7 @@ class Edit extends Component
     {
         $this->validate();
         try {
-            $this->unit->save();
+            $this->unit->update();
             return redirect()->route('admin.units.index');
         } catch (\Throwable $th) {
             $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());

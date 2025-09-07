@@ -76,12 +76,18 @@ class Edit extends Component
 
     }
 
-    function selectProduct($id)
-    {
-        $this->selectedProductId = $id;
-        $this->productSearch=Product::find($id)->name;
+    
+   function selectProduct($id)
+{
+    $this->selectedProductId = $id;
 
+    $product = Product::find($id);
+
+    if ($product) {
+        $this->productSearch = $product->name;
+        $this->price = $product->purchase_price; 
     }
+}
 
 function addToList()
 {
@@ -161,10 +167,8 @@ public function cancelEdit()
             }
         }
 
-        // Save sale updates
         $this->sale->update();
 
-        // Replace existing items
         $this->sale->products()->detach();
 
         foreach ($this->productList as $item) {
