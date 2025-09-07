@@ -10,9 +10,5 @@ class SalesPayment extends Model
         return $this->belongsToMany(Sale::class,'sale_sale_payment')->withPivot('amount');
     }
 
-        function customer()
-    {
-        return $this->belongsTo(Customer::class);
-    }
-
+     
 }

@@ -10,7 +10,6 @@ use Livewire\Component;
 class Create extends Component
 {
 
-    public $customerSearch;
     public $productSearch;
 
     public $selectedProductId;
@@ -27,7 +26,6 @@ class Create extends Component
     {
         return [
             'sale.sale_date' => 'required',
-            'sale.customer_id' => 'required',
         ];
     }
 
@@ -60,19 +58,18 @@ class Create extends Component
     }
 
 
-    function selectCustomer($id)
-    {
-        $this->sale->customer_id = $id;
-        $this->customerSearch=$this->sale->customer->name;
 
+   function selectProduct($id)
+{
+    $this->selectedProductId = $id;
+
+    $product = Product::find($id);
+
+    if ($product) {
+        $this->productSearch = $product->name;
+        $this->price = $product->purchase_price; 
     }
-
-    function selectProduct($id)
-    {
-        $this->selectedProductId = $id;
-        $this->productSearch=Product::find($id)->name;
-
-    }
+}
     public function cancelEdit()
 {
     $this->reset(); // or reset specific fields
@@ -86,7 +83,6 @@ class Create extends Component
             $this->validate([
                 'selectedProductId' => 'required',
                 'quantity' => 'required',
-                'price' => 'required',
             ]);
 
             if (empty($this->sale->sale_date)) {
@@ -162,13 +158,11 @@ class Create extends Component
 
     public function render()
     {
-        $customers = Customer::where('name', 'like', '%' . $this->customerSearch . '%')->get();
         $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
 
         return view(
             'livewire.admin.sales.create',
             [
-                'customers' => $customers,
                 'products' => $products,
 
             ]
