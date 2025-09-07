@@ -10,57 +10,94 @@ class StickyNoteBanner extends Component
     public $content;
     public $noteCount;
     public $editing = false;
+    public $editNoteId = null;
+    public $notes = [];
 
- public function mount()
-{
-    $latest = StickyNote::latest()->first();
-    $this->content = $latest?->content ?? '';
-    $this->noteCount = StickyNote::count();
-}
-
-    public function edit()
+    public function mount()
     {
+        $latest = StickyNote::latest()->first();
+        $this->content = $latest?->content ?? '';
+        $this->noteCount = StickyNote::count();
+    }
+
+    public function edit($id)
+    {
+        $note = StickyNote::findOrFail($id);
+        $this->editNoteId = $note->id;
+        $this->content = $note->content;
         $this->editing = true;
     }
 
-public function save()
-{
-    StickyNote::create([
-        'content' => $this->content,
-    ]);
+       public function addNote()
+    {
+        $this->resetForm();     
+    $this->editing = true;
+    }
 
-    $this->noteCount = StickyNote::count();
-    $this->editing = false;
-    $this->content = ''; // optional: clear textarea after saving
-}
-
-public function deleteNote($id){
-    StickyNote::findOrFail($id)->delete();
-    // $this->content=StickyNote::lastest()->get();    
-}
+    public function deleteNote($id)
+    {
+        StickyNote::findOrFail($id)->delete();
+        $this->refreshNotes();
+    }
 
     public function deleteAllNote()
     {
         StickyNote::truncate();
-
-        $this->content = '';
+        $this->resetForm();
         $this->noteCount = 0;
-        $this->editing = false;
     }
 
-public $notes = [];
+    private function resetForm()
+    {
+        $this->content = '';
+        $this->editNoteId = null;
+        $this->editing = false;
+        $this->refreshNotes();
+    }
 
-public function render()
-{
-    $this->notes = StickyNote::latest()->get();
-    $this->noteCount = $this->notes->count();
-
-    return view('components.sticky-note-banner', [
-        'notes' => $this->notes,
-        'editing' => $this->editing,
-        'noteCount' => $this->noteCount,
-    ]);
-}
+    private function refreshNotes()
+    {
+        $this->notes = StickyNote::latest()->get();
+        $this->noteCount = $this->notes->count();
+    }
 
 
+    
+    public function save()
+    {
+             $this->validate(
+        [
+            'content' => 'required|string|min:5',
+        ],
+        [
+            'content.required' => 'Note cannot be empty.',
+            'content.min' => 'Note must be at least 5 characters.',
+        ]
+    );
+        if ($this->editing && $this->editNoteId) {
+            // Update existing note
+            $note = StickyNote::findOrFail($this->editNoteId);
+            $note->update([
+                'content' => $this->content,
+            ]);
+        } else {
+            // Create new note
+            StickyNote::create([
+                'content' => $this->content,
+            ]);
+        }
+
+        $this->resetForm();
+    }
+
+    public function render()
+    {
+        $this->refreshNotes();
+
+        return view('components.sticky-note-banner', [
+            'notes' => $this->notes,
+            'editing' => $this->editing,
+            'noteCount' => $this->noteCount,
+        ]);
+    }
 }
