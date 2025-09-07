@@ -34,16 +34,12 @@ class Create extends Component
     }
 
 
- public function togglePaid($id)
-    {
-        $purchase = Purchase::findOrFail($id);
-        $purchase->is_paid = !$purchase->is_paid;
-        $purchase->save();
-    }
+
     function mount()
     {
         $this->purchase = new Purchase();
             $this->purchase->purchase_date = now()->toDateString();
+            
 
     }
 
@@ -74,12 +70,18 @@ class Create extends Component
 
     }
 
-    function selectProduct($id)
-    {
-        $this->selectedProductId = $id;
-        $this->productSearch=Product::find($id)->name;
+function selectProduct($id)
+{
+    $this->selectedProductId = $id;
 
+    $product = Product::find($id);
+
+    if ($product) {
+        $this->productSearch = $product->name;
+        $this->price = $product->purchase_price; 
     }
+}
+
 
  function addToList()
     {
@@ -87,7 +89,6 @@ class Create extends Component
             $this->validate([
                 'selectedProductId' => 'required',
                 'quantity' => 'required',
-                'price' => 'required',
             ]);
 
             foreach ($this->productList as $key => $listItem) {

@@ -98,7 +98,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="" class="form-label">Unit Price</label>
-                                <input wire:model='price' type="number" min='0' class="form-control" />
+                                <input wire:model='price' type="number" min='0' class="form-control" readonly />
                                 @error('price')
                                 <small id="helpId" class="form-text text-danger">{{ $message }} </small>
                                 @enderror

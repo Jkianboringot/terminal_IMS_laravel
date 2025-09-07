@@ -34,12 +34,7 @@ class Edit extends Component
         ];
     }
 
-    public function togglePaid($id)
-    {
-        $purchase = Purchase::findOrFail($id);
-        $purchase->is_paid = !$purchase->is_paid;
-        $purchase->save();
-    }
+   
 
     function mount($id)
     {
@@ -81,20 +76,24 @@ class Edit extends Component
         $this->supplierSearch = $this->purchase->supplier->name;
     }
 
-    function selectProduct($id)
-    {
-        $this->selectedProductId = $id;
-        $this->productSearch = Product::find($id)->name;
+   function selectProduct($id)
+{
+    $this->selectedProductId = $id;
+
+    $product = Product::find($id);
+
+    if ($product) {
+        $this->productSearch = $product->name;
+        $this->price = $product->purchase_price; 
     }
+}
     function addToList()
     {
         try {
-            // Manual checks to replace validate()
             if (!$this->selectedProductId || !$this->quantity || !$this->price) {
                 throw new \Exception('All product fields are required.');
             }
 
-            // Try to merge with an existing entry (same product and price)
             foreach ($this->productList as $key => $item) {
                 if ($item['product_id'] == $this->selectedProductId && $item['price'] == $this->price) {
                     $this->productList[$key]['quantity'] += $this->quantity;
@@ -103,7 +102,6 @@ class Edit extends Component
                 }
             }
 
-            // Add new item to list
             $this->productList[] = [
                 'product_id' => $this->selectedProductId,
                 'quantity' => $this->quantity,
