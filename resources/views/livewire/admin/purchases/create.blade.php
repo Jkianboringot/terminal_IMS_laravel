@@ -39,7 +39,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            @if(in_array($purchase->is_paid, ['Paid', 'Partially Paid']) )
+                            @if( $purchase && in_array($purchase->is_paid, ['Paid', 'Partially Paid']) )
 
                             <div class="mb-3">
                                 <label for="" class="form-label">Date Settled</label>
@@ -126,7 +126,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                @if(in_array($purchase->is_paid, ['Paid', 'Partially Paid']) )
+                                @if( $purchase && in_array($purchase->is_paid, ['Paid', 'Partially Paid']) )
                                 <th>Date Settled</th>
                                 @endif
 
@@ -143,7 +143,7 @@
                             @php $total = 0; @endphp
                             @foreach ($productList as $key => $listItem)
                             <tr>
-                                @if(in_array($purchase->is_paid, ['Paid', 'Partially Paid']) && $purchase->date_settled)
+                                @if($purchase && in_array($purchase->is_paid, ['Paid', 'Partially Paid']) && $purchase->date_settled)
                                 <td>
 
                                     {{ $purchase->date_settled }}

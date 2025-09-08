@@ -42,9 +42,9 @@ class Purchase extends Model
             return $product->pivot->quantity ;
         });
     }
-     function getTotalBalanceAttribute(){
-            return $this->total_amount- $this->total_paid ;
-        }
+    //  function getTotalBalanceAttribute(){
+    //         return $this->total_amount- $this->total_paid ;
+    //     }
         // function getIsPaidAttribute(){
         //     return $this->total_balance <= 0;
             

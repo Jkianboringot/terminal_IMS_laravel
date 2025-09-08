@@ -37,8 +37,7 @@
                         </div>
 
                         <div class="col-md-6">
-                                  @if(in_array($purchase->is_paid, ['Paid', 'Partially Paid']) )
-
+                            @if($purchase && in_array($purchase->is_paid, ['Paid', 'Partially Paid']))
                             <div class="mb-3">
                                 <label for="" class="form-label">Date Settled</label>
                                 <input wire:model.live="purchase.date_settled" type="date" class="form-control" />
@@ -124,10 +123,10 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                  @if(in_array($purchase->is_paid, ['Paid', 'Partially Paid']) )
-                                     <th>Date Settled</th>
-                                    @endif
-                            
+                                @if($purchase && in_array($purchase->is_paid, ['Paid', 'Partially Paid']) )
+                                <th>Date Settled</th>
+                                @endif
+
 
                                 <th>Product Name</th>
                                 <th>Product Quantity</th>
@@ -141,13 +140,13 @@
                             @php $total = 0; @endphp
                             @foreach ($productList as $key => $listItem)
                             <tr>
-                                   @if(in_array($purchase->is_paid, ['Paid', 'Partially Paid']) && $purchase->date_settled)
+                                @if(in_array($purchase->is_paid, ['Paid', 'Partially Paid']) && $purchase->date_settled)
                                 <td>
-                                 
+
                                     {{ $purchase->date_settled }}
-                                 
+
                                 </td>
-                                   @endif
+                                @endif
                                 <td>
                                     {{ App\Models\Product::find($listItem['product_id'])->name }} <br>
                                     <small class="text-muted">
@@ -157,7 +156,7 @@
                                 </td>
                                 <td>{{ $listItem['quantity'] }}</td>
                                 <td>PISO {{ number_format($listItem['price'], 2) }}</td>
-                               <td>{{ $purchase->is_paid }}</td>
+                                <td>{{ $purchase->is_paid }}</td>
 
                                 <td>PISO {{ number_format($listItem['quantity'] * $listItem['price'], 2) }}</td>
 
@@ -191,7 +190,7 @@
                         </tbody>
                     </table>
 
-                   <div class="d-flex gap-2 mt-3">
+                    <div class="d-flex gap-2 mt-3">
                         <button
                             onclick="confirm('Are you sure you wish to make the Sale?')||event.stopImmediatePropagation()"
                             wire:click='save'

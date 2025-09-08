@@ -23,8 +23,12 @@
                             <th>Product</th>
 
                             <th>No. of Unit Sold</th>
-                            <th>Total Amount</th>
 
+
+                            @if ($user && $user->hasPermission('edit permission') || $user->hasPermission('delete permission'))
+                            <th>Total Amount</th>
+                            @endif
+                            <!-- i will keep this like this for now since edit and create are property only admin has -->
 
                             @if ($user && $user->hasPermission('edit permission') || $user->hasPermission('delete permission'))
                             <th class="text-center">Actions</th>
@@ -32,7 +36,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($sales as $sale)  
+                        @foreach ($sales as $sale)
                         <tr>
                             <td>{{ $sale->ref_num }}</td>
                             <td>
@@ -41,7 +45,10 @@
                             <td>|||||</td>
                             <td>alcohol</td>
                             <td> <small> {{ number_format($sale->total_quantity, 2)}}</small></td>
+                            @if ($user && $user->hasPermission('edit permission') || $user->hasPermission('delete permission'))
                             <td> <small>PISO {{ number_format($sale->total_amount, 2)}}</small></td>
+                            @endif
+
 
                             <td class="text-center">
                                 @if ($user && $user->hasPermission('edit permission'))
@@ -71,10 +78,14 @@
                             <td></td>
                             <td><strong>{{ number_format($sales->sum(function ($sale) {
     return $sale->total_quantity; })) }}</strong></td>
+                            @if ($user && $user->hasPermission('edit permission') || $user->hasPermission('delete permission'))
                             <td><strong> PISO {{ number_format($sales->sum(function ($sale) {
     return $sale->total_amount; })) }}</strong></td>
+                            @endif
+
+
                             <td></td>
-                            
+
                         </tr>
                     </tbody>
                 </table>
