@@ -5,10 +5,12 @@ namespace App\Livewire\Admin\AddProducts;
 use App\Models\Product;
 use App\Models\AddProduct;
 use App\Models\Supplier;
+use App\Traits\WithCancel;
 use Livewire\Component;
 
 class Create extends Component
 {
+    use WithCancel;
     public $supplierSearch;
     public $productSearch;
     
@@ -108,7 +110,7 @@ class Create extends Component
              $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
         }
     }
-function addProductToList()
+function save()
 {
     try {
         $this->validate();

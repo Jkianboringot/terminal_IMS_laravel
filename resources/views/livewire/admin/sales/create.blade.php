@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
         {{-- LEFT SIDE --}}
         <div class="col-md-4 col-6">
-           
+
 
             <div class="card mt-2">
                 <div class="card-header bg-inv-primary text-inv-secondary border-0">
@@ -40,87 +40,98 @@
                                 <small class="form-text text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                        
+
+                        </div>
                     </div>
+
+                    <button onclick="confirm('Are you sure you wish to Add this Sale?')||event.stopImmediatePropagation()"
+                        wire:click='addToList' class="btn btn-dark text-inv-secondary">
+                        Add To List
+                    </button>
                 </div>
+            </div>
+        </div>
 
-                <button onclick="confirm('Are you sure you wish to Add this Sale?')||event.stopImmediatePropagation()"
-                    wire:click='addToList' class="btn btn-dark text-inv-secondary">
-                    Add To List
-                </button>
+        {{-- RIGHT SIDE (CART) --}}
+        <div class="col-md-8 col-6">
+            <div class="card shadow" id="cart-section">
+                <div class="card-header bg-inv-secondary text-inv-primary border-0">
+                    <h5 class="text-center text-uppercase">Cart</h5>
+                </div>
+                <div class="card-body">
+                    @if ($productList && count($productList) > 0)
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Product Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Total Price</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php $total = 0; @endphp
+                            @foreach ($productList as $key => $listItem)
+                            <tr>
+                                <td>
+                                    {{ App\Models\Product::find($listItem['product_id'])->name }} <br>
+                                    <small class="text-muted">
+                                        {{ App\Models\Product::find($listItem['product_id'])->quantity }}
+                                        {{ App\Models\Product::find($listItem['product_id'])->unit->name }}
+                                    </small>
+                                </td>
+                                <td>{{ $listItem['quantity'] }}</td>
+                                <td>PISO {{ number_format($listItem['price'], 2) }}</td>
+                                <td>PISO {{ number_format($listItem['quantity'] * $listItem['price'], 2) }}</td>
+                                <td class="text-center">
+                                    @if ($listItem['quantity'] > 1)
+                                    <button wire:click='subtractQuantity({{ $key }})' class="btn btn-danger">
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+                                    @endif
+                                    <button wire:click='addQuantity({{ $key }})' class="btn btn-success">
+                                        <i class="bi bi-plus"></i>
+                                    </button>
+                                    <button onclick="confirm('Are you sure you want to delete this Sale?')||event.stopImmediatePropagation()"
+                                        wire:click='deleteCartItem({{ $key }})'
+                                        class="btn btn-danger">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            @php $total += $listItem['quantity'] * $listItem['price']; @endphp
+                            @endforeach
+                            <tr>
+                                <td colspan="2" style='font-size:18px'><strong>TOTAL</strong></td>
+                                <td></td>
+                                <td style='font-size:18px'><strong>PISO {{ number_format($total, 2) }}</strong></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="d-flex gap-2 mt-3">
+                        <button
+                            onclick="confirm('Are you sure you wish to make the Sale?')||event.stopImmediatePropagation()"
+                            wire:click='save'
+                            class="btn btn-success flex-fill">
+                            <i class="bi bi-cart-check me-1"></i> Make Sale
+                        </button>
+
+                        <button
+                            onclick="confirm('Are you sure you wish to cancel?')||event.stopImmediatePropagation()"
+                            wire:click='cancel'
+                            class="btn btn-outline-secondary flex-fill">
+                            <i class="bi bi-x-circle me-1"></i> Cancel
+                        </button>
+                    </div>
+
+                    @else
+                    <p class="text-center text-muted">Your cart is empty. Add a product to get started.</p>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
-
-    {{-- RIGHT SIDE (CART) --}}
-    <div class="col-md-8 col-6">
-        <div class="card shadow" id="cart-section">
-            <div class="card-header bg-inv-secondary text-inv-primary border-0">
-                <h5 class="text-center text-uppercase">Cart</h5>
-            </div>
-            <div class="card-body">
-                @if ($productList && count($productList) > 0)
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Product Name</th>
-                            <th>Product Quantity</th>
-                            <th>Unit Price</th>
-                            <th>Total Price</th>
-                            <th class="text-center">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php $total = 0; @endphp
-                        @foreach ($productList as $key => $listItem)
-                        <tr>
-                            <td>
-                                {{ App\Models\Product::find($listItem['product_id'])->name }} <br>
-                                <small class="text-muted">
-                                    {{ App\Models\Product::find($listItem['product_id'])->quantity }}
-                                    {{ App\Models\Product::find($listItem['product_id'])->unit->name }}
-                                </small>
-                            </td>
-                            <td>{{ $listItem['quantity'] }}</td>
-                            <td>PISO {{ number_format($listItem['price'], 2) }}</td>
-                            <td>PISO {{ number_format($listItem['quantity'] * $listItem['price'], 2) }}</td>
-                            <td class="text-center">
-                                @if ($listItem['quantity'] > 1)
-                                <button wire:click='subtractQuantity({{ $key }})' class="btn btn-danger">
-                                    <i class="bi bi-dash"></i>
-                                </button>
-                                @endif
-                                <button wire:click='addQuantity({{ $key }})' class="btn btn-success">
-                                    <i class="bi bi-plus"></i>
-                                </button>
-                                <button onclick="confirm('Are you sure you want to delete this Sale?')||event.stopImmediatePropagation()"
-                                    wire:click='deleteCartItem({{ $key }})'
-                                    class="btn btn-danger">
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        @php $total += $listItem['quantity'] * $listItem['price']; @endphp
-                        @endforeach
-                        <tr>
-                            <td colspan="2" style='font-size:18px'><strong>TOTAL</strong></td>
-                            <td></td>
-                            <td style='font-size:18px'><strong>PISO {{ number_format($total, 2) }}</strong></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <button onclick="confirm('Are you sure you wish to make the Sale?')||event.stopImmediatePropagation()"
-                    wire:click='makeSale'
-                    class="btn btn-dark text-inv-secondary w-100">
-                    Sale
-                </button>
-                @else
-                <p class="text-center text-muted">Your cart is empty. Add a product to get started.</p>
-                @endif
-            </div>
-        </div>
-    </div>
-</div>
 </div>

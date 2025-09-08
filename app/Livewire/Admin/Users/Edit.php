@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\Users;
 use App\Mail\UserCreatedMail;
 use App\Models\Role;
 use App\Models\User;
+use App\Traits\WithCancel;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Illuminate\Support\Facades\Hash;
@@ -12,6 +13,7 @@ use Illuminate\Support\Str;
 
 class Edit extends Component
 {
+    use WithCancel;
 
     public User $user;
     public  $selectedRoles = [];

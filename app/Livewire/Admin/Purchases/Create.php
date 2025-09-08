@@ -6,10 +6,12 @@ use App\Models\ActivityLog;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Supplier;
+use App\Traits\WithCancel;
 use Livewire\Component;
 
 class Create extends Component
 {
+     use WithCancel;
     public $supplierSearch;
     public $productSearch;
     
@@ -117,7 +119,7 @@ function selectProduct($id)
         }
     }
 
-function makePurchase()
+function save()
 {
     try {
         $this->validate();

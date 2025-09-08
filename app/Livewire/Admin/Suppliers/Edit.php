@@ -3,11 +3,13 @@
 namespace App\Livewire\Admin\Suppliers;
 
 use App\Models\Supplier;
+use App\Traits\WithCancel;
 use Livewire\Component;
 
 class Edit extends Component
 {
-    public Supplier $supplier;
+    use WithCancel;
+        public Supplier $supplier;
 
     function rules()
     {

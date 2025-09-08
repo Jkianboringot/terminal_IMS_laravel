@@ -5,11 +5,13 @@ namespace App\Livewire\Admin\Purchases;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Supplier;
+use App\Traits\WithCancel;
 use Livewire\Component;
 use App\Models\ActivityLog;
 
 class Edit extends Component
 {
+     use WithCancel;
     public $supplierSearch;
     public $productSearch;
 
@@ -114,7 +116,7 @@ class Edit extends Component
             $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
         }
     }
-    function makePurchase()
+    function save()
     {
         try {
             if (!$this->purchase->purchase_date || !$this->purchase->supplier_id) {

@@ -3,10 +3,13 @@
 namespace App\Livewire\Admin\Units;
 
 use App\Models\Unit;
+use App\Traits\WithCancel;
 use Livewire\Component;
 
 class Create extends Component
 {
+    use WithCancel;
+
     public Unit $unit;
 
     function rules()

@@ -3,12 +3,15 @@
 namespace App\Livewire\Admin\Brands;
 
 use App\Models\Brand;
+use App\Traits\WithCancel;
 use Livewire\Component;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 
 class Create extends Component
 {
+    use WithCancel;
+
     public Brand $brand;
     public $image;
 

@@ -4,10 +4,12 @@ namespace App\Livewire\Admin\Customers;
 
 
 use App\Models\Customer;
+use App\Traits\WithCancel;
 use Livewire\Component;
 
 class Create extends Component
 {
+     use WithCancel;
      public Customer $customer;
 
     function rules(){

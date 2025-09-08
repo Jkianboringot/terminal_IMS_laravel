@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sale extends Model
 {
-
+  protected $fillable = ['ref_num', 'sale_date'];
     protected $appends = [
         'total_amount'
     ];
@@ -56,4 +56,25 @@ class Sale extends Model
           function payments(){
         return $this->belongsToMany(SalesPayment::class,'sale_sale_payment')->withPivot(['amount']);
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($sale) {
+            $year = now()->year;
+
+            $lastRef = Sale::whereYear('created_at', $year)->max('ref_num');
+
+            if ($lastRef) {
+                $lastNumber = (int)substr($lastRef, 4); // grab number after year
+                $newNumber = $lastNumber + 1;
+            } else {
+                $newNumber = 1;
+            }
+
+            $sale->ref_num = $year . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
+        });
+    }
+
 }

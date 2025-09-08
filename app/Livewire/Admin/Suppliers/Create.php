@@ -3,10 +3,13 @@
 namespace App\Livewire\Admin\Suppliers;
 
 use App\Models\Supplier;
+use App\Traits\WithCancel;
 use Livewire\Component;
 
 class Create extends Component
 {
+    use WithCancel;
+
     public Supplier $supplier;
 
     function rules()

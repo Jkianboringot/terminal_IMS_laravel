@@ -5,11 +5,13 @@ namespace App\Livewire\Admin\Sales;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Sale;
+use App\Traits\WithCancel;
 use Livewire\Component;
 
 class Create extends Component
 {
 
+     use WithCancel;
     public $productSearch;
 
     public $selectedProductId;
@@ -70,11 +72,6 @@ class Create extends Component
         $this->price = $product->purchase_price; 
     }
 }
-    public function cancelEdit()
-{
-    $this->reset(); // or reset specific fields
-    $this->dispatch('notify', 'Create canceled'); // or show feedback
-}
 
 
     function addToList()
@@ -122,7 +119,7 @@ class Create extends Component
         }
     }
 
-    function makeSale()
+    function save()
     {
 
         try {

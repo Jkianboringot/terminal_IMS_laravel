@@ -5,11 +5,13 @@ namespace App\Livewire\Admin\Sales;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Sale;
+use App\Traits\WithCancel;
 use Livewire\Component;
 
 class Edit extends Component
 {
-    public $customerSearch;
+    use WithCancel;
+
     public $productSearch;
 
     public $selectedProductId;
@@ -26,7 +28,6 @@ class Edit extends Component
     {
         return [
             'sale.sale_date' => 'required',
-            'sale.customer_id' => 'required',
         ];
     }
 
@@ -47,7 +48,6 @@ class Edit extends Component
             );
 
         }
-        $this->customerSearch = $this->sale->customer->name;
     }
     function deleteCartItem($key)
     {
@@ -69,12 +69,7 @@ class Edit extends Component
 
 
 
-    function selectCustomer($id)
-    {
-        $this->sale->customer_id = $id;
-        $this->customerSearch=$this->sale->customer->name;
 
-    }
 
     
    function selectProduct($id)
@@ -138,20 +133,15 @@ function addToList()
         $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
     }
 }
-public function cancelEdit()
-{
-    $this->reset(); // or reset specific fields
-    $this->dispatch('notify', 'Edit canceled'); // or show feedback
-}
 
 
 
-  function makeSale()
+  function save()
 {
     try {
         // Manual lightweight validation
-        if (!$this->sale->sale_date || !$this->sale->customer_id) {
-            throw new \Exception("Sale date and customer are required.");
+        if (!$this->sale->sale_date ) {
+            throw new \Exception("Sale date  are required.");
         }
 
         // Validate inventory for all items
@@ -191,13 +181,11 @@ public function cancelEdit()
 
     public function render()
     {
-        $customers = Customer::where('name', 'like', '%' . $this->customerSearch . '%')->get();
         $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
 
         return view(
             'livewire.admin.sales.edit',
             [
-                'customers' => $customers,
                 'products' => $products,
 
             ]

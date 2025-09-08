@@ -36,19 +36,17 @@ class Index extends Component
 
     
    
-       public function render()
+      public function render()
 {
     $search = trim($this->search);
 
-    $sales = Sale::select('sales.*')
-        ->join('customers', 'sales.customer_id', '=', 'customers.id')
+    $sales = Sale::query()
         ->when($search, fn ($query) =>
-            $query->where(function ($sub) use ($search) {
-                $sub->where('sales.sale_date', 'like', "%$search%")
-                    ->orWhere('customers.name', 'like', "%$search%");
+            $query->where(function ($q) use ($search) {
+                $q->where('sales.sale_date', 'like', "%$search%")
+                  ->orWhere('sales.ref_num', 'like', "%$search%");
             })
         )
-        ->with(['customer:id,name']) // Only load needed fields
         ->orderBy('sales.sale_date', 'desc')
         ->paginate(10);
 
@@ -56,4 +54,5 @@ class Index extends Component
         'sales' => $sales
     ]);
 }
+
 }

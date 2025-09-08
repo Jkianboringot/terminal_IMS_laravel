@@ -34,7 +34,7 @@
                     <tbody>
                         @foreach ($sales as $sale)  
                         <tr>
-                            <td>ref num</td>
+                            <td>{{ $sale->ref_num }}</td>
                             <td>
                                 <h6>{{Carbon\Carbon::parse($sale->sale_date)->format('jS F,Y') }}</h6>
                             </td>

@@ -4,10 +4,12 @@ namespace App\Livewire\Admin\ProductCategories;
 
 
 use App\Models\ProductCategory;
+use App\Traits\WithCancel;
 use Livewire\Component;
 
 class Edit extends Component
 {
+     use WithCancel;
     public ProductCategory $category;
 
     function rules()

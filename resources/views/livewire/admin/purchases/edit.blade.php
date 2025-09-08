@@ -191,11 +191,21 @@
                         </tbody>
                     </table>
 
-                    <button onclick="confirm('Are you sure you wish to make the Purchase')||event.stopImmediatePropagation()"
-                        wire:click='makePurchase'
-                        class="btn btn-dark text-inv-secondary w-100">
-                        Purchase
-                    </button>
+                   <div class="d-flex gap-2 mt-3">
+                        <button
+                            onclick="confirm('Are you sure you wish to make the Sale?')||event.stopImmediatePropagation()"
+                            wire:click='save'
+                            class="btn btn-success flex-fill">
+                            <i class="bi bi-cart-check me-1"></i> Make Sale
+                        </button>
+
+                        <button
+                            onclick="confirm('Are you sure you wish to cancel?')||event.stopImmediatePropagation()"
+                            wire:click='cancel'
+                            class="btn btn-outline-secondary flex-fill">
+                            <i class="bi bi-x-circle me-1"></i> Cancel
+                        </button>
+                    </div>
                     @else
                     <p class="text-center text-muted">Your cart is empty. Add a product to get started.</p>
                     @endif

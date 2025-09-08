@@ -5,10 +5,13 @@ namespace App\Livewire\Admin\AddProducts;
 use App\Models\Product;
 use App\Models\AddProduct;
 use App\Models\Supplier;
+use App\Traits\WithCancel;
 use Livewire\Component;
 
 class Edit extends Component
 {
+    use WithCancel;
+
     public $supplierSearch;
     public $productSearch;
 
@@ -118,7 +121,7 @@ function addToList()
     }
 }
 
-  function addProductToList()
+  function save()
 {
     try {
       

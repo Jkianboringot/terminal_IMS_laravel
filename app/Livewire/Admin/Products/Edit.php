@@ -7,12 +7,14 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\Supplier;
 use App\Models\Unit;
+use App\Traits\WithCancel;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
 
 class Edit extends Component
 {
+     use WithCancel;
     public Product $product;
     public $manual_image;
 

@@ -3,12 +3,15 @@
 namespace App\Livewire\Admin\Roles;
 
 use App\Models\Role;
+use App\Traits\WithCancel;
 use Livewire\Component;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class Create extends Component
 {
+    use WithCancel;
+
     public Role $role;
     public array $permissions = [];
 
