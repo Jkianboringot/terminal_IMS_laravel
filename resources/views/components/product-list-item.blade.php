@@ -1,10 +1,7 @@
 @props(['product', 'selectedProductId'])
 <li wire:click='selectProduct({{ $product->id }})'
     class="list-group-item {{ $product->id == $selectedProductId ? 'active' : '' }} d-flex ">
-    <div class="me-auto">
-        <img src="{{ asset('admin-lte/assets/img/ego-profile.jpg' . $product->image) }}" class="img-fluid rounded-top" alt="" height="100%"      />
-
-    </div>
+   
     <div class="m-3" style="max-width: 30%">
         <h7 class="text-capitalize text-inv-secondary">{{ $product->brand->name }}</h7>
         <h6>{{ $product->name }}</h6>
