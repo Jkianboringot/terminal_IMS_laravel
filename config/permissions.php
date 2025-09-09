@@ -96,3 +96,8 @@ return [
     ],
     
 ];
+
+// this is the prep and final preparetion for permissions
+// prep=['user','dashboard','unit','sale','role','customer','supplier','brand',
+// 'category','product','purchase','order','new arrival','return','unsuccesfull transaction',
+// 'approval','product defect','notes',];

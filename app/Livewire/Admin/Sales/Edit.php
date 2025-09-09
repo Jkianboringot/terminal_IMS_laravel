@@ -11,6 +11,7 @@ use Livewire\Component;
 class Edit extends Component
 {
     use WithCancel;
+     public $overrideLowStock = false;
 
     public $productSearch;
 
@@ -19,6 +20,7 @@ class Edit extends Component
     public $quantity;
     public $price;
 
+public $pendingAction = null; 
 
     public Sale $sale;
     public $productList = [];
@@ -54,21 +56,37 @@ class Edit extends Component
         array_splice($this->productList, $key, 1);
     }
 
-    function addQuantity($key)
-    {
-        $this->productList[$key]['quantity']++;
-    }
-    function subtractQuantity($key)
-    {
-            if ( $this->productList[$key]['quantity'] > 1) {
-                 $this->productList[$key]['quantity']--;
-            }
-         
-       
+
+function addQuantity($key)
+{
+    $product = Product::find($this->productList[$key]['product_id']);
+    $newQty  = $this->productList[$key]['quantity'] + 1;
+
+    if ($product->inventory_balance < $newQty) {
+        session()->flash('warning', "Not enough stock for {$product->name}. Available: {$product->inventory_balance}.");
+        return;
     }
 
+    if (($product->inventory_balance - $newQty) < 10 && !$this->overrideLowStock) {
+        session()->flash('warning', "Adding this will bring {$product->name} below 10 in stock.");
+        $this->pendingAction = ['type' => 'addQuantity', 'key' => $key]; // store pending action
+        return;
+    }
+
+    $this->productList[$key]['quantity']++;
+    $this->overrideLowStock = false; // reset after use
+    $this->pendingAction = null;
+}
 
 
+ function subtractQuantity($key)
+    {
+        if ($this->productList[$key]['quantity'] > 1) {
+            $this->productList[$key]['quantity']--;
+        }
+
+
+    }
 
 
     
@@ -87,41 +105,51 @@ class Edit extends Component
 function addToList()
 {
     try {
-        // Manual validation to prevent deep state sync
-        if (!$this->selectedProductId || !$this->quantity || !$this->price) {
-            throw new \Exception("All fields are required.");
+        $this->validate([
+            'selectedProductId' => 'required',
+            'quantity' => 'required',
+        ]);
+
+        if (empty($this->sale->sale_date)) {
+            $this->sale->sale_date = now()->toDateString();
         }
 
         $product = Product::find($this->selectedProductId);
+
         if (!$product) {
-            throw new \Exception("Selected product not found.");
+            $this->dispatch('done', error: "Warning: Product not found.");
+            return;
         }
 
+        // 🚨 Hard stop if requested qty is more than available
         if ($product->inventory_balance < $this->quantity) {
-            throw new \Exception("Inventory balance for {$product->name} is too low.");
+            $this->dispatch('done', error: "Warning: Inventory balance for {$product->name} is too low.");
+            return;
         }
 
-        // Try to merge with existing entry
-        foreach ($this->productList as $key => $item) {
-            if ($item['product_id'] == $this->selectedProductId && $item['price'] == $this->price) {
-                $this->productList[$key]['quantity'] += $this->quantity;
+       // ⚠️ Soft warning if stock would fall below 10
+if (($product->inventory_balance - $this->quantity) < 10 && !$this->overrideLowStock) {
+    session()->flash('warning', "Adding this will bring {$product->name} below 10 in stock.");
+    $this->pendingAction = ['type' => 'addToList']; // <---- ADD THIS
+    return;
+}
 
-                $this->reset([
-                    'selectedProductId',
-                    'productSearch',
-                    'quantity',
-                    'price',
-                ]);
+
+        // Merge if same product & price already exists
+        foreach ($this->productList as $key => $listItem) {
+            if ($listItem['product_id'] == $this->selectedProductId && $listItem['price'] == $this->price) {
+                $this->productList[$key]['quantity'] += $this->quantity;
+                $this->overrideLowStock = false; // reset override
                 return;
             }
         }
 
-        // Add new entry
-        $this->productList[] = [
+        // Otherwise add as new item
+        array_push($this->productList, [
             'product_id' => $this->selectedProductId,
             'quantity' => $this->quantity,
             'price' => $this->price
-        ];
+        ]);
 
         $this->reset([
             'selectedProductId',
@@ -129,11 +157,28 @@ function addToList()
             'quantity',
             'price',
         ]);
+
+        $this->overrideLowStock = false; // reset after adding
     } catch (\Throwable $th) {
-        $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
+        $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
     }
 }
 
+public function continueAnyway()
+{
+    $this->overrideLowStock = true;
+
+    if ($this->pendingAction) {
+        if ($this->pendingAction['type'] === 'addToList') {
+            $this->addToList();
+        } elseif ($this->pendingAction['type'] === 'addQuantity') {
+            $this->addQuantity($this->pendingAction['key']);
+        }
+    }
+
+    $this->pendingAction = null;
+ 
+}
 
 
   function save()

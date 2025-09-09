@@ -118,7 +118,7 @@ $user = auth()->user();
             @endif
 
 
-            {{--
+           
             @if ($user && $user->hasPermission('manage orders'))
                 <x-new-nav-link-dropdown title="Orders" bi_icon="bi-cart-check" route="admin.orders*">
                     <x-new-nav-link title="Order List" bi_icon="" route="admin.orders.index" />
@@ -127,7 +127,7 @@ $user = auth()->user();
                     @endif
                 </x-new-nav-link-dropdown>
             @endif
-
+ {{--
             @if ($user && $user->hasPermission('manage quotations'))
                 <x-new-nav-link-dropdown title="Quotations" bi_icon="bi-file-earmark-text" route="admin.quotations*">
                     <x-new-nav-link title="Quotation List" bi_icon="" route="admin.quotations.index" />

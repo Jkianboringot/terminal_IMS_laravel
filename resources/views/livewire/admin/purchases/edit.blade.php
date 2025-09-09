@@ -172,7 +172,7 @@
                                     <button onclick="confirm('Are you sure you want to delete this Purchase')||event.stopImmediatePropagation()"
                                         wire:click='deleteCartItem({{ $key }})'
                                         class="btn btn-danger">
-                                        <i class="bi bi-trash-fill"></i>
+                                      <i class="bi bi-x-lg"></i>
                                     </button>
                                 </td>
                             </tr>

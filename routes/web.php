@@ -106,11 +106,11 @@ Route::middleware([
     //     Route::get('{id}/edit', Admin\Invoices\Edit::class)->name('edit');
     // });
 
-    // Route::prefix('orders')->middleware('permission:manage orders')->name('orders.')->group(function () {
-    //     Route::get('/', Admin\Orders\Index::class)->name('index');
-    //     Route::get('/create', Admin\Orders\Create::class)->middleware('permission:create permission')->name('create');
-    //     Route::get('{id}/edit', Admin\Orders\Edit::class)->name('edit');
-    // });
+    Route::prefix('orders')->middleware('permission:manage orders')->name('orders.')->group(function () {
+        Route::get('/', Admin\Orders\Index::class)->name('index');
+        Route::get('/create', Admin\Orders\Create::class)->middleware('permission:create permission')->name('create');
+        Route::get('{id}/edit', Admin\Orders\Edit::class)->name('edit');
+    });
 
     Route::prefix('product-categories')->middleware('permission:manage product categories')->name('productcategories.')->group(function () {
         Route::get('/', Admin\ProductCategories\Index::class)->name('index');

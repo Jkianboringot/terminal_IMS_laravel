@@ -1,5 +1,13 @@
 <div>
     <x-slot:header>Sales</x-slot:header>
+    @if (session()->has('warning'))
+    <div class="alert alert-warning d-flex justify-content-between align-items-center">
+        <span>{{ session('warning') }}</span>
+        <button wire:click="continueAnyway" class="btn btn-sm btn-outline-danger ms-2">
+            Continue Anyway
+        </button>
+    </div>
+    @endif
     <div class="row justify-content-center">
         {{-- LEFT SIDE --}}
         <div class="col-md-4 col-6">
@@ -10,6 +18,7 @@
                     <h6>Add a Product to List</h6>
                 </div>
                 <div class="card-body">
+
                     <div class="mb-3">
                         <label class="form-label">Product Search</label>
                         <input type="text" wire:model.live='productSearch' class="form-control" />
@@ -85,19 +94,32 @@
                                 <td>PISO {{ number_format($listItem['price'], 2) }}</td>
                                 <td>PISO {{ number_format($listItem['quantity'] * $listItem['price'], 2) }}</td>
                                 <td class="text-center">
+
+                                    @php
+                                    $product = App\Models\Product::find($listItem['product_id']);
+                                    @endphp
+
                                     @if ($listItem['quantity'] > 1)
                                     <button wire:click='subtractQuantity({{ $key }})' class="btn btn-danger">
                                         <i class="bi bi-dash"></i>
                                     </button>
                                     @endif
-                                    <button wire:click='addQuantity({{ $key }})' class="btn btn-success">
+
+                                    @if ($product && $product->inventory_balance > $listItem['quantity'])
+                                    @php
+                                    $remainingStock = $product->inventory_balance - $listItem['quantity'];
+                                    $btnClass = $remainingStock <= 10 ? 'btn btn-danger' : 'btn btn-success' ;
+                                        @endphp
+                                        <button wire:click='addQuantity({{ $key }})' class="{{ $btnClass }}">
                                         <i class="bi bi-plus"></i>
-                                    </button>
-                                    <button onclick="confirm('Are you sure you want to delete this Sale?')||event.stopImmediatePropagation()"
-                                        wire:click='deleteCartItem({{ $key }})'
-                                        class="btn btn-danger">
-                                        <i class="bi bi-trash-fill"></i>
-                                    </button>
+                                        </button>
+                                        @endif
+                                        
+                                        <button onclick="confirm('Are you sure you want to delete this Sale?')||event.stopImmediatePropagation()"
+                                            wire:click='deleteCartItem({{ $key }})'
+                                            class="btn btn-danger">
+                                            <i class="bi bi-x-lg"></i>
+                                        </button>
                                 </td>
                             </tr>
                             @php $total += $listItem['quantity'] * $listItem['price']; @endphp
