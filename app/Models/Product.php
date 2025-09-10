@@ -104,7 +104,7 @@
 
     function getInventoryBalanceAttribute()
     {
-        return $this->total_add_product_count - $this->total_sales_count;
+       return $this->total_purchase_count + $this->total_add_product_count - $this->total_sales_count;
         // i think i will get rid of total purchase for know since the especifically said that only focus on inventory so i will get 
         // rid of it for now but i wnat he inventory balance to be also considered on inventroy balance like they order from a supplier instead of 
         // manually adding then just add this back '$this->total_purchase_count + $this->total_add_product_count - $this->total_sales_count;'
