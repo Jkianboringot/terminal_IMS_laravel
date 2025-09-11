@@ -13,6 +13,7 @@ class Create extends Component
 
      use WithCancel;
      public $overrideLowStock = false;
+    public $customerSearch;
 
     public $productSearch;
 
@@ -30,6 +31,7 @@ public $pendingAction = null;
     function rules()
     {
         return [
+            'sale.customer_id' => 'required',
             'sale.sale_date' => 'required',
         ];
     }
@@ -43,7 +45,12 @@ public $pendingAction = null;
     $this->sale->sale_date = now()->toDateString();
     }
 
+    function selectCustomer($id)
+    {
+        $this->sale->customer_id = $id;
+        $this->customerSearch=$this->sale->customer->name;
 
+    }
 function addQuantity($key)
 {
     $product = Product::find($this->productList[$key]['product_id']);
@@ -210,11 +217,14 @@ public function continueAnyway()
     public function render()
     {
         $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
+        $customers = Customer::where('name', 'like', '%' . $this->customerSearch . '%')->get();
 
         return view(
             'livewire.admin.sales.create',
             [
                 'products' => $products,
+
+                'customers' => $customers,
 
             ]
         );

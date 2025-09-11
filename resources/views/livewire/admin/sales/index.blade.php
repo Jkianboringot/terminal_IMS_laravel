@@ -18,6 +18,7 @@
                     <thead class="thead-inverse">
                         <tr>
                             <th>Ref Num</th>
+                            <th>Customer</th>
                             <th>Sale Date</th>
                             <th>Bar Code</th>
                             <th>Product</th>
@@ -39,6 +40,8 @@
                         @foreach ($sales as $sale)
                         <tr>
                             <td>{{ $sale->ref_num }}</td>
+                        <td>{{ $sale->customer->name }}</td>
+
                             <td>
                                 <h6>{{Carbon\Carbon::parse($sale->sale_date)->format('jS F,Y') }}</h6>
                             </td>

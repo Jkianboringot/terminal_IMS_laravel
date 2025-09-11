@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
               $table->string('ref_num')->unique();
+            $table->foreignId('customer_id')->constrained();
+
              $table->date('sale_date')->nullable();
             $table->timestamps();
         });

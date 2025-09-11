@@ -35,8 +35,9 @@ class SalesSeeder extends Seeder
 
         foreach ($saleDates as $key => $date) {
             $products = Product::all();
-
+         
             $sale = new Sale();
+               $sale->customer_id = rand(1, count(Customer::all()));
             $sale->sale_date = $date;
             $sale->save();
 

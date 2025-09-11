@@ -18,7 +18,21 @@
                     <h6>Add a Product to List</h6>
                 </div>
                 <div class="card-body">
-
+<div class="mb-3">
+                        <label for="" class="form-label">Customer Search</label>
+                        <input type="text" wire:model.live="customerSearch" class="form-control" />
+                          @error('sale.customer_id')
+                            <small id="helpId" class="form-text text-danger">{{ $message }} </small>
+                        @enderror
+                          <ul class="list-group mt-2 w-100">
+                        @if ($customerSearch != '')
+                            @foreach ($customers as $customer)
+                                     <x-customer-list-item :customer="$customer" :sale="$sale"/>
+                            @endforeach
+                        @endif
+                        
+</ul>
+                    </div>
                     <div class="mb-3">
                         <label class="form-label">Product Search</label>
                         <input type="text" wire:model.live='productSearch' class="form-control" />
