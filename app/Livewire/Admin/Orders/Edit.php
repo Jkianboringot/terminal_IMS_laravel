@@ -10,7 +10,7 @@ use Livewire\Component;
 class Edit extends Component
 {
     
-    public $supplierSearch;
+    public $customerSearch;
     public $productSearch;
 
     public $selectedProductId;
@@ -27,7 +27,7 @@ class Edit extends Component
     {
         return [
             'order.order_date' => 'required',
-            'order.supplier_id' => 'required',
+            'order.customer_id' => 'required',
         ];
     }
 
@@ -48,7 +48,7 @@ class Edit extends Component
             );
 
         }
-        $this->supplierSearch = $this->order->supplier->name;
+        $this->customerSearch = $this->order->customer->name;
     }
     function deleteCartItem($key)
     {
@@ -72,8 +72,8 @@ class Edit extends Component
 
     function selectSupplier($id)
     {
-        $this->order->supplier_id = $id;
-        $this->supplierSearch=$this->order->supplier->name;
+        $this->order->customer_id = $id;
+        $this->customerSearch=$this->order->customer->name;
 
     }
 
@@ -118,8 +118,8 @@ class Edit extends Component
 function makeOrder()
 {
     try {
-        if (!$this->order->order_date || !$this->order->supplier_id) {
-            throw new \Exception("Order date and supplier are required.");
+        if (!$this->order->order_date || !$this->order->customer_id) {
+            throw new \Exception("Order date and customer are required.");
         }
 
         $this->order->update();
@@ -140,13 +140,13 @@ function makeOrder()
 
     public function render()
     {
-        $suppliers = Supplier::where('name', 'like', '%' . $this->supplierSearch . '%')->get();
+        $customers = Supplier::where('name', 'like', '%' . $this->customerSearch . '%')->get();
         $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
 
         return view(
             'livewire.admin.orders.edit',
             [
-                'suppliers' => $suppliers,
+                'customers' => $customers,
                 'products' => $products,
 
             ]

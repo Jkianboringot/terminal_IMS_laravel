@@ -20,15 +20,15 @@
 
 
   <div class="mb-3">
-                        <label for="" class="form-label">Supplier Search</label>
-                        <input type="text" wire:model.live='supplierSearch' class="form-control" />
-                        @error('purchase.supplier_id')
+                        <label for="" class="form-label">Customer Search</label>
+                        <input type="text" wire:model.live='customerSearch' class="form-control" />
+                        @error('purchase.customer_id')
                             <small id="helpId" class="form-text text-danger">{{ $message }}</small>
                         @enderror
                         <ul class="list-group mt-2 w-100">
-                            @if ($supplierSearch != '')
-                                @foreach ($suppliers as $supplier)
-                                    <x-supplier-order-list-item :supplier="$supplier" :order="$order"/>
+                            @if ($customerSearch != '')
+                                @foreach ($customers as $customer)
+                                    <x-customer-order-list-item :customer="$customer" :order="$order"/>
                                 @endforeach
                             @endif
                         </ul>
@@ -180,4 +180,4 @@
 </div>
 
 
-<!-- after this make the supplier id and product a drop down and search because its annoying just being able to searcjh -->
+<!-- after this make the customer id and product a drop down and search because its annoying just being able to searcjh -->

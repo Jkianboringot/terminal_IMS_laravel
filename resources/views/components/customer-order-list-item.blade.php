@@ -1,0 +1,14 @@
+@props(["customer", 'order'])
+
+<li wire:click="selectSupplier({{ $customer->id }})"
+    class="list-group-item {{ $customer->id == $order->customer_id ? 'active' : '' }} d-flex justify-content-between">
+    <div class="me-auto ">
+        <h7 class='text-inv-secondary'>{{ $customer->name }}</h7><br>
+        <small class='text-muted'>{{ $customer->email}} <br>{{ $customer->phone_number }}</small>
+    </div>
+   
+    <div class="ms-auto my-auto {{$customer->total_balance > 0 ? 'text-cash-red' : 'text-cash-green' }} ">
+        <h7>PISO {{ number_format($customer->total_balance, 2) }}</h7>
+
+    </div>
+</li>   

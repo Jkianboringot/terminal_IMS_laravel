@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Orders;
 
+use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Supplier;
@@ -11,7 +12,7 @@ class Create extends Component
 {
 
     
-    public $supplierSearch;
+    public $customerSearch;
     public $productSearch;
     
     public $selectedProductId;
@@ -27,7 +28,9 @@ class Create extends Component
     function rules(){
         return [
             'order.order_date'=>'required',
-            'order.supplier_id'=>'required',
+            'order.delivery_date'=>'required',
+            'order.order_status'=>'required',
+            'order.customer_id'=>'required',
         ];
     }
 
@@ -59,8 +62,8 @@ class Create extends Component
 
     function selectSupplier($id)
     {
-        $this->order->supplier_id = $id;
-        $this->supplierSearch=$this->order->supplier->name;
+        $this->order->customer_id = $id;
+        $this->customerSearch=$this->order->customer->name;
 
     }
 
@@ -128,13 +131,13 @@ class Create extends Component
     }
     public function render()
     {
-        $suppliers = Supplier::where('name', 'like', '%' . $this->supplierSearch . '%')->get();
+        $customers = Customer::where('name', 'like', '%' . $this->customerSearch . '%')->get();
         $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
 
         return view(
             'livewire.admin.orders.create',
             [
-                'suppliers' => $suppliers,
+                'customers' => $customers,
                 'products' => $products,
 
             ]

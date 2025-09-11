@@ -45,12 +45,12 @@ class Index extends Component
          $search = trim($this->search);
 
     $order = Order::select('orders.*')
-        ->join('suppliers', 'orders.supplier_id', '=', 'suppliers.id')
+        ->join('customers', 'orders.customer_id', '=', 'customers.id')
         ->when($search, fn ($query) =>
-            $query->where('suppliers.name', 'like', "%$search%")
+            $query->where('customers.name', 'like', "%$search%")
         )
-        ->with(['supplier:id,name']) // Only if you display customer info in the view
-        ->orderBy('suppliers.name')
+        ->with(['customer:id,name']) // Only if you display customer info in the view
+        ->orderBy('customers.name')
         ->paginate(10);
 
         return view('livewire.admin.orders.index', [

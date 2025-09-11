@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
-   
+       function orders(){
+        return $this->hasMany(Order::class);
+    }
 
          function sales(){
         return $this->hasMany(Sale::class);

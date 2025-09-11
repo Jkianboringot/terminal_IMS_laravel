@@ -18,10 +18,13 @@
             <table class="table table-hover  ">
                 <thead class="thead-inverse">
                     <tr>
-                        <th>ID</th>
                         <th>Order Date</th>
-                        <th>Supplier</th>
+                        <th>Customer</th>
+                        <th>Product</th>
+                        <th>QTY</th>
+                        <th>Status</th>
                         <th>Total Amount</th>
+                        <th>Delivery Date</th>
                         <!-- <th>Status</th> -->
 
                         @if ($user && $user->hasPermission('edit permission') || $user->hasPermission('delete permission'))
@@ -32,16 +35,30 @@
                 <tbody>
                     @foreach ($orders as $order)
                     <tr>
-                        <td scope="row">{{ $order->id }}</td>
                         <td>
                             <h6>{{Carbon\Carbon::parse($order->order_date)->format('jS F,Y') }}</h6>
                         </td>
-                        <td>{{ $order->supplier->name }}</td>
+                        <td>
+                       {{-- {{ $order->customer->name }} --}}
+                    custmer
+                        </td>
+                        <td>
+                     {{-- {{ $order->prodcut->name }} --}}
+                     pname
+                        <td>
+                        {{-- {{ $order->prodcut->quantity }} --}}
+                        pqty
+
+                        </td>
+                        <td>status</td>
                         <td> <small>PISO {{ number_format($order->total_amount, 2)}}</small></td>
                         <!-- <td>
                                 <span class={{ $order->is_paid ? 'text-success' : 'text-danger' }} style="font: bold">
                                 {{ $order->is_paid ? 'Paid' : 'Not Paid' }}</span>
                             </td> -->
+                             <td>
+                            <h6>{{Carbon\Carbon::parse($order->delivery_date)->format('jS F,Y') }}</h6>
+                        </td>
                         <td class="text-center">
                             @if ($user && $user->hasPermission('edit permission'))
 

@@ -10,9 +10,9 @@ class Order extends Model
     protected $appends = [
         'total_amount'
     ];
-    function supplier()
+    function customer()
     {
-        return $this->belongsTo(Supplier::class);
+        return $this->belongsTo(Customer::class);
     }
     function products()
     {
