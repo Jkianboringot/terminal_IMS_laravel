@@ -26,8 +26,10 @@ class Edit extends Component
     function rules()
     {
         return [
-            'order.order_date' => 'required',
-            'order.customer_id' => 'required',
+            'order.order_date'=>'required',
+            'order.delivery_date'=>'nullable',
+            'order.order_status'=>'required',
+            'order.customer_id'=>'required',
         ];
     }
 
@@ -70,7 +72,7 @@ class Edit extends Component
 
 
 
-    function selectSupplier($id)
+    function selectCustomer($id)
     {
         $this->order->customer_id = $id;
         $this->customerSearch=$this->order->customer->name;
@@ -78,11 +80,17 @@ class Edit extends Component
     }
 
     function selectProduct($id)
-    {
-        $this->selectedProductId = $id;
-        $this->productSearch=Product::find($id)->name;
+{
+    $this->selectedProductId = $id;
 
+    $product = Product::find($id);
+
+    if ($product) {
+        $this->productSearch = $product->name;
+        $this->price = $product->purchase_price; 
     }
+}
+
 
  function addToList()
 {
@@ -115,7 +123,7 @@ class Edit extends Component
     }
 }
 
-function makeOrder()
+function save()
 {
     try {
         if (!$this->order->order_date || !$this->order->customer_id) {
@@ -142,12 +150,29 @@ function makeOrder()
     {
         $customers = Supplier::where('name', 'like', '%' . $this->customerSearch . '%')->get();
         $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
-
+ $orderOptions=[
+    'Pending',
+    'Confirmed',
+    'Processing',
+    'On Hold',
+    'Shipped',
+    'Delivered',
+    'Delivery Failed',
+    'Completed',
+    'Returned',
+    'Refunded',
+    'Cancelled',
+    'Declined'
+]
+;
         return view(
             'livewire.admin.orders.edit',
             [
                 'customers' => $customers,
                 'products' => $products,
+                'orderOptions' => $orderOptions,
+
+
 
             ]
         );

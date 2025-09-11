@@ -28,7 +28,7 @@ class Create extends Component
     function rules(){
         return [
             'order.order_date'=>'required',
-            'order.delivery_date'=>'required',
+            'order.delivery_date'=>'nullable',
             'order.order_status'=>'required',
             'order.customer_id'=>'required',
         ];
@@ -39,6 +39,8 @@ class Create extends Component
     function mount()
     {
         $this->order = new Order();
+            $this->order->order_date = now()->toDateString();
+
     }
 
 
@@ -60,20 +62,24 @@ class Create extends Component
     }
    
 
-    function selectSupplier($id)
+    function selectCustomer($id)
     {
         $this->order->customer_id = $id;
         $this->customerSearch=$this->order->customer->name;
 
     }
 
-    function selectProduct($id)
-    {
-        $this->selectedProductId = $id;
-              $this->productSearch=Product::find($id)->name;
+     function selectProduct($id)
+{
+    $this->selectedProductId = $id;
 
+    $product = Product::find($id);
 
+    if ($product) {
+        $this->productSearch = $product->name;
+        $this->price = $product->purchase_price; 
     }
+}
 
  function addToList()
     {
@@ -110,7 +116,7 @@ class Create extends Component
         }
     }
 
-    function makeOrder(){
+    function save(){
         
         try {
             $this->validate();
@@ -133,15 +139,30 @@ class Create extends Component
     {
         $customers = Customer::where('name', 'like', '%' . $this->customerSearch . '%')->get();
         $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
-
+        $orderOptions=[
+    'Pending',
+    'Confirmed',
+    'Processing',
+    'On Hold',
+    'Shipped',
+    'Delivered',
+    'Delivery Failed',
+    'Completed',
+    'Returned',
+    'Refunded',
+    'Cancelled',
+    'Declined'
+]
+;
         return view(
             'livewire.admin.orders.create',
             [
                 'customers' => $customers,
                 'products' => $products,
+                'orderOptions' => $orderOptions,
 
             ]
         );
-    }
+    }   
    
 }

@@ -1,6 +1,6 @@
 @props(["customer", 'order'])
 
-<li wire:click="selectSupplier({{ $customer->id }})"
+<li wire:click="selectCustomer({{ $customer->id }})"
     class="list-group-item {{ $customer->id == $order->customer_id ? 'active' : '' }} d-flex justify-content-between">
     <div class="me-auto ">
         <h7 class='text-inv-secondary'>{{ $customer->name }}</h7><br>
