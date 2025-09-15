@@ -5,10 +5,11 @@ namespace App\Livewire\Admin\Orders;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Product;
+use App\Traits\ProductSearch;
 use Livewire\Component;
 
 class Create extends Component
-{
+{   use ProductSearch;
     public $customerSearch;
     public $productSearch;
     
@@ -186,7 +187,7 @@ class Create extends Component
     public function render()
     {
         $customers = Customer::where('name', 'like', '%' . $this->customerSearch . '%')->get();
-        $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
+      
         $orderOptions = [
             'Pending',
             'Processing',
@@ -197,7 +198,8 @@ class Create extends Component
             'livewire.admin.orders.create',
             [
                 'customers' => $customers,
-                'products' => $products,
+                             'products' => $this->productSearch(),
+
                 'orderOptions' => $orderOptions,
             ]
         );

@@ -5,11 +5,13 @@ namespace App\Livewire\Admin\AddProducts;
 use App\Models\Product;
 use App\Models\AddProduct;
 use App\Models\Supplier;
+use App\Traits\ProductSearch;
 use App\Traits\WithCancel;
 use Livewire\Component;
 
 class Create extends Component
 {
+    use ProductSearch;
     use WithCancel;
     public $supplierSearch;
     public $productSearch;
@@ -150,13 +152,13 @@ function save()
     public function render()
     {
         $suppliers = Supplier::where('name', 'like', '%' . $this->supplierSearch . '%')->get();
-        $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
-
+      
         return view(
             'livewire.admin.add-products.create',
             [
                 'suppliers' => $suppliers,
-                'products' => $products,
+                               'products' => $this->productSearch(),
+
 
             ]
         );

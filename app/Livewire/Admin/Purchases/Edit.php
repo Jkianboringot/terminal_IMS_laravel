@@ -5,12 +5,14 @@ namespace App\Livewire\Admin\Purchases;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Supplier;
+use App\Traits\ProductSearch;
 use App\Traits\WithCancel;
 use Livewire\Component;
 use App\Models\ActivityLog;
 
 class Edit extends Component
 {
+    use ProductSearch;
      use WithCancel;
     public $supplierSearch;
     public $productSearch;
@@ -188,7 +190,6 @@ class Edit extends Component
     public function render()
     {
         $suppliers = Supplier::where('name', 'like', '%' . $this->supplierSearch . '%')->get();
-        $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
         $paidOptions = [
             'Paid',
             'Unpaid / Pending',
@@ -203,7 +204,8 @@ class Edit extends Component
             'livewire.admin.purchases.edit',
             [
                 'suppliers' => $suppliers,
-                'products' => $products,
+                               'products' => $this->productSearch(),
+
                 'paidOptions' => $paidOptions,
 
             ]

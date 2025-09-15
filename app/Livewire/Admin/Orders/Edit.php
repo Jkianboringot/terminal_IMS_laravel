@@ -5,10 +5,12 @@ namespace App\Livewire\Admin\Orders;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Supplier;
+use App\Traits\ProductSearch;
 use Livewire\Component;
 
 class Edit extends Component
 {
+    use ProductSearch;
     
     public $customerSearch;
     public $productSearch;
@@ -149,7 +151,7 @@ function save()
     public function render()
     {
         $customers = Supplier::where('name', 'like', '%' . $this->customerSearch . '%')->get();
-        $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
+    
  $orderOptions=[
     'Pending',
     'Confirmed',
@@ -169,7 +171,8 @@ function save()
             'livewire.admin.orders.edit',
             [
                 'customers' => $customers,
-                'products' => $products,
+                              'products' => $this->productSearch(),
+
                 'orderOptions' => $orderOptions,
 
 

@@ -6,11 +6,14 @@ use App\Models\ActivityLog;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Supplier;
+use App\Traits\ProductSearch;
 use App\Traits\WithCancel;
 use Livewire\Component;
 
 class Create extends Component
 {
+
+    use ProductSearch;
     use WithCancel;
     public $supplierSearch;
     public $productSearch;
@@ -156,7 +159,7 @@ class Create extends Component
     public function render()
     {
         $suppliers = Supplier::where('name', 'like', '%' . $this->supplierSearch . '%')->get();
-        $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
+      
         $paidOptions = [
             'Paid',
             'Unpaid / Pending',
@@ -167,7 +170,8 @@ class Create extends Component
             'livewire.admin.purchases.create',
             [
                 'suppliers' => $suppliers,
-                'products' => $products,
+                              'products' => $this->productSearch(),
+
                 'paidOptions' => $paidOptions,
 
             ]

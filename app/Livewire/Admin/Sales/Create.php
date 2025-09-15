@@ -5,11 +5,14 @@ namespace App\Livewire\Admin\Sales;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Sale;
+use App\Traits\ProductSearch;
 use App\Traits\WithCancel;
 use Livewire\Component;
 
 class Create extends Component
 {
+
+     use ProductSearch;
 
      use WithCancel;
      public $overrideLowStock = false;
@@ -216,13 +219,13 @@ public function continueAnyway()
 
     public function render()
     {
-        $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
+   
         $customers = Customer::where('name', 'like', '%' . $this->customerSearch . '%')->get();
 
         return view(
             'livewire.admin.sales.create',
             [
-                'products' => $products,
+                'products' => $this->productSearch(),
 
                 'customers' => $customers,
 
