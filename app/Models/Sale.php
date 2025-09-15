@@ -67,7 +67,7 @@ class Sale extends Model
             $lastRef = Sale::whereYear('created_at', $year)->max('sales_ref');
 
             if ($lastRef) {
-                $lastNumber = (int)substr($lastRef, 4); // grab number after year
+                $lastNumber = (int)substr($lastRef, 8); // grab number after year
                 $newNumber = $lastNumber + 1;
             } else {
                 $newNumber = 1;

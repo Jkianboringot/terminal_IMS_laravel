@@ -27,7 +27,7 @@ class Create extends Component
     {
         return [
             'order.order_date' => 'required',
-            'order.delivery_date' => 'nullable',
+            'order.delivery_date' => 'required',
             'order.order_status' => 'required',
             'order.customer_id' => 'required',
         ];
@@ -189,17 +189,8 @@ class Create extends Component
         $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
         $orderOptions = [
             'Pending',
-            'Confirmed',
             'Processing',
-            'On Hold',
             'Shipped',
-            'Delivered',
-            'Delivery Failed',
-            'Completed',
-            'Returned',
-            'Refunded',
-            'Cancelled',
-            'Declined'
         ];
 
         return view(

@@ -27,7 +27,7 @@ class Edit extends Component
     {
         return [
             'order.order_date'=>'required',
-            'order.delivery_date'=>'nullable',
+            'order.delivery_date'=>'required',
             'order.order_status'=>'required',
             'order.customer_id'=>'required',
         ];

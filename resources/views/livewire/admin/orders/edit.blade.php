@@ -39,16 +39,14 @@
                         </div>
 
                         <div class="col-md-6">
-                            @if( $order && in_array($order->is_paid, ['Paid', 'Partially Paid']) )
 
-                           div class="mb-3">
+                           <div class="mb-3">
                         <label for="" class="form-label">Delivery Date</label>
                         <input wire:model.live="order.delivery_date" type="date" class="form-control" />
                         @error('order.order_date')
                             <small id="helpId" class="form-text text-danger">{{ $message }} </small>
                         @enderror
                     </div>
-                            @endif
                         </div>
                     </div>
 <div class="mb-3">

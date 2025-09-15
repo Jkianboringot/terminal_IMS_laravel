@@ -16,7 +16,7 @@ return new class extends Migration
               $table->string('orders_ref')->unique();
 
            $table->date('order_date');
-           $table->date('delivery_date')->nullable();  
+           $table->date('delivery_date');  
            $table->string('order_status');
              $table->foreignId('customer_id')->constrained();
             $table->timestamps();
