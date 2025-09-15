@@ -6,7 +6,7 @@ trait WithCancel
 {
     public function cancel()
     {
-        $this->reset(); 
+        $this->reset('customerSearch', 'productSearch', 'selectedProductId', 'quantity', 'price', 'productList'); 
         $this->dispatch('notify', 'Operation Canceled');
     }
 }

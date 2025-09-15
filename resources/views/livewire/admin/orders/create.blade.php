@@ -1,5 +1,5 @@
 <div>
-    <x-slot:header>Purchases</x-slot:header>
+    <x-slot:header>Order</x-slot:header>
      @if (session()->has('warning'))
     <div class="alert alert-warning d-flex justify-content-between align-items-center">
         <span>{{ session('warning') }}</span>
