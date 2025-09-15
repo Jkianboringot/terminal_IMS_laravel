@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sale extends Model
 {
-  protected $fillable = ['ref_num', 'sale_date'];
+  protected $fillable = ['sales_ref', 'sale_date'];
     protected $appends = [
         'total_amount'
     ];
@@ -64,7 +64,7 @@ class Sale extends Model
         static::creating(function ($sale) {
             $year = now()->year;
 
-            $lastRef = Sale::whereYear('created_at', $year)->max('ref_num');
+            $lastRef = Sale::whereYear('created_at', $year)->max('sales_ref');
 
             if ($lastRef) {
                 $lastNumber = (int)substr($lastRef, 4); // grab number after year
@@ -73,7 +73,7 @@ class Sale extends Model
                 $newNumber = 1;
             }
 
-            $sale->ref_num = $year . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
+            $sale->sales_ref = 'Sal-'.$year . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
         });
     }
 

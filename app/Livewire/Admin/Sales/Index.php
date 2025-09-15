@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Sales;
 
+use App\Models\Product;
 use App\Models\Sale;
 use Livewire\Component;
 use Livewire\WithPagination;

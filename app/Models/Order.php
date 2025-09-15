@@ -25,6 +25,25 @@ class Order extends Model
             return $product->pivot->quantity * $product->pivot->unit_price;
         });
     }
-   
+      protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($sale) {
+            $year = now()->year;
+
+            $lastRef = Order::whereYear('created_at', $year)->max('orders_ref');
+
+            if ($lastRef) {
+                $lastNumber = (int)substr($lastRef, 4); // grab number after year
+                $newNumber = $lastNumber + 1;
+            } else {
+                $newNumber = 1;
+            }
+
+            $sale->orders_ref ='Ord-'. $year . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
+        });
+    }
+
     
 }

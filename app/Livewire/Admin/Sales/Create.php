@@ -96,7 +96,7 @@ function addQuantity($key)
 
     if ($product) {
         $this->productSearch = $product->name;
-        $this->price = $product->purchase_price; 
+        $this->price = $product->sale_price; 
     }
 }
 

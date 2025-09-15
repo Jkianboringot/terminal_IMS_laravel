@@ -195,10 +195,10 @@
 
                     <div class="d-flex gap-2 mt-3">
                         <button
-                            onclick="confirm('Are you sure you wish to make the Sale?')||event.stopImmediatePropagation()"
+                            onclick="confirm('Are you sure you wish to make the Purchase?')||event.stopImmediatePropagation()"
                             wire:click='save'
                             class="btn btn-success flex-fill">
-                            <i class="bi bi-cart-check me-1"></i> Make Sale
+                            <i class="bi bi-cart-check me-1"></i> Make Purchase
                         </button>
 
                         <button

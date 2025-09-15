@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
            $table->id();
+              $table->string('orders_ref')->unique();
+
            $table->date('order_date');
            $table->date('delivery_date')->nullable();  
            $table->string('order_status');

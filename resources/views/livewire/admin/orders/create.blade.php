@@ -1,5 +1,13 @@
 <div>
     <x-slot:header>Purchases</x-slot:header>
+     @if (session()->has('warning'))
+    <div class="alert alert-warning d-flex justify-content-between align-items-center">
+        <span>{{ session('warning') }}</span>
+        <button wire:click="continueAnyway" class="btn btn-sm btn-outline-danger ms-2">
+            Continue Anyway
+        </button>
+    </div>
+    @endif
     <div class="row justify-content-center">
         {{-- LEFT SIDE --}}
         <div class="col-md-4 col-6">

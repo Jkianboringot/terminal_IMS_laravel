@@ -17,7 +17,7 @@
                 <table class="table table-hover  ">
                     <thead class="thead-inverse">
                         <tr>
-                            <th>Ref Num</th>
+                            <th>Sale Ref</th>
                             <th>Customer</th>
                             <th>Sale Date</th>
                             <th>Bar Code</th>
@@ -39,14 +39,20 @@
                     <tbody>
                         @foreach ($sales as $sale)
                         <tr>
-                            <td>{{ $sale->ref_num }}</td>
+                            <td>{{ $sale->sales_ref }}</td>
                         <td>{{ $sale->customer->name }}</td>
 
                             <td>
                                 <h6>{{Carbon\Carbon::parse($sale->sale_date)->format('jS F,Y') }}</h6>
                             </td>
                             <td>|||||</td>
-                            <td>alcohol</td>
+                           <td>
+                                <small>
+                                    @foreach($sale->products as $product)
+                                    {{ $product->name }}@if(!$loop->last), @endif
+                                    @endforeach
+                                </small>
+                            </td>
                             <td> <small> {{ number_format($sale->total_quantity, 2)}}</small></td>
                             @if ($user && $user->hasPermission('edit permission') || $user->hasPermission('delete permission'))
                             <td> <small>PISO {{ number_format($sale->total_amount, 2)}}</small></td>
