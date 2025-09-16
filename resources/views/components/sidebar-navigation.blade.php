@@ -127,6 +127,11 @@ $user = auth()->user();
                     @endif
                 </x-new-nav-link-dropdown>
             @endif
+
+                <x-new-nav-link-dropdown title="Returns" bi_icon="bi bi-arrow-return-left" route="admin.returns*">
+                    <x-new-nav-link title="Returns List" bi_icon="" route="admin.returns.index" />
+                        <x-new-nav-link title="Create Returns" bi_icon="" route="admin.returns.create" />
+                </x-new-nav-link-dropdown>
  {{--
             @if ($user && $user->hasPermission('manage quotations'))
                 <x-new-nav-link-dropdown title="Quotations" bi_icon="bi-file-earmark-text" route="admin.quotations*">

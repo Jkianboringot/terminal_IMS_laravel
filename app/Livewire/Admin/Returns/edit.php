@@ -21,13 +21,12 @@ class Edit extends Component
     public ReturnItem $return;
     public $productList = [];
 
-    function rules()
-    {
-        return [
-            'return.return_date' => 'required|date',
-            'return.return_type' => 'required|in:customer,supplier',
-        ];
-    }
+  protected $rules = [
+        'return.return_date' => 'required|date',
+        'return.return_type' => 'required|string|in:supplier,customer',
+        'return.reason'      => 'nullable|string|max:255',
+        'return.description' => 'nullable|string|max:500',
+    ];
 
     function mount(ReturnItem $return)
     {

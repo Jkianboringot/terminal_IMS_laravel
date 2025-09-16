@@ -88,6 +88,12 @@ Route::middleware([
         Route::get('{id}/edit', Admin\Customers\Edit::class)->name('edit');
     });
 
+       Route::prefix('returns')->name('returns.')->group(function () {
+        Route::get('/', Admin\Returns\Index::class)->name('index');
+        Route::get('/create', Admin\Returns\Create::class)->name('create');
+        Route::get('{id}/edit', Admin\Returns\Edit::class)->name('edit');
+    });
+
     // Route::prefix('credit-notes')->middleware('permission:manage credit notes')->name('creditnotes.')->group(function () {
     //     Route::get('/', Admin\CreditNotes\Index::class)->name('index');
     //     Route::get('/create', Admin\CreditNotes\Create::class)->middleware('permission:create permission')->name('create');

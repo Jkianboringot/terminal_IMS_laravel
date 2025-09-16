@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-      Schema::create('returns', function (Blueprint $table) {
+       Schema::create('return_items', function (Blueprint $table) {
     $table->id();
+    $table->string('return_ref');
+  $table->foreignId('sale_id')->nullable()->constrained()->onDelete('cascade');
+
     $table->date('return_date');
-    $table->enum('return_type', ['customer', 'supplier']); // who returned
+        $table->enum('return_type', ['customer', 'supplier']); // <--- add this
+
     $table->text('reason')->nullable();
     $table->text('description')->nullable();
     $table->string('status')->default('pending'); // pending / approved / rejected
@@ -28,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('return_items');
     }
 };

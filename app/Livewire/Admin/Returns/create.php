@@ -10,8 +10,10 @@ use Livewire\Component;
 
 class Create extends Component
 {
-    use ProductSearch, WithCancel;
+    use ProductSearch;
+    use WithCancel;
 
+    public $productSearch = '';   // ← Add this
     public $returnSearch;
     public $selectedProductId;
     public $quantity;
@@ -21,13 +23,12 @@ class Create extends Component
     public ReturnItem $return;
     public $productList = [];
 
-    function rules()
-    {
-        return [
-            'return.return_date' => 'required|date',
-            'return.return_type' => 'required|in:customer,supplier',
-        ];
-    }
+  protected $rules = [
+        'return.return_date' => 'required|date',
+        'return.return_type' => 'required|string|in:supplier,customer',
+        'return.reason'      => 'nullable|string|max:255',
+        'return.description' => 'nullable|string|max:500',
+    ];
 
     function mount()
     {

@@ -29,10 +29,13 @@ class Index extends Component
 
     public function render()
     {
-        $returns =ReturnItem::with('products')
-            ->where('reason', 'like', '%' . $this->search . '%')
-            ->orWhere('return_type', 'like', '%' . $this->search . '%')
-            ->orWhere('return_date', 'like', '%' . $this->search . '%')
+        $returns = ReturnItem::with('products')
+            ->where(function ($query) {
+                $query->where('reason', 'like', '%' . $this->search . '%')
+                      ->orWhere('description', 'like', '%' . $this->search . '%')
+                      ->orWhere('return_date', 'like', '%' . $this->search . '%')
+                      ->orWhere('status', 'like', '%' . $this->search . '%');
+            })
             ->paginate($this->perPage);
 
         return view('livewire.admin.returns.index', compact('returns'));

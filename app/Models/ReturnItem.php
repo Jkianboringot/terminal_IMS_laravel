@@ -10,11 +10,12 @@ class ReturnItem extends Model
 
     protected $appends = ['total_amount', 'total_quantity'];
 
-    public function products()
-    {
-        return $this->belongsToMany(Product::class, 'product_return')
-                    ->withPivot(['quantity', 'unit_price', 'restock']);
-    }
+  public function products()
+{
+    return $this->belongsToMany(Product::class, 'product_return')
+        ->withPivot(['quantity', 'unit_price', 'restock']);
+}
+
 
     public function getTotalAmountAttribute()
     {
