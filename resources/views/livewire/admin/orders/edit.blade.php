@@ -26,13 +26,13 @@
                                     <option value="null" selected>Select Status</option>
                                     @foreach ($orderOptions as $option)
 
-                                    <option class={{ in_array($option,['Paid','Partially Paid']) ? 'text-success' : 'text-danger'  }}
+                                    <option
                                         value="{{ $option }}">{{ $option }}</option>
                                     <!-- just create an array fro this -->
                                     @endforeach
                                 </select>
 
-                                @error('order.is_paid')
+                                @error('order.order_status')
                                 <small id="helpId" class="form-text text-danger">{{ $message }} </small>
                                 @enderror
                             </div>

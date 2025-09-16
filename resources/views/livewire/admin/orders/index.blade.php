@@ -39,7 +39,7 @@
                         <tr>
                             <td>{{ $order->orders_ref }}</td>
                             <td>
-                                <h6>{{Carbon\Carbon::parse($order->order_date)->format('jS F,Y') }}</h6>
+                                {{Carbon\Carbon::parse($order->order_date)->format('jS F,Y') }}
                             </td>
                             <td>
                                 {{ $order->customer->name }}
@@ -61,13 +61,13 @@
 
                             </td> --}}
                         <td>{{ $order->order_status }}</td>
-                            <td> <small>PISO {{ number_format($order->total_amount, 2)}}</small></td>
+                            <td> PISO <strong> {{ number_format($order->total_amount, 2)}}</strong></td>
                             <!-- <td>
                                 <span class={{ $order->is_paid ? 'text-success' : 'text-danger' }} style="font: bold">
                                 {{ $order->is_paid ? 'Paid' : 'Not Paid' }}</span>
                             </td> -->
                             <td>
-                                <h6>{{Carbon\Carbon::parse($order->delivery_date)->format('jS F,Y') }}</h6>
+                              {{Carbon\Carbon::parse($order->delivery_date)->format('jS F,Y') }}
                             </td>
                             <td class="text-center">
                                 @if ($user && $user->hasPermission('edit permission'))

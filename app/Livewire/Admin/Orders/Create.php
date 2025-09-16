@@ -6,10 +6,13 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Product;
 use App\Traits\ProductSearch;
+use App\Traits\WithCancel;
 use Livewire\Component;
 
 class Create extends Component
 {   use ProductSearch;
+    use WithCancel;
+
     public $customerSearch;
     public $productSearch;
     
