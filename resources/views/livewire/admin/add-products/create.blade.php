@@ -26,11 +26,13 @@
                         @enderror
                         <ul class="list-group mt-2 w-100">
                             @if ($supplierSearch != '')
-                                @foreach ($suppliers as $supplier)
-                                    <x-add-product-supplier-list-item 
-                                        :supplier="$supplier" 
-                                        :addProduct="$addProduct"/>
-                                @endforeach
+                            @forelse ($suppliers as $supplier)
+                            <x-add-product-supplier-list-item
+                                :supplier="$supplier"
+                                :addProduct="$addProduct" />
+                            @empty
+                            <p>No Supplier yet.</p>
+                            @endforelse
                             @endif
                         </ul>
                     </div>
@@ -48,11 +50,13 @@
                         <input type="text" wire:model.live="productSearch" class="form-control" />
                         <ul class="list-group mt-2 w-100">
                             @if ($productSearch != '')
-                                @foreach ($products as $product)
+                                @forelse ($products as $product)
                                     <x-product-list-item 
                                         :product="$product" 
                                         :selectedProductId="$selectedProductId"/>
-                                @endforeach
+                                        @empty
+                                        <p>No Products yet.</p>
+                                @endforelse
                             @endif
                         </ul>
                     </div>
