@@ -1,12 +1,15 @@
-<div>
+<div
+>
     <x-slot:header>Roles</x-slot:header>
 
-    <div class="card">
+    <div class="card"  tabindex="0" wire:keydown.escape="cancel" >
         <div class="card-header bg-inv-primary text-inv-secondary border-0">
             <h5>Create a new Role</h5>
         </div>
         <div class="card-body">
-
+        <form 
+    wire:submit.prevent="save" 
+>
             <div class="row">
                 <div class="col-md-6 col-12">
                     <div class="mb-3">
@@ -43,5 +46,6 @@
             <button onclick="confirm('Are you sure you wish to create this Role')||event.stopImmediatePropagation()"
                 wire:click='save' class="btn btn-dark text-inv-secondary">Save</button>
         </div>
+        </form>
     </div>
 </div>
