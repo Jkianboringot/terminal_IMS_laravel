@@ -94,6 +94,7 @@ Route::middleware([
         Route::get('{id}/edit', Admin\Returns\Edit::class)->name('edit');
     });
 
+
     // Route::prefix('credit-notes')->middleware('permission:manage credit notes')->name('creditnotes.')->group(function () {
     //     Route::get('/', Admin\CreditNotes\Index::class)->name('index');
     //     Route::get('/create', Admin\CreditNotes\Create::class)->middleware('permission:create permission')->name('create');
@@ -135,12 +136,27 @@ Route::middleware([
         Route::get('/create', Admin\Purchases\Create::class)->middleware('permission:create permission')->name('create');
         Route::get('{id}/edit', Admin\Purchases\Edit::class)->name('edit');
     });
-
-        Route::prefix('add-products')->middleware('permission:manage product purchases')->name('add-products.')->group(function () {
+Route::prefix('add-products')
+    ->middleware('permission:manage product purchases')
+    ->name('add-products.')
+    ->group(function () {
         Route::get('/', Admin\AddProducts\Index::class)->name('index');
         Route::get('/create', Admin\AddProducts\Create::class)->middleware('permission:create permission')->name('create');
         Route::get('{id}/edit', Admin\AddProducts\Edit::class)->name('edit');
+
+      
     });
+
+    Route::prefix('approvals')
+    ->middleware('permission:manage product purchases')
+    ->name('approvals.')
+    ->group(function () {
+      Route::get('/addapproval', Admin\Approvals\AddApproval::class)->name('addapproval');
+    Route::get('/approvaledit', Admin\Approvals\ApprovalEdit::class)->name('approvaledit');
+      
+    });
+
+
 
     // Route::prefix('quotations')->middleware('permission:manage quotations')->name('quotations.')->group(function () {
     //     Route::get('/', Admin\Quotations\Index::class)->name('index');

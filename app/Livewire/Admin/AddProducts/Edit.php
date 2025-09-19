@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\AddProducts;
 
+use App\Models\EditApproval;
 use App\Models\Product;
 use App\Models\AddProduct;
 use App\Models\Supplier;
@@ -122,63 +123,30 @@ function addToList()
         $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
     }
 }
-
-  function save()
+function save()
 {
     try {
-      
-        $this->addProduct->update();
+        $changes = [
+            'supplier_id' => $this->addProduct->supplier_id,
+            'add_product_date' => $this->addProduct->add_product_date,
+            'products' => $this->productList,
+        ];
 
-        foreach ($this->productList as $listItem) {
-            // Check if the product already exists in pivot
-            $existing = $this->addProduct->products()
-                ->where('product_id', $listItem['product_id'])
-                ->first();
+        EditApproval::create([
+            'add_product_id' => $this->addProduct->id,
+            'user_id' => auth()->id(),
+            'changes' => $changes,
+            'status' => 'pending',
+        ]);
 
-            $oldQuantity = $existing ? $existing->pivot->quantity : 0;
-            $newQuantity = $listItem['quantity'];
+        $this->addProduct->update(['status' => 'pending_edit']);
 
-            // Attach or update pivot
-            $this->addProduct->products()->syncWithoutDetaching([
-                $listItem['product_id'] => [
-                    'quantity' => $newQuantity,
-                ]
-            ]);
-
-            // Determine if there's a change
-            if ($newQuantity > $oldQuantity) {
-               
-                $changeQty = $newQuantity - $oldQuantity;
-            } elseif ($newQuantity < $oldQuantity) {
-                
-                $changeQty = $oldQuantity - $newQuantity;
-            } else {
-                continue; // No change → skip logging
-            }
-
-            // ✅ Log Stock Change
-            \App\Models\ActivityLog::create([
-                'user_id' => auth()->id(),
-                'action' => 'Update',
-                'model' => 'AddProduct',
-                'model_id' => $listItem['product_id'],
-                'changes' => json_encode([
-                    'old_quantity' => $oldQuantity,
-                    'new_quantity' => $newQuantity,
-                    'change' => $changeQty,
-                ]),
-                'ip_address' => request()->ip(),
-                'user_agent' => request()->header('User-Agent'),
-            ]);
-        }
-
-        return redirect()->route('admin.add-products.index');
-
+        return redirect()->route('admin.add-products.index')
+            ->with('success', 'Edit request submitted for approval.');
     } catch (\Throwable $th) {
         $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
     }
 }
-
 
     public function render()
     {

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class AddProduct extends Model
 {
    
-    
+      protected $fillable = ['supplier_id', 'add_product_date', 'status'];
 
     function supplier()
     {
@@ -15,7 +15,8 @@ class AddProduct extends Model
     }
     function products()
     {
-        return $this->belongsToMany(Product::class, 'add_products_to_list')->withPivot(['quantity'])->withTimestamps();;
+        return $this->belongsToMany(Product::class, 'add_products_to_list')
+        ->withPivot(['quantity'])->withTimestamps();;
     }
 
     //   public function getTotalValueAttribute()

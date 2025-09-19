@@ -121,8 +121,9 @@ function save()
        $this->addProduct->add_product_date = now()->toDateString();
 
         }   
-
+  $this->addProduct->status = 'pending'; // 🔹 default request status
         $this->addProduct->save();
+
 
         foreach ($this->productList as $key => $listItem) {
             $this->addProduct->products()->attach($listItem['product_id'], [

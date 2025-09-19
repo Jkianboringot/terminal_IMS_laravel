@@ -132,6 +132,11 @@ $user = auth()->user();
                     <x-new-nav-link title="Returns List" bi_icon="" route="admin.returns.index" />
                         <x-new-nav-link title="Create Returns" bi_icon="" route="admin.returns.create" />
                 </x-new-nav-link-dropdown>
+
+                  <x-new-nav-link-dropdown title="Approval" bi_icon="bi bi-clipboard2-check" route="admin.approvals*">
+                    <x-new-nav-link title="Approval List" bi_icon="" route="admin.approvals.addapproval" />
+                    <x-new-nav-link title="Approval Edit List" bi_icon="" route="admin.approvals.approvaledit" />
+                </x-new-nav-link-dropdown>
  {{--
             @if ($user && $user->hasPermission('manage quotations'))
                 <x-new-nav-link-dropdown title="Quotations" bi_icon="bi-file-earmark-text" route="admin.quotations*">

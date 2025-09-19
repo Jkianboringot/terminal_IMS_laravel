@@ -93,11 +93,12 @@ function getTotalPurchaseCountAttribute()
 function getTotalAddProductCountAttribute()
 {
     $amount = 0;
-    foreach ($this->add_products as $addproduct) {
+    foreach ($this->add_products()->where('status', 'approved')->get() as $addproduct) {
         $amount += ($addproduct->pivot->quantity);
     }
     return $amount;
 }
+
 function getTotalSalesCountAttribute()
 {
     $amount = 0;
