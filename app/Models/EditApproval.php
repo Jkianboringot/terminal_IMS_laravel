@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class EditApproval extends Model
 {
     use HasFactory;
-
+ protected $table = 'edit_requests';
     protected $fillable = [
         'add_product_id',
         'user_id',
