@@ -1,3 +1,3 @@
-<x-livewire.roles 
+<x-livewire.roles-form 
 header="Edit Roles" 
 :staticpermissions="$staticpermissions"/>
