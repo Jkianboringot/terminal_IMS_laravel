@@ -42,10 +42,10 @@
 
 
 
+                <x-livewire.partials.save-buttons message="Are you sure you wish to create this Role"/>
 
 
-            <button onclick="confirm('Are you sure you wish to create this Role')||event.stopImmediatePropagation()"
-                wire:click='save' class="btn btn-dark text-inv-secondary">Save</button>
+           
         </div>
         </form>
     </div>

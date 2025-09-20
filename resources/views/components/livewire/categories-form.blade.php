@@ -5,10 +5,13 @@
 <div>
     <x-slot:header>Product Categories</x-slot:header>
 
-    <div class="card">
+ <div class="card" tabindex="0" wire:keydown.escape="cancel">
         <div class="card-header bg-inv-primary text-inv-secondary border-0">
             <h5>{{ $header }}</h5>
         </div>
+        <form 
+            wire:submit.prevent="save">
+        
         <div class="card-body">
 
             <div class="mb-3">
@@ -20,10 +23,11 @@
                 @enderror
             </div>
 
+                <x-livewire.partials.save-buttons message="Are you sure you wish to create this Category"/>
 
 
-            <button onclick="confirm('Are you sure you wish to create this Category')||event.stopImmediatePropagation()"
-                wire:click='save' class="btn btn-dark text-inv-secondary">Save</button>
+        
         </div>
+        </form>
     </div>
 </div>

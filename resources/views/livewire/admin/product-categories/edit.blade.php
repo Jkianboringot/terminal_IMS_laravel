@@ -1,2 +1,2 @@
-<x-livewire.categories-form-form header="Edit Product Category" 
+<x-livewire.categories-form header="Edit Product Category" 
 />

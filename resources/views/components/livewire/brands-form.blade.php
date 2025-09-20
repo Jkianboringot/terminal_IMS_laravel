@@ -40,10 +40,9 @@
                 @endif
 
 
+                <x-livewire.partials.save-buttons message="Are you sure you want to Create this Brand?"/>
 
-
-                <button onclick="confirm('Are you sure you wish to update this Brand')||event.stopImmediatePropagation()"
-                    wire:click='save' class="btn btn-dark text-inv-secondary">Save</button>
+             
             </div>
         </form>
     </div>
