@@ -11,7 +11,7 @@ use Livewire\Component;
 
 class Create extends Component
 {
-
+    
      use ProductSearch;
 
      use WithCancel;

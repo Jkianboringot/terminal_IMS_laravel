@@ -1,3 +1,6 @@
+
+
+
 <div>
     <x-slot:header>Sale_payments</x-slot:header>
     <div class="row justify-content-center">
@@ -97,9 +100,8 @@
 
                     </div>
                     
-                    <button
-                        onclick="confirm('Are you sure you wish to Add this Sale to the lsit')||event.stopImmediatePropagation()"
-                        wire:click='addToList' class="btn btn-dark text-inv-secondary">Add To List</button>
+                                                           <x-livewire.partials.add-to-list--buttons>
+
                 </div>
             </div>
         </div>
@@ -175,11 +177,12 @@
 
                             </tbody>
                         </table>
-                 
-                            <button
-                        onclick="confirm('Are you sure you wish to save the Payment')||event.stopImmediatePropagation()"
-                        wire:click='savePayment' class="btn btn-dark text-inv-secondary w-100">Save Payment</button>
-                      
+                  <div class="d-flex gap-2 mt-3">
+                       <x-livewire.partials.save-buttons>
+                     
+
+                       <x-livewire.partials.cancel-buttons>
+                    </div>
                     </div>
                 </div>
         </div>
