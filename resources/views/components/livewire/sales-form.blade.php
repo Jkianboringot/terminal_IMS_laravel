@@ -81,7 +81,7 @@
                         </div>
                     </div>
 
-                                                                             <x-livewire.partials.add-to-list-buttons>
+<x-livewire.partials.add-to-list-buttons>
 
                 </div>
             </div>
