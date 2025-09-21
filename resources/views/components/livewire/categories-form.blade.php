@@ -9,9 +9,7 @@
         <div class="card-header bg-inv-primary text-inv-secondary border-0">
             <h5>{{ $header }}</h5>
         </div>
-        <form 
-            wire:submit.prevent="save">
-        
+      
         <div class="card-body">
 
             <div class="mb-3">
