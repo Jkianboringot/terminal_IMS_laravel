@@ -1,13 +1,17 @@
-@props('header')
+@props(['header'])
 
 
 <div>
     <x-slot:header>Suppliers</x-slot:header>
 
-    <div class="card">
+     <div class="card" tabindex="0" wire:keydown.escape="cancel">
+
         <div class="card-header bg-inv-primary text-inv-secondary border-0">
             <h5>{{ $header }}</h5>
         </div>
+         <form 
+            wire:submit.prevent="save">
+        
         <div class="card-body">
 
             <div class="row">
@@ -78,7 +82,8 @@
 
 
 
-            <x-livewire.partials.save-buttons/>
+            <x-livewire.partials.save-buttons />
         </div>
+</form>
     </div>
 </div>

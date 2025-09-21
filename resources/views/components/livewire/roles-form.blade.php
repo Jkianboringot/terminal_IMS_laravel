@@ -42,7 +42,7 @@
 
 
 
-                <x-livewire.partials.save-buttons message="Are you sure you wish to create this Role"/>
+                <x-livewire.partials.save-buttons />
 
 
            

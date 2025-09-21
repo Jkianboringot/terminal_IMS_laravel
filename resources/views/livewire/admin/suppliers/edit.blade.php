@@ -1,2 +1,2 @@
-<x-livewire.products-form header='Edit Supplier' />
+<x-livewire.suppliers-form header='Edit Supplier' />
 

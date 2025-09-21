@@ -23,7 +23,7 @@
                 @enderror
             </div>
 
-                <x-livewire.partials.save-buttons message="Are you sure you wish to create this Category"/>
+                <x-livewire.partials.save-buttons/>
 
 
         

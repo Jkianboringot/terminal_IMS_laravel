@@ -40,7 +40,7 @@
                 @endif
 
 
-                <x-livewire.partials.save-buttons message="Are you sure you want to Create this Brand?"/>
+                <x-livewire.partials.save-buttons />
 
              
             </div>

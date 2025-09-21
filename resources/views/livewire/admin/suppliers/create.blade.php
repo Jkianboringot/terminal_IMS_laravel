@@ -1,2 +1,2 @@
-<x-livewire.products-form header='Create new Supplier' />
+<x-livewire.suppliers-form header='Create new Supplier' />
 

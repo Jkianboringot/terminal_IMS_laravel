@@ -35,7 +35,7 @@
             </div>
 
 
-                <x-livewire.partials.save-buttons message="Are you sure you wish to create this Unit"/>
+                <x-livewire.partials.save-buttons />
 
         </form>
     </div>
