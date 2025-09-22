@@ -4,6 +4,8 @@
                         :productSearch='$productSearch' 
                         :products='$products'
                         :productList='$productList'
+                        :addProduct="$addProduct"
+                        :selectedProductId="$selectedProductId"
                         />
 
 

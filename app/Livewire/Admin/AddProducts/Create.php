@@ -125,10 +125,14 @@ function save()
         $this->addProduct->save();
 
 
-        foreach ($this->productList as $key => $listItem) {
-            $this->addProduct->products()->attach($listItem['product_id'], [
-                'quantity' => $listItem['quantity'],
-            ]);
+       foreach ($this->productList as $listItem) {
+    $this->addProduct->products()->syncWithoutDetaching([
+        $listItem['product_id'] => [
+            'quantity' => $listItem['quantity'],
+        ],
+    ]);
+
+
 
           //make this a function
             \App\Models\ActivityLog::create([

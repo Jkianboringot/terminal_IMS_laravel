@@ -7,5 +7,6 @@
                         :productList='$productList'
                         :customers='$customers'
                         :order='$order'
+                        :selectedProductId="$selectedProductId"
                         />
 

@@ -4,7 +4,8 @@
 'productSearch',
 'products',
 'purchase',
-'productList'])
+'productList',
+'selectedProductId'])
 
 
 
@@ -85,7 +86,7 @@
                 <div class="card-header bg-inv-primary text-inv-secondary border-0">
                     <h6>Add a Product to List</h6>
                 </div>
-                <div class="card-body ">
+                <div class="card-body">
                     <div class="mb-3">
                         <label for="" class="form-label">Product Search</label>
                         <input type="text" wire:model.live='productSearch' class="form-control" />
@@ -119,7 +120,7 @@
                         </div>
                     </div>
 
-                                        <x-livewire.partials.add-to-list-buttons>
+                                        <x-livewire.partials.add-to-list-buttons/>
 
                 </div>
             </div>
@@ -204,10 +205,10 @@
                     </table>
 
                     <div class="d-flex gap-2 mt-3">
-                       <x-livewire.partials.save-buttons>
+                       <x-livewire.partials.save-buttons/>
                      
 
-                       <x-livewire.partials.cancel-buttons>
+                       <x-livewire.partials.cancel-buttons/>
                     </div>
                     @else
                     <p class="text-center text-muted">Your cart is empty. Add a product to get started.</p>

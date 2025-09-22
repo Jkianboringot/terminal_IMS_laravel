@@ -5,6 +5,7 @@
 'products',
 'productList',
 'order',
+'selectedProductId'
 
 ])
 
@@ -123,7 +124,7 @@
                         </div>
                     </div>
 
-                   <x-livewire.partials.add-to-list-buttons>
+                   <x-livewire.partials.add-to-list-buttons/>
 
                 </div>
             </div>
@@ -208,10 +209,10 @@
                     </table>
 
                     <div class="d-flex gap-2 mt-3">
-                         <x-livewire.partials.save-buttons>
+                                 <x-livewire.partials.save-buttons/>
                      
 
-                       <x-livewire.partials.cancel-buttons>
+                       <x-livewire.partials.cancel-buttons/>
                     </div>
                     @else
                     <p class="text-center text-muted">Your cart is empty. Add a product to get started.</p>

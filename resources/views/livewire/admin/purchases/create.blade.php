@@ -6,6 +6,7 @@
                         :productList='$productList' 
                         :products='$products'
                         :purchase='$purchase'
+                        :selectedProductId="$selectedProductId"
                         />
 
 

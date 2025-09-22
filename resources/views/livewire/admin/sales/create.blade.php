@@ -4,6 +4,6 @@
                         :products='$products' 
                         :productList='$productList'
                         :customers='$customers'
-                        :saleList='$saleList' 
                         :sale='$sale'
+                        :selectedProductId="$selectedProductId"
                         />
