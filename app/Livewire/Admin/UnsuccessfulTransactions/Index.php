@@ -1,13 +1,59 @@
 <?php
 
-namespace App\Livewire\Admin\UnsuccessfulTransactions;
+    namespace App\Livewire\Admin\UnsuccessfulTransaction;
 
-use Livewire\Component;
+    use App\Models\AddProduct;
+    use App\Models\Product;
+    use Livewire\Component;
+    use Livewire\WithPagination;
 
-class Index extends Component
-{
-    public function render()
+    class Index extends Component
     {
-        return view('livewire.admin.unsuccessful-transactions.index');
-    }
+        use WithPagination;
+
+        public string $search = '';
+
+        public function updatingSearch(): void
+        {
+            $this->resetPage();
+        }
+
+        function delete($id)
+        {
+            try {
+                $purchase = AddProduct::findOrFail($id);
+               
+
+                $purchase->products()->detach();
+                $purchase->delete();
+
+                $this->dispatch('done', success: "Successfully Deleted this Purchase");
+            } catch (\Throwable $th) {
+                //throw $th;
+                $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
+            }
+        }
+       public function render()
+{
+    $search = trim($this->search);
+
+    $addProducts = AddProduct::select('unsuccessful_transaction.*')
+        ->join('suppliers', 'unsuccessful_transaction.supplier_id', '=', 'suppliers.id')    
+        ->when($search, fn ($query) =>
+            $query->where(function ($sub) use ($search) {
+                $sub->where('unsuccessful_transaction.add_product_date', 'like', "%$search%")
+                    ->orWhere('suppliers.name', 'like', "%$search%");
+            })
+        )
+        ->with(['supplier:id,name']) // Only load needed fields
+        ->orderBy('unsuccessful_transaction.add_product_date', 'desc')
+        ->paginate(10);
+
+
+    return view('livewire.admin.unsuccessful-transactions.index', [
+        'addProducts' => $addProducts,
+
+    ]);
 }
+
+    }
