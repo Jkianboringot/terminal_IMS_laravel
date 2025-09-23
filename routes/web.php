@@ -147,6 +147,19 @@ Route::prefix('add-products')
       
     });
 
+
+    Route::prefix('unsuccessful-transactions')
+    ->middleware('permission:manage product purchases')
+    ->name('unsuccessful-transactions.')
+    ->group(function () {
+        Route::get('/', Admin\UnsuccessfulTransactions\Index::class)->name('index');
+        Route::get('/create', Admin\UnsuccessfulTransactions\Create::class)->middleware('permission:create permission')->name('create');
+        Route::get('{id}/edit', Admin\UnsuccessfulTransactions\Edit::class)->name('edit');
+
+      
+    });
+
+
     Route::prefix('approvals')
     ->middleware('permission:manage product purchases')
     ->name('approvals.')

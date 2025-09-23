@@ -82,7 +82,7 @@ $user = auth()->user();
             @endif
 
             @if ($user && $user->hasPermission('manage products'))
-            <x-new-nav-link-dropdown title="Products" bi_icon="bi-box" route="admin.products*">
+            <x-new-nav-link-dropdown title="Products" bi_icon="bi bi-boxes`" route="admin.products*">
                 <x-new-nav-link title="Product List" bi_icon="" route="admin.products.index" />
                 @if ($user && $user->hasPermission('create permission'))
                 <x-new-nav-link title="Create Product" bi_icon="" route="admin.products.create" />
@@ -102,7 +102,7 @@ $user = auth()->user();
 
 
             @if ($user && $user->hasPermission('manage product purchases'))
-            <x-new-nav-link-dropdown title="New Arrival" bi_icon="bi-bag-check" route="admin.add-products*">
+            <x-new-nav-link-dropdown title="New Arrival" bi_icon="bi bi-inboxes" route="admin.add-products*">
                 <x-new-nav-link title="New Arrivals List" bi_icon="" route="admin.add-products.index" />
                 @if ($user && $user->hasPermission('create permission'))
                 <x-new-nav-link title="Create New Arrival" bi_icon="" route="admin.add-products.create" />
@@ -110,7 +110,14 @@ $user = auth()->user();
             </x-new-nav-link-dropdown>
             @endif
 
-
+  @if ($user && $user->hasPermission('manage product purchases'))
+            <x-new-nav-link-dropdown title="Unsuccessful Transac" bi_icon="bi bi-window-x" route="admin.unsuccessful-transactions*">
+                <x-new-nav-link title="Unsuccessful Transact List" bi_icon="" route="admin.unsuccessful-transactions.index" />
+                @if ($user && $user->hasPermission('create permission'))
+                <x-new-nav-link title="Create Unsuccessful Transact" bi_icon="" route="admin.unsuccessful-transactions.create" />
+                @endif
+            </x-new-nav-link-dropdown>
+            @endif
 
 
             @if ($user && $user->hasPermission('manage sales'))
