@@ -1,4 +1,4 @@
-<?php
+|date<?php
 
 namespace App\Livewire\Admin\Orders;
 
@@ -31,8 +31,8 @@ class Edit extends Component
     function rules()
     {
         return [
-            'order.order_date'=>'required',
-            'order.delivery_date'=>'required',
+            'order.order_date'=>'required|date',
+            'order.delivery_date'=>'required|date',
             'order.order_status'=>'required',
             'order.customer_id'=>'required',
         ];

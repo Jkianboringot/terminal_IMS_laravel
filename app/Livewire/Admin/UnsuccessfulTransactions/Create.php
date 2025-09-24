@@ -30,7 +30,7 @@ class Create extends Component
 
     function rules(){
         return [
-            'unsuccessfulTransaction.add_product_date'=>'required',
+            'unsuccessfulTransaction.add_product_date'=>'required|date',
             'unsuccessfulTransaction.supplier_id'=>'required',
         ];
     }

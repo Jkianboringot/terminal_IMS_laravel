@@ -15,12 +15,12 @@ class Create extends Component
     function rules()
     {
         return [
-            'supplier.name' => "required",
+            'supplier.name' => "required|string",
             'supplier.email' => "required|unique:suppliers,email",
             'supplier.address' => "required",
-            'supplier.phone_number' => "required",
-            'supplier.tax_id' => "required",
-            'supplier.account_number' => "required",
+            'supplier.phone_number' => "required|string",
+            'supplier.tax_id' => "required|string",
+            'supplier.account_number' => "required|string",
         ];
     }
 

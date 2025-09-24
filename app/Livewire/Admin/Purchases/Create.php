@@ -31,8 +31,8 @@ class Create extends Component
     function rules()
     {
         return [
-            'purchase.purchase_date' => 'required',
-            'purchase.date_settled' => 'nullable',
+           'purchase.purchase_date' => 'required|date',
+            'purchase.date_settled' => 'required|date',
             'purchase.supplier_id' => 'required',
             'purchase.is_paid' => 'required',
 

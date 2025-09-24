@@ -1,8 +1,8 @@
 <?php
 
-    namespace App\Livewire\Admin\UnsuccessfulTransaction;
+    namespace App\Livewire\Admin\UnsuccessfulTransactions;
 
-    use App\Models\AddProduct;
+    use App\Models\UnsuccessfulTransaction;
     use App\Models\Product;
     use Livewire\Component;
     use Livewire\WithPagination;
@@ -21,7 +21,7 @@
         function delete($id)
         {
             try {
-                $purchase = AddProduct::findOrFail($id);
+                $purchase = UnsuccessfulTransaction::findOrFail($id);
                
 
                 $purchase->products()->detach();
@@ -37,7 +37,7 @@
 {
     $search = trim($this->search);
 
-    $addProducts = AddProduct::select('unsuccessful_transaction.*')
+    $addProducts = UnsuccessfulTransaction::select('unsuccessful_transaction.*')
         ->join('suppliers', 'unsuccessful_transaction.supplier_id', '=', 'suppliers.id')    
         ->when($search, fn ($query) =>
             $query->where(function ($sub) use ($search) {

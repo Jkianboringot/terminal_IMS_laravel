@@ -31,7 +31,7 @@ class Edit extends Component
     function rules()
     {
         return [
-         'addProduct.add_product_date'=>'required',
+         'addProduct.add_product_date'=>'required|string',
             'addProduct.supplier_id'=>'required',
         ];
     }

@@ -13,7 +13,7 @@ use Livewire\Component;
 class Edit extends Component
 {
     use ProductSearch;
-    use WithCancel;
+    use WithCancel; 
 
     public $supplierSearch;
     public $productSearch;
@@ -31,7 +31,7 @@ class Edit extends Component
     function rules()
     {
         return [
-         'unsuccessfulTransaction.add_product_date'=>'required',
+         'unsuccessfulTransaction.add_product_date'=>'required|date',
             'unsuccessfulTransaction.supplier_id'=>'required',
         ];
     }

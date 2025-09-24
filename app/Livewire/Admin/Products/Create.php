@@ -29,7 +29,7 @@ class Create extends Component
     function rules()
     {
         return [
-            'product.name' => 'required',
+            'product.name' => 'required|string',
             'product.brand_id' => 'nullable|string',
             'product.supplier_id' => 'required',
 
@@ -37,9 +37,9 @@ class Create extends Component
             'product.unit_id' => 'required|integer|exists:units,id',
             // do this for every validation but becarefull it might impact the perfomacne
             'product.product_category_id' => 'nullable|string',
-            'product.quantity' => 'required',
-            'product.purchase_price' => 'required',
-            'product.sale_price' => 'required',
+            'product.quantity' => 'required|numeric',
+            'product.purchase_price' => 'required|numeric',
+            'product.sale_price' => 'required|numeric',
             'product.location' => 'nullable|string|max:45',
             'product.barcode' => 'nullable|string|max:45',
 

@@ -14,7 +14,7 @@ class Create extends Component
 
     function rules(){
             return [
-                'customer.name'=>'required',
+                'customer.name'=>'required|string',
                 'customer.email'=>'required|unique:customers,email',
                 'customer.address'=>'nullable|string|max:85',
                 'customer.phone_number'=>'nullable|string|max:20',

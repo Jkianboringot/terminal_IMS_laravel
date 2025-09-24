@@ -34,7 +34,7 @@ public $pendingAction = null;
         return [
             'sale.customer_id' => 'required',
            
-            'sale.sale_date' => 'required',
+            'sale.sale_date' => 'required|date',
         ];
     }
 

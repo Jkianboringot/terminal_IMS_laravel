@@ -15,7 +15,7 @@ class Edit extends Component
     function rules()
     {
         return [
-            'category.name' => 'required',
+            'category.name' => 'required|string',
                               'category.description' => 'nullable', 
 
 

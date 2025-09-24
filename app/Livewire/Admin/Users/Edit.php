@@ -22,7 +22,7 @@ class Edit extends Component
     function rules()
     {
         return [
-            'user.name' => 'required',
+            'user.name' => 'required|string',
             'user.email' => 'required|unique:users,email,' . $this->user->id,
             'selectedRoles' => 'required',
 

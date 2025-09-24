@@ -20,7 +20,7 @@ class Create extends Component
     function rules()
     {
         return [
-            'brand.name' => "required",
+            'brand.name' => "required|string",
             'image' => 'nullable|image|max:2048'
         ];
     }

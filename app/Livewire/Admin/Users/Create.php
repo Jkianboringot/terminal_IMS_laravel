@@ -20,7 +20,7 @@ class Create extends Component
 
     function rules(){
             return [
-                'user.name'=>'required',
+                'user.name'=>'required|string',
                 'user.email'=>'required|unique:users,email',
                 'selectedRoles'=>'required',
 

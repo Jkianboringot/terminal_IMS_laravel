@@ -14,8 +14,8 @@ class Edit extends Component
     function rules()
     {
         return [
-            'unit.name' => "required",
-            'unit.symbol' => "required",
+            'unit.name' => "required|string",
+            'unit.symbol' => "required|string",
         ];
     }
 
