@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('unsecessful_transactions', function (Blueprint $table) {
+        Schema::create('unsuccessful_transactions', function (Blueprint $table) {
             $table->id();
+     $table->enum('status', ['pending', 'approved', 'rejected','pending_edit'])->default('pending');
+            $table->date('unsuccessful_transactions_date')->nullable();
             $table->timestamps();
         });
     }
@@ -22,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('unsecessful_transactions');
+        Schema::dropIfExists('unsuccessful_transactions');
     }
 };

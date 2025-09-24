@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class AddProduct extends Model
 {
    
-      protected $fillable = ['supplier_id', 'add_product_date', 'status'];
+      protected $fillable = [ 'add_product_date', 'status'];
 
   
     function products()

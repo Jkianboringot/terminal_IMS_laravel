@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('add_products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('supplier_id')->constrained();
      $table->enum('status', ['pending', 'approved', 'rejected','pending_edit'])->default('pending');
             $table->date('add_product_date')->nullable();
             $table->timestamps();
