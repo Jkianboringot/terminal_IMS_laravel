@@ -88,7 +88,7 @@ Route::middleware([
         Route::get('{id}/edit', Admin\Customers\Edit::class)->name('edit');
     });
 
-       Route::prefix('returns')->name('returns.')->group(function () {
+       Route::prefix('returns')->middleware('permission:manage returns')->name('returns.')->group(function () {
         Route::get('/', Admin\Returns\Index::class)->name('index');
         Route::get('/create', Admin\Returns\Create::class)->name('create');
         Route::get('{id}/edit', Admin\Returns\Edit::class)->name('edit');
@@ -137,7 +137,7 @@ Route::middleware([
         Route::get('{id}/edit', Admin\Purchases\Edit::class)->name('edit');
     });
 Route::prefix('add-products')
-    ->middleware('permission:manage product purchases')
+    ->middleware('permission:manage add products')
     ->name('add-products.')
     ->group(function () {
         Route::get('/', Admin\AddProducts\Index::class)->name('index');
@@ -149,7 +149,7 @@ Route::prefix('add-products')
 
 
     Route::prefix('unsuccessful-transactions')
-    ->middleware('permission:manage product purchases')
+    ->middleware('permission:manage unsuccessfull transactions')
     ->name('unsuccessful-transactions.')
     ->group(function () {
         Route::get('/', Admin\UnsuccessfulTransactions\Index::class)->name('index');
@@ -161,7 +161,7 @@ Route::prefix('add-products')
 
 
     Route::prefix('approvals')
-    ->middleware('permission:manage product purchases')
+    ->middleware('permission:manage approvals')
     ->name('approvals.')
     ->group(function () {
       Route::get('/addapproval', Admin\Approvals\AddApproval::class)->name('addapproval');
