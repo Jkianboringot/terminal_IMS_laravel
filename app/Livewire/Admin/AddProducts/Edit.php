@@ -15,7 +15,6 @@ class Edit extends Component
     use ProductSearch;
     use WithCancel;
 
-    public $supplierSearch;
     public $productSearch;
 
     public $selectedProductId;
@@ -32,7 +31,6 @@ class Edit extends Component
     {
         return [
          'addProduct.add_product_date'=>'required|string',
-            'addProduct.supplier_id'=>'required',
         ];
     }
 
@@ -53,7 +51,6 @@ class Edit extends Component
             );
 
         }
-        $this->supplierSearch = $this->addProduct->supplier->name;
           $this->addProduct->add_product_date = now()->toDateString();
     }
     function deleteCartItem($key)
@@ -76,13 +73,7 @@ class Edit extends Component
 
 
 
-    function selectSupplier($id)
-    {
-        $this->addProduct->supplier_id = $id;
-               $this->supplierSearch = $this->addProduct->supplier->name;
-        
-
-    }
+   
 
     function selectProduct($id)
     {
@@ -127,7 +118,6 @@ function save()
 {
     try {
         $changes = [
-            'supplier_id' => $this->addProduct->supplier_id,
             'add_product_date' => $this->addProduct->add_product_date,
             'products' => $this->productList,
         ];
@@ -150,17 +140,11 @@ function save()
 
     public function render()
     {
-        $suppliers = Supplier::where('name', 'like', '%' . $this->supplierSearch . '%')->get();
      
 
         return view(
             'livewire.admin.add-products.edit',
-            [
-                'suppliers' => $suppliers,
-                             'products' => $this->productSearch(),
-
-
-            ]
+          
         );
     }
 

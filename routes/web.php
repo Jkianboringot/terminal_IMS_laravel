@@ -88,6 +88,7 @@ Route::middleware([
         Route::get('{id}/edit', Admin\Customers\Edit::class)->name('edit');
     });
 
+    
        Route::prefix('returns')->middleware('permission:manage returns')->name('returns.')->group(function () {
         Route::get('/', Admin\Returns\Index::class)->name('index');
         Route::get('/create', Admin\Returns\Create::class)->name('create');

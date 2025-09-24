@@ -10,10 +10,7 @@ class UnsuccessfulTransaction extends Model
    
       protected $fillable = ['supplier_id', 'add_product_date', 'status'];
 
-    function supplier()
-    {
-        return $this->belongsTo(Supplier::class);
-    }
+
     function products()
     {
         return $this->belongsToMany(Product::class, 'add_products_to_list')

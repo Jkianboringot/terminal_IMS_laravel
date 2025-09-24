@@ -13,7 +13,6 @@ class Create extends Component
 {
     use ProductSearch;
     use WithCancel;
-    public $supplierSearch;
     public $productSearch;
     
     public $selectedProductId;
@@ -31,7 +30,6 @@ class Create extends Component
     function rules(){
         return [
             'unsuccessfulTransaction.add_product_date'=>'required|date',
-            'unsuccessfulTransaction.supplier_id'=>'required',
         ];
     }
 
@@ -63,13 +61,7 @@ class Create extends Component
     }
    
 
-    function selectSupplier($id)
-    {
-        $this->unsuccessfulTransaction->supplier_id = $id;
-               $this->supplierSearch = $this->unsuccessfulTransaction->supplier->name;
-
-
-    }
+   
 
     function selectProduct($id)
     {
@@ -156,16 +148,9 @@ function save()
 
     public function render()
     {
-        $suppliers = Supplier::where('name', 'like', '%' . $this->supplierSearch . '%')->get();
       
         return view(
-            'livewire.admin.unsuccessful-transactions.create',
-            [
-                'suppliers' => $suppliers,
-                               'products' => $this->productSearch(),
-
-
-            ]
+            'livewire.admin.unsuccessful-transactions.create'
         );
     }
 }

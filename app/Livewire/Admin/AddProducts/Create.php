@@ -4,7 +4,6 @@ namespace App\Livewire\Admin\AddProducts;
 
 use App\Models\Product;
 use App\Models\AddProduct;
-use App\Models\Supplier;
 use App\Traits\ProductSearch;
 use App\Traits\WithCancel;
 use Livewire\Component;
@@ -13,7 +12,6 @@ class Create extends Component
 {
     use ProductSearch;
     use WithCancel;
-    public $supplierSearch;
     public $productSearch;
     
     public $selectedProductId;
@@ -31,7 +29,6 @@ class Create extends Component
     function rules(){
         return [
             'addProduct.add_product_date'=>'required|string',
-            'addProduct.supplier_id'=>'required',
         ];
     }
 
@@ -63,13 +60,7 @@ class Create extends Component
     }
    
 
-    function selectSupplier($id)
-    {
-        $this->addProduct->supplier_id = $id;
-               $this->supplierSearch = $this->addProduct->supplier->name;
-
-
-    }
+  
 
     function selectProduct($id)
     {
@@ -156,16 +147,10 @@ function save()
 
     public function render()
     {
-        $suppliers = Supplier::where('name', 'like', '%' . $this->supplierSearch . '%')->get();
       
         return view(
-            'livewire.admin.add-products.create',
-            [
-                'suppliers' => $suppliers,
-                               'products' => $this->productSearch(),
-
-
-            ]
+            'livewire.admin.add-products.create'
+            
         );
     }
 }

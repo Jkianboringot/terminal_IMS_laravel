@@ -15,7 +15,6 @@ class Edit extends Component
     use ProductSearch;
     use WithCancel; 
 
-    public $supplierSearch;
     public $productSearch;
 
     public $selectedProductId;
@@ -32,7 +31,6 @@ class Edit extends Component
     {
         return [
          'unsuccessfulTransaction.add_product_date'=>'required|date',
-            'unsuccessfulTransaction.supplier_id'=>'required',
         ];
     }
 
@@ -53,7 +51,6 @@ class Edit extends Component
             );
 
         }
-        $this->supplierSearch = $this->unsuccessfulTransaction->supplier->name;
           $this->unsuccessfulTransaction->add_product_date = now()->toDateString();
     }
     function deleteCartItem($key)
@@ -76,14 +73,7 @@ class Edit extends Component
 
 
 
-    function selectSupplier($id)
-    {
-        $this->unsuccessfulTransaction->supplier_id = $id;
-               $this->supplierSearch = $this->unsuccessfulTransaction->supplier->name;
-        
-
-    }
-
+  
     function selectProduct($id)
     {
         $this->selectedProductId = $id;
@@ -127,7 +117,6 @@ function save()
 {
     try {
         $changes = [
-            'supplier_id' => $this->unsuccessfulTransaction->supplier_id,
             'add_product_date' => $this->unsuccessfulTransaction->add_product_date,
             'products' => $this->productList,
         ];
@@ -150,17 +139,11 @@ function save()
 
     public function render()
     {
-        $suppliers = Supplier::where('name', 'like', '%' . $this->supplierSearch . '%')->get();
      
 
         return view(
             'livewire.admin.unsuccessful-transactions.edit',
-            [
-                'suppliers' => $suppliers,
-                             'products' => $this->productSearch(),
-
-
-            ]
+         
         );
     }
 
