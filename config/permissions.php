@@ -17,7 +17,7 @@
 //     ]
 //     ];
 
-
+// make all prural becuase its confusing except for button
 return [
     'Admin/Owner' => [
         'manage roles',
@@ -38,6 +38,10 @@ return [
         'edit permission',
         'delete permission',
         'download permission',
+        'manage add products',
+        'manage unsuccessfull transactions',
+        'manage approvals',
+
         'create permission'
     ],
 
@@ -60,41 +64,36 @@ return [
         'edit permission',
         'delete permission',
         'download permission',
+        'manage add products',
+        'manage unsuccessfull transactions',
+        'manage approvals',
+
         'create permission'
     ],
 
     'Sales Clerk'  =>  [
         'manage customers',
-        'manage quotations',
-        'manage units',
-        'manage payments',
         'manage sales'
     ],
 
     'Inventory Clerk' =>  [
-        'manage invoices',
-        'manage orders',
-        'manage product categories',
-        'manage products',
-        'manage product purchases',
+        'manage new arrivals',
+
     ],
 
     'Warehouse Keeper' =>  [
-        'sales',
+        'manage unsuccessfull transactions',
+        'manage orders',
+
 
     ],
 
     'Return and Exchange Clerk'  => [
-        'edit permission',
-        'delete permission',
-        'download permission',
-        'create permission',
-        'manage suppliers',
-        'manage brands',
-        'manage activity logs',
-       
+        'manage returns',
+
+
     ],
-    
+
 ];
 
 // this is the prep and final preparetion for permissions
