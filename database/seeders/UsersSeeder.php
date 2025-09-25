@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class UserSeeder extends Seeder
+class UsersSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,67 +15,67 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         DB::table('users')->inset([[
-          'Name'=>'joe smith',  
+          'name'=>'joe smith',  
           'email'=>'joe@gmail.com',  
           'password'=>Hash::make('123'),  
         ],
         [
-          'Name'=>'mark sulas',  
+          'name'=>'mark sulas',  
           'email'=>'mark@gmail.com',  
           'password'=>Hash::make('123'),  
         ],
         [
-          'Name'=>'loyd oragon',  
+          'name'=>'loyd oragon',  
           'email'=>'hazel@gmail.com',  
           'password'=>Hash::make('123'),  
         ],
         [
-          'Name'=>'aldrin buhayo',  
+          'name'=>'aldrin buhayo',  
           'email'=>'joe@gmail.com',  
           'password'=>Hash::make('123'),  
         ],
         [
-          'Name'=>'cedrick tano',  
+          'name'=>'cedrick tano',  
           'email'=>'cedrick@gmail.com',  
           'password'=>Hash::make('123'),  
         ],
         [
-          'Name'=>'hussain rabida',  
+          'name'=>'hussain rabida',  
           'email'=>'hussain@gmail.com',  
           'password'=>Hash::make('123'),  
         ],
         [
-          'Name'=>'jerlyn boringot',  
+          'name'=>'jerlyn boringot',  
           'email'=>'jerlyn@gmail.com',  
           'password'=>Hash::make('123'),  
         ],
         [
-          'Name'=>'michiel camu',  
+          'name'=>'michiel camu',  
           'email'=>'michiel@gmail.com',  
           'password'=>Hash::make('123'),  
         ],
         [
-          'Name'=>'jushou hoho',  
+          'name'=>'jushou hoho',  
           'email'=>'jushou@gmail.com',  
           'password'=>Hash::make('123'),  
         ],
         [
-          'Name'=>'wang wang',  
+          'name'=>'wang wang',  
           'email'=>'wang@gmail.com',  
           'password'=>Hash::make('123'),  
         ],
         [
-          'Name'=>'jesus smith',  
+          'name'=>'jesus smith',  
           'email'=>'jesus@gmail.com',  
           'password'=>Hash::make('123'),  
         ],
         [
-          'Name'=>'juri boringot',  
+          'name'=>'juri boringot',  
           'email'=>'juri@gmail.com',  
           'password'=>Hash::make('123'),  
         ],
         [
-          'Name'=>'god',  
+          'name'=>'god',  
           'email'=>'god@gmail.com',  
           'password'=>Hash::make('123'),  
         ],
