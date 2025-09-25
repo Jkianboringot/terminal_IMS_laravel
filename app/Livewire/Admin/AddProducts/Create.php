@@ -35,7 +35,7 @@ class Create extends Component
 
 
     function mount()
-    {
+    {   
         $this->addProduct = new AddProduct();
     $this->addProduct->add_product_date = now()->toDateString();
 
@@ -112,7 +112,7 @@ function save()
        $this->addProduct->add_product_date = now()->toDateString();
 
         }   
-  $this->addProduct->status = 'pending'; // 🔹 default request status
+  $this->addProduct->status = 'pending'; 
         $this->addProduct->save();
 
 

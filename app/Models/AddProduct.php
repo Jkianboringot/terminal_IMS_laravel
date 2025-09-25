@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Livewire\Admin\Approvals\AddApproval;
 use Illuminate\Database\Eloquent\Model;
 
 class AddProduct extends Model
@@ -10,6 +11,10 @@ class AddProduct extends Model
       protected $fillable = [ 'add_product_date', 'status'];
 
     
+public function approvals()
+{
+    return $this->morphMany(AddApproval::class, 'approvable');
+}
 
     function products()
     {

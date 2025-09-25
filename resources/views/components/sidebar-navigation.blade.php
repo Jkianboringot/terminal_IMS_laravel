@@ -30,6 +30,7 @@ $user = auth()->user();
             @if ($user && $user->hasPermission('manage approvals'))
              <x-new-nav-link-dropdown title="Approvals" bi_icon="bi bi-clipboard2-check" route="admin.approvals*">
                     <x-new-nav-link title="Approvals List" bi_icon="" route="admin.approvals.addapproval" />
+                    <x-new-nav-link title="Approvals center" bi_icon="" route="admin.approvals.approvalcenter" />
                   
                      
                     <x-new-nav-link title="Edited Approvals List" bi_icon="" route="admin.approvals.approvaledit" />

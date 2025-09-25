@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\Approvals;
 use App\Models\AddProduct;
 use App\Models\ActivityLog;
 use App\Models\UnsuccessfulTransaction;
+use App\Models\Approval; // ✅ Import the Approval model
 use Livewire\Component;
 
 class AddApproval extends Component
@@ -19,8 +20,11 @@ class AddApproval extends Component
 
     function loadPendingRequests()
     {
-        $this->pendingAddProducts = AddProduct::with(['products','user'])->where('status', 'pending')->get();
-        $this->pendingUnsuccessful = UnsuccessfulTransaction::with(['products','user'])->where('status', 'pending')->get();
+        $this->pendingAddProducts = AddProduct::with('products')
+            ->where('status', 'pending')->get();
+
+        $this->pendingUnsuccessful = UnsuccessfulTransaction::with('products')
+            ->where('status', 'pending')->get();
     }
 
     function approve($id, $type)
@@ -28,17 +32,24 @@ class AddApproval extends Component
         try {
             if ($type === 'AddProduct') {
                 $model = AddProduct::findOrFail($id);
-                $model->update(['status' => 'approved']);
-                $action = 'approved_add_product';
             } else {
                 $model = UnsuccessfulTransaction::findOrFail($id);
-                $model->update(['status' => 'approved']);
-                $action = 'approved_unsuccessful_transaction';
             }
 
+            $model->update(['status' => 'approved']);
+
+            // ✅ Save to approvals table
+            Approval::create([
+                'user_id' => auth()->id(),
+                'approvable_id' => $model->id,
+                'approvable_type' => get_class($model),
+                'status' => 'approved',
+            ]);
+
+            // ✅ Activity log
             ActivityLog::create([
                 'user_id' => auth()->id(),
-                'action' => $action,
+                'action' => 'approved_' . strtolower(class_basename($model)),
                 'model'  => $type,
                 'model_id' => $model->id,
             ]);
@@ -55,17 +66,24 @@ class AddApproval extends Component
         try {
             if ($type === 'AddProduct') {
                 $model = AddProduct::findOrFail($id);
-                $model->update(['status' => 'rejected']);
-                $action = 'rejected_add_product';
             } else {
                 $model = UnsuccessfulTransaction::findOrFail($id);
-                $model->update(['status' => 'rejected']);
-                $action = 'rejected_unsuccessful_transaction';
             }
 
+            $model->update(['status' => 'rejected']);
+
+            // ✅ Save to approvals table
+            Approval::create([
+                'user_id' => auth()->id(),
+                'approvable_id' => $model->id,
+                'approvable_type' => get_class($model),
+                'status' => 'rejected',
+            ]);
+
+            // ✅ Activity log
             ActivityLog::create([
                 'user_id' => auth()->id(),
-                'action' => $action,
+                'action' => 'rejected_' . strtolower(class_basename($model)),
                 'model'  => $type,
                 'model_id' => $model->id,
             ]);

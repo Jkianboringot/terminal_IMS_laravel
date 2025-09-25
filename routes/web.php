@@ -167,6 +167,7 @@ Route::prefix('add-products')
     ->group(function () {
       Route::get('/addapproval', Admin\Approvals\AddApproval::class)->name('addapproval');
     Route::get('/approvaledit', Admin\Approvals\ApprovalEdit::class)->name('approvaledit');
+    Route::get('/approvalcenter', Admin\Approvals\ApprovalCenter::class)->name('approvalcenter');
       
     });
 

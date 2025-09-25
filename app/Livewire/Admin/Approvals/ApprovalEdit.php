@@ -103,6 +103,32 @@ function loadPendingEdits()
         }
     }
 
+    function save()
+{
+    try {
+        $changes = [
+            'add_product_date' => $this->addProduct->add_product_date,
+            'products' => $this->productList,
+        ];
+
+        EditApproval::create([
+            'add_product_id' => $this->addProduct->id,
+            'user_id' => auth()->id(),
+            'changes' => $changes,
+            'status' => 'pending',
+        ]);
+
+        // ❌ Don't reset AddProduct to pending here
+        // $this->addProduct->update(['status' => 'pending']);
+
+        return redirect()->route('admin.add-products.index')
+            ->with('success', 'Edit request submitted for approval.');
+    } catch (\Throwable $th) {
+        $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
+    }
+}
+
+
     public function render()
     {
         return view('livewire.admin.approvals.approvaledit', [

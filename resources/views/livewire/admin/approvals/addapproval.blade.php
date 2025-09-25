@@ -12,7 +12,6 @@
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Requested by</th>
             
                         <th>Products</th>
                         <th class="text-center">Actions</th>
@@ -22,7 +21,6 @@
                     @forelse($pendingAddProducts as $request)
                         <tr>
                             <td>{{ $request->add_product_date }}</td>
-                            <td>{{ $request->user->name }}</td>
                             <td>
                                 <ul class="mb-0 ps-3">
                                     @foreach($request->products as $p)

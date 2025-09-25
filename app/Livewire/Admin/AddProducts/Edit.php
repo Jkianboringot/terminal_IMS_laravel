@@ -129,7 +129,7 @@ function save()
             'status' => 'pending',
         ]);
 
-        $this->addProduct->update(['status' => 'pending']);
+        $this->addProduct->update();
 
         return redirect()->route('admin.add-products.index')
             ->with('success', 'Edit request submitted for approval.');
