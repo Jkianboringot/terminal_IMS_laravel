@@ -20,7 +20,6 @@ function loadPendingEdits()
 {
     $this->pendingEdits = EditApproval::with([
         'user',
-        'addProduct.supplier',
         'addProduct.products' // eager load products
     ])
         ->where('status', 'pending')
@@ -36,9 +35,7 @@ function loadPendingEdits()
 
             $addProduct = AddProduct::findOrFail($editRequest->add_product_id);
 
-            // Apply supplier/date
             $addProduct->update([
-                'supplier_id' => $changes['supplier_id'],
                 'add_product_date' => $changes['add_product_date'],
                 'status' => 'approved',
             ]);

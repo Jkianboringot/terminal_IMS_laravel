@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('approvals', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained(); // who requested the edit
+
             $table->timestamps();
         });
     }

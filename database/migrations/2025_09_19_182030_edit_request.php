@@ -13,8 +13,8 @@ return new class extends Migration
     {
        Schema::create('edit_requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('add_product_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // who requested the edit
+            $table->foreignId('add_product_id')->constrained();
+            $table->foreignId('user_id')->constrained(); // who requested the edit
             $table->json('changes'); // store proposed edits in JSON
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();

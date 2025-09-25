@@ -11,8 +11,7 @@
                 <thead>
                     <tr>
                         <th>Requested By</th>
-                        <th>Supplier</th>
-                        <th>Proposed Changes</th>
+                        <th>Proposed Changes</th>   
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
@@ -20,17 +19,9 @@
                     @forelse($pendingEdits as $edit)
                         <tr>
                             <td>{{ $edit->user->name }}</td>
-                            <td>{{ $edit->addProduct->supplier->name }}</td>
                             <td>
                                 <ul class="mb-0 ps-3">
-                                    {{-- Supplier change --}}
-                                    <li>
-                                        <strong>Supplier:</strong>
-                                        {{ $edit->addProduct->supplier->name }} →
-                                        {{ $edit->changes['supplier_id'] }}
-                                    </li>
-
-                                    {{-- Date change --}}
+                                    
                                     <li>
                                         <strong>Date:</strong>
                                         {{ $edit->addProduct->add_product_date }} →

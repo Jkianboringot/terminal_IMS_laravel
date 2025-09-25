@@ -9,7 +9,8 @@ class AddProduct extends Model
    
       protected $fillable = [ 'add_product_date', 'status'];
 
-  
+    
+
     function products()
     {
         return $this->belongsToMany(Product::class, 'add_products_to_list')
