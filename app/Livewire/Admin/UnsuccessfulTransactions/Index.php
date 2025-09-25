@@ -39,10 +39,10 @@
     $unsuccessfulTransactions = UnsuccessfulTransaction::select('unsuccessful_transactions.*')
     ->when($search,fn($query)=>
     $query->where(function($sub) use ($search){
-       $sub->where('unsuccessful_transactions.add_product_date', 'like', "%$search%")
+       $sub->where('unsuccessful_transactions.unsuccessful_transactions_date', 'like', "%$search%")
           ->orWhere('unsuccessful_transactions.name', 'like', "%$search%");
     }))
-        ->orderBy('unsuccessful_transactions.add_product_date', 'desc')
+        ->orderBy('unsuccessful_transactions.unsuccessful_transactions_date', 'desc')
         ->paginate(10);
 
 

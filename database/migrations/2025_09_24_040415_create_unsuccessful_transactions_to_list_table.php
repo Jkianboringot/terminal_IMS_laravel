@@ -12,11 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('unsuccessful_transactions_to_list', function (Blueprint $table) {
-         $table->foreignId('product_id')->constrained();
-            $table->foreignId('add_product_id')->constrained();
-            $table->primary(['product_id','add_product_id']);
-            $table->decimal('quantity',10,2)->unsigned();
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('unsuccessful_transaction_id');
+
+            $table->primary(['product_id', 'unsuccessful_transaction_id']);
+
+            $table->decimal('quantity', 10, 2)->unsigned();
             $table->timestamps();
+
+            // Short foreign key names
+            $table->foreign('product_id', 'utl_product_fk')
+                  ->references('id')->on('products')
+                  ->onDelete('cascade');
+
+            $table->foreign('unsuccessful_transaction_id', 'utl_txn_fk')
+                  ->references('id')->on('unsuccessful_transactions')
+                  ->onDelete('cascade');
         });
     }
 

@@ -29,7 +29,7 @@ class Create extends Component
 
     function rules(){
         return [
-            'unsuccessfulTransaction.unsuccessful_transactions_date'=>'required|date',
+            'unsuccessfulTransaction.unsuccessful_transactions_date'=>'required',
         ];
     }
 
@@ -38,7 +38,7 @@ class Create extends Component
     function mount()
     {
         $this->unsuccessfulTransaction = new UnsuccessfulTransaction();
-    $this->unsuccessfulTransaction->add_product_date = now()->toDateString();
+    $this->unsuccessfulTransaction->unsuccessful_transactions_date = now()->toDateString();
 
     }
 
@@ -109,8 +109,8 @@ function save()
     try {
         $this->validate();
 
-        if (empty($this->unsuccessfulTransaction->add_product_date)) {
-       $this->unsuccessfulTransaction->add_product_date = now()->toDateString();
+        if (empty($this->unsuccessfulTransaction->unsuccessful_transactions_date)) {
+       $this->unsuccessfulTransaction->unsuccessful_transactions_date = now()->toDateString();
 
         }   
   $this->unsuccessfulTransaction->status = 'pending'; // 🔹 default request status

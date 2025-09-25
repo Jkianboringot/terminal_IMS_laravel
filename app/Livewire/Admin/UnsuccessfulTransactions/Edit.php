@@ -30,7 +30,7 @@ class Edit extends Component
     function rules()
     {
         return [
-         'unsuccessfulTransaction.unsuccessful_transactions_date'=>'required|date',
+         'unsuccessfulTransaction.unsuccessful_transactions_date'=>'required',
         ];
     }
 
@@ -51,7 +51,7 @@ class Edit extends Component
             );
 
         }
-          $this->unsuccessfulTransaction->add_product_date = now()->toDateString();
+          $this->unsuccessfulTransaction->unsuccessful_transactions_date = now()->toDateString();
     }
     function deleteCartItem($key)
     {
@@ -83,8 +83,8 @@ class Edit extends Component
 function addToList()
 {
     try {
- if (empty($this->unsuccessfulTransaction->add_product_date)) {
-       $this->unsuccessfulTransaction->add_product_date = now()->toDateString();
+ if (empty($this->unsuccessfulTransaction->unsuccessful_transactions_date)) {
+       $this->unsuccessfulTransaction->unsuccessful_transactions_date = now()->toDateString();
 
         }           // Manual checks to replace validate()
         if (!$this->selectedProductId || !$this->quantity || !$this->price) {
@@ -117,7 +117,7 @@ function save()
 {
     try {
         $changes = [
-            'add_product_date' => $this->unsuccessfulTransaction->add_product_date,
+            'unsuccessful_transactions_date' => $this->unsuccessfulTransaction->unsuccessful_transactions_date,
             'products' => $this->productList,
         ];
 
