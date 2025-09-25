@@ -165,8 +165,8 @@ Route::prefix('add-products')
     ->middleware('permission:manage approvals')
     ->name('approvals.')
     ->group(function () {
-      Route::get('/addapproval', Admin\Approvals\AddApproval::class)->name('addapproval');
-    Route::get('/approvaledit', Admin\Approvals\ApprovalEdit::class)->name('approvaledit');
+    //   Route::get('/addapproval', Admin\Approvals\AddApproval::class)->name('addapproval');
+    // Route::get('/approvaledit', Admin\Approvals\ApprovalEdit::class)->name('approvaledit');
     Route::get('/approvalcenter', Admin\Approvals\ApprovalCenter::class)->name('approvalcenter');
       
     });

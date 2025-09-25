@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
     <x-slot:header>Pending Edit Requests</x-slot:header>
 
     <div class="card">
@@ -66,4 +66,4 @@
             </table>
         </div>
     </div>
-</div>
+</div> -->

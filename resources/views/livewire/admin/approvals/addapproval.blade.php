@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
     <x-slot:header>Pending Approvals</x-slot:header>
 
     {{-- Add Products --}}
@@ -87,4 +87,4 @@
             </table>
         </div>
     </div>
-</div>
+</div> -->

@@ -1,138 +1,139 @@
 <?php 
-namespace App\Livewire\Admin\Approvals;
 
-use App\Models\AddProduct;
-use App\Models\EditApproval;
-use App\Models\ActivityLog;
-use Livewire\Component;
-use Exception;
+// namespace App\Livewire\Admin\Approvals;
 
-class ApprovalEdit extends Component
-{
-    public $pendingEdits;
+// use App\Models\AddProduct;
+// use App\Models\EditApproval;
+// use App\Models\ActivityLog;
+// use Livewire\Component;
+// use Exception;
 
-    function mount()
-    {
-        $this->loadPendingEdits();
-    }
+// class ApprovalEdit extends Component
+// {
+//     public $pendingEdits;
 
-function loadPendingEdits()
-{
-    $this->pendingEdits = EditApproval::with([
-        'user',
-        'addProduct.products' // eager load products
-    ])
-        ->where('status', 'pending')
-        ->get();
-}
+//     function mount()
+//     {
+//         $this->loadPendingEdits();
+//     }
 
-
-    function approve($id)
-    {
-        try {
-            $editRequest = EditApproval::findOrFail($id);
-            $changes = $editRequest->changes;
-
-            $addProduct = AddProduct::findOrFail($editRequest->add_product_id);
-
-            $addProduct->update([
-                'add_product_date' => $changes['add_product_date'],
-                'status' => 'approved',
-            ]);
-
-            // Apply products & log changes
-        foreach ($changes['products'] as $listItem) {
-    $product = $addProduct->products()->find($listItem['product_id']); 
-    $productName = $product ? $product->name : "Unknown Product";
-
-    $existing = $product;
-    $oldQuantity = $existing ? $existing->pivot->quantity : 0;
-    $newQuantity = $listItem['quantity'];
-
-    $addProduct->products()->syncWithoutDetaching([
-        $listItem['product_id'] => ['quantity' => $newQuantity],
-    ]);
-
-    if ($newQuantity != $oldQuantity) {
-        ActivityLog::create([
-            'user_id' => auth()->id(),
-            'action' => 'edit_approved',
-            'model' => 'AddProduct',
-            'model_id' => $listItem['product_id'],
-            'changes' => json_encode([
-                'product_name' => $productName,
-                'old_quantity' => $oldQuantity,
-                'new_quantity' => $newQuantity,
-                'change' => $newQuantity - $oldQuantity,
-            ]),
-            'ip_address' => request()->ip(),
-            'user_agent' => request()->header('User-Agent'),
-        ]);
-    }
-}
+// function loadPendingEdits()
+// {
+//     $this->pendingEdits = EditApproval::with([
+//         'user',
+//         'addProduct.products' // eager load products
+//     ])
+//         ->where('status', 'pending')
+//         ->get();
+// }
 
 
-            $editRequest->update(['status' => 'approved']);
+//     function approve($id)
+//     {
+//         try {
+//             $editRequest = EditApproval::findOrFail($id);
+//             $changes = $editRequest->changes;
 
-            $this->loadPendingEdits();
-            $this->dispatch('done', success: "Edit request approved.");
-        } catch (Exception $e) {
-            $this->dispatch('done', error: "Approval failed: " . $e->getMessage());
-        }
-    }
+//             $addProduct = AddProduct::findOrFail($editRequest->add_product_id);
 
-    function reject($id)
-    {
-        try {
-            $edit = EditApproval::findOrFail($id);
-            $edit->update(['status' => 'rejected']);
+//             $addProduct->update([
+//                 'add_product_date' => $changes['add_product_date'],
+//                 'status' => 'approved',
+//             ]);
 
-            $edit->addProduct->update(['status' => 'approved']); // revert
+//             // Apply products & log changes
+//         foreach ($changes['products'] as $listItem) {
+//     $product = $addProduct->products()->find($listItem['product_id']); 
+//     $productName = $product ? $product->name : "Unknown Product";
 
-            ActivityLog::create([
-                'user_id' => auth()->id(),
-                'action' => 'rejected_edit_request',
-                'model' => 'EditApproval',
-                'model_id' => $edit->id,
-            ]);
+//     $existing = $product;
+//     $oldQuantity = $existing ? $existing->pivot->quantity : 0;
+//     $newQuantity = $listItem['quantity'];
 
-            $this->loadPendingEdits();
-            $this->dispatch('done', success: "Edit request rejected.");
-        } catch (Exception $e) {
-            $this->dispatch('done', error: "Rejection failed: " . $e->getMessage());
-        }
-    }
+//     $addProduct->products()->syncWithoutDetaching([
+//         $listItem['product_id'] => ['quantity' => $newQuantity],
+//     ]);
 
-    function save()
-{
-    try {
-        $changes = [
-            'add_product_date' => $this->addProduct->add_product_date,
-            'products' => $this->productList,
-        ];
-
-        EditApproval::create([
-            'add_product_id' => $this->addProduct->id,
-            'user_id' => auth()->id(),
-            'changes' => $changes,
-            'status' => 'pending',
-        ]);
-
-        // ❌ Don't reset AddProduct to pending here
-        // $this->addProduct->update(['status' => 'pending']);
-
-        return redirect()->route('admin.add-products.index')
-            ->with('success', 'Edit request submitted for approval.');
-    } catch (\Throwable $th) {
-        $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
-    }
-}
+//     if ($newQuantity != $oldQuantity) {
+//         ActivityLog::create([
+//             'user_id' => auth()->id(),
+//             'action' => 'edit_approved',
+//             'model' => 'AddProduct',
+//             'model_id' => $listItem['product_id'],
+//             'changes' => json_encode([
+//                 'product_name' => $productName,
+//                 'old_quantity' => $oldQuantity,
+//                 'new_quantity' => $newQuantity,
+//                 'change' => $newQuantity - $oldQuantity,
+//             ]),
+//             'ip_address' => request()->ip(),
+//             'user_agent' => request()->header('User-Agent'),
+//         ]);
+//     }
+// }
 
 
-    public function render()
-    {
-        return view('livewire.admin.approvals.approvaledit', [
-            'pendingEdits' => $this->pendingEdits
-        ]);
-    }
-}
+//             $editRequest->update(['status' => 'approved']);
+
+//             $this->loadPendingEdits();
+//             $this->dispatch('done', success: "Edit request approved.");
+//         } catch (Exception $e) {
+//             $this->dispatch('done', error: "Approval failed: " . $e->getMessage());
+//         }
+//     }
+
+//     function reject($id)
+//     {
+//         try {
+//             $edit = EditApproval::findOrFail($id);
+//             $edit->update(['status' => 'rejected']);
+
+//             $edit->addProduct->update(['status' => 'approved']); // revert
+
+//             ActivityLog::create([
+//                 'user_id' => auth()->id(),
+//                 'action' => 'rejected_edit_request',
+//                 'model' => 'EditApproval',
+//                 'model_id' => $edit->id,
+//             ]);
+
+//             $this->loadPendingEdits();
+//             $this->dispatch('done', success: "Edit request rejected.");
+//         } catch (Exception $e) {
+//             $this->dispatch('done', error: "Rejection failed: " . $e->getMessage());
+//         }
+//     }
+
+//     function save()
+// {
+//     try {
+//         $changes = [
+//             'add_product_date' => $this->addProduct->add_product_date,
+//             'products' => $this->productList,
+//         ];
+
+//         EditApproval::create([
+//             'add_product_id' => $this->addProduct->id,
+//             'user_id' => auth()->id(),
+//             'changes' => $changes,
+//             'status' => 'pending',
+//         ]);
+
+//         // ❌ Don't reset AddProduct to pending here
+//         // $this->addProduct->update(['status' => 'pending']);
+
+//         return redirect()->route('admin.add-products.index')
+//             ->with('success', 'Edit request submitted for approval.');
+//     } catch (\Throwable $th) {
+//         $this->dispatch('done', error: "Something Went Wrong: " . $th->getMessage());
+//     }
+// }
+
+
+//     public function render()
+//     {
+//         return view('livewire.admin.approvals.approvaledit', [
+//             'pendingEdits' => $this->pendingEdits
+//         ]);
+//     }
+// }
