@@ -85,6 +85,7 @@ class Create extends Component
     {
         try {
             $this->validate();
+  $this->addProduct->status = 'pending'; 
 
             $this->return->save();
 

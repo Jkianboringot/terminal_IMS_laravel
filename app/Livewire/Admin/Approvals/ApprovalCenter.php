@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Approvals;
 
 use App\Models\AddProduct;
+use App\Models\ReturnItem;
 use App\Models\UnsuccessfulTransaction;
 use App\Models\EditApproval;
 use App\Models\Approval;
@@ -12,6 +13,7 @@ use Livewire\Component;
 class ApprovalCenter extends Component
 {
     public $pendingAddProducts;
+    public $pendingReturnItem;
     public $pendingUnsuccessful;
     public $pendingEdits;
 
@@ -25,6 +27,8 @@ class ApprovalCenter extends Component
         $this->pendingAddProducts = AddProduct::with('products')
             ->where('status', 'pending')->get();
 
+            $this->pendingReturnItem = ReturnItem::with('products')
+            ->where('status', 'pending')->get();
         $this->pendingUnsuccessful = UnsuccessfulTransaction::with('products')
             ->where('status', 'pending')->get();
 
@@ -135,6 +139,7 @@ class ApprovalCenter extends Component
     {
         return match ($type) {
             'AddProduct'   => AddProduct::findOrFail($id),
+            'ReturnItem'   => ReturnItem::findOrFail($id),
             'Unsuccessful' => UnsuccessfulTransaction::findOrFail($id),
             'Edit'         => EditApproval::findOrFail($id),
             default        => throw new \Exception("Unknown type: $type"),
@@ -147,6 +152,7 @@ class ApprovalCenter extends Component
             'pendingAddProducts' => $this->pendingAddProducts,
             'pendingUnsuccessful' => $this->pendingUnsuccessful,
             'pendingEdits' => $this->pendingEdits,
+            'pendingReturnItem' => $this->pendingReturnItem,
         ]);
     }
 }

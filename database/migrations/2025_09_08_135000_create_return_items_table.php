@@ -14,14 +14,14 @@ return new class extends Migration
        Schema::create('return_items', function (Blueprint $table) {
     $table->id();
     $table->string('return_ref');
-  $table->foreignId('sale_id')->nullable()->constrained()->onDelete('cascade');
+  $table->foreignId('sale_id')->nullable()->constrained();
 
     $table->date('return_date');
         $table->enum('return_type', ['customer', 'supplier']); // <--- add this
+     $table->enum('status', ['pending', 'approved', 'rejected','pending_edit'])->default('pending');
 
     $table->text('reason')->nullable();
     $table->text('description')->nullable();
-    $table->string('status')->default('pending'); // pending / approved / rejected
     $table->timestamps();
 });
 

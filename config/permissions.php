@@ -41,6 +41,7 @@ return [
         'manage add products',
         'manage unsuccessfull transactions',
         'manage approvals',
+        'manage returns',
 
         'create permission'
     ],
@@ -67,6 +68,7 @@ return [
         'manage add products',
         'manage unsuccessfull transactions',
         'manage approvals',
+        'manage returns',
 
         'create permission'
     ],

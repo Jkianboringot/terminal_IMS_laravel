@@ -128,7 +128,7 @@ function save()
             'status' => 'pending',
         ]);
 
-        $this->unsuccessfulTransaction->update(['status' => 'pending']);
+        $this->unsuccessfulTransaction->update();//this was where and working ['status' => 'pending'] just got rid of it sep 26 2am
 
         return redirect()->route('admin.unsuccessful-transactions.index')
             ->with('success', 'Edit request submitted for approval.');

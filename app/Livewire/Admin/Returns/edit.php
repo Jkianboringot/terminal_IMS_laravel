@@ -91,7 +91,7 @@ class Edit extends Component
         try {
             $this->validate();
 
-            $this->return->save();
+            $this->return->udpate();
 
             $this->return->products()->detach();
 
@@ -101,7 +101,7 @@ class Edit extends Component
                     'unit_price' => $item['price'],
                     'restock' => $item['restock']
                 ]);
-            }
+        }
 
             if ($this->return->products->count() == 0) {
                 $this->return->delete();

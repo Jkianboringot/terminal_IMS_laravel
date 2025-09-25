@@ -13,7 +13,7 @@ class AddProduct extends Model
     
 public function approvals()
 {
-    return $this->morphMany(AddApproval::class, 'approvable');
+    return $this->morphMany(Approval::class, 'approvable');
 }
 
     function products()
