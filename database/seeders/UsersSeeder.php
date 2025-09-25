@@ -14,7 +14,7 @@ class UsersSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('users')->inset([[
+        DB::table('users')->insert([[
           'name'=>'joe smith',  
           'email'=>'joe@gmail.com',  
           'password'=>Hash::make('123'),  
@@ -29,19 +29,10 @@ class UsersSeeder extends Seeder
           'email'=>'hazel@gmail.com',  
           'password'=>Hash::make('123'),  
         ],
+
         [
-          'name'=>'aldrin buhayo',  
-          'email'=>'joe@gmail.com',  
-          'password'=>Hash::make('123'),  
-        ],
-        [
-          'name'=>'cedrick tano',  
-          'email'=>'cedrick@gmail.com',  
-          'password'=>Hash::make('123'),  
-        ],
-        [
-          'name'=>'hussain rabida',  
-          'email'=>'hussain@gmail.com',  
+          'name'=>'kian boringot',  
+          'email'=>'kian@gmail.com',  
           'password'=>Hash::make('123'),  
         ],
         [
@@ -49,36 +40,7 @@ class UsersSeeder extends Seeder
           'email'=>'jerlyn@gmail.com',  
           'password'=>Hash::make('123'),  
         ],
-        [
-          'name'=>'michiel camu',  
-          'email'=>'michiel@gmail.com',  
-          'password'=>Hash::make('123'),  
-        ],
-        [
-          'name'=>'jushou hoho',  
-          'email'=>'jushou@gmail.com',  
-          'password'=>Hash::make('123'),  
-        ],
-        [
-          'name'=>'wang wang',  
-          'email'=>'wang@gmail.com',  
-          'password'=>Hash::make('123'),  
-        ],
-        [
-          'name'=>'jesus smith',  
-          'email'=>'jesus@gmail.com',  
-          'password'=>Hash::make('123'),  
-        ],
-        [
-          'name'=>'juri boringot',  
-          'email'=>'juri@gmail.com',  
-          'password'=>Hash::make('123'),  
-        ],
-        [
-          'name'=>'god',  
-          'email'=>'god@gmail.com',  
-          'password'=>Hash::make('123'),  
-        ],
+      
     ]);
     }
 }
