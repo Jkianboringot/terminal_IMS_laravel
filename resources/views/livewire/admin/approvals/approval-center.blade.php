@@ -25,81 +25,135 @@
             <div class="tab-content mt-3">
                 {{-- ✅ New Products --}}
                 <div class="tab-pane fade show active" id="add-products" role="tabpanel">
-                    @forelse($pendingAddProducts as $request)
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <b>
-                                    @foreach($request->products as $product)
-                                        {{ $product->name }} (x{{ $product->pivot->quantity }})<br>
+                    @if($pendingAddProducts->isNotEmpty())
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-secondary">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>No. of Units</th>
+                                        <th>Bar Code</th>
+                                        <th>Products</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($pendingAddProducts as $request)
+                                        <tr>
+                                            <td>{{ $request->created_at->format('Y-m-d') }}</td>
+                                            <td>{{ $request->products->sum('pivot.quantity') }}</td>
+                                            <td>{{ $request->barcode ?? '—' }}</td>
+                                            <td>
+                                                @foreach($request->products as $product)
+                                                    {{ $product->name }} (x{{ $product->pivot->quantity }})<br>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                <button wire:click="approve({{ $request->id }}, 'AddProduct')" class="btn btn-success btn-sm">
+                                                    <i class="bi bi-check-lg"></i> Approve
+                                                </button>
+                                                <button wire:click="reject({{ $request->id }}, 'AddProduct')" class="btn btn-danger btn-sm">
+                                                    <i class="bi bi-x-lg"></i> Reject
+                                                </button>
+                                            </td>
+                                        </tr>
                                     @endforeach
-                                </b>
-                                <div class="mt-2">
-                                    <button wire:click="approve({{ $request->id }}, 'AddProduct')" class="btn btn-success btn-sm">
-                                        <i class="bi bi-check-lg"></i> Approve
-                                    </button>
-                                    <button wire:click="reject({{ $request->id }}, 'AddProduct')" class="btn btn-danger btn-sm">
-                                        <i class="bi bi-x-lg"></i> Reject
-                                    </button>
-                                </div>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
-                    @empty
+                    @else
                         <p class="text-muted">No pending product approvals.</p>
-                    @endforelse
+                    @endif
                 </div>
 
                 {{-- ✅ Unsuccessful Transactions --}}
                 <div class="tab-pane fade" id="unsuccessful" role="tabpanel">
-                    @forelse($pendingUnsuccessful as $request)
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <b>
-                                    @foreach($request->products as $product)
-                                        {{ $product->name }} (x{{ $product->pivot->quantity }})<br>
+                    @if($pendingUnsuccessful->isNotEmpty())
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-secondary">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>No. of Units</th>
+                                        <th>Products</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($pendingUnsuccessful as $request)
+                                        <tr>
+                                            <td>{{ $request->created_at->format('Y-m-d') }}</td>
+                                            <td>{{ $request->products->sum('pivot.quantity') }}</td>
+                                            <td>
+                                                @foreach($request->products as $product)
+                                                    {{ $product->name }} (x{{ $product->pivot->quantity }})<br>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                <button wire:click="approve({{ $request->id }}, 'Unsuccessful')" class="btn btn-success btn-sm">
+                                                    <i class="bi bi-check-lg"></i> Approve
+                                                </button>
+                                                <button wire:click="reject({{ $request->id }}, 'Unsuccessful')" class="btn btn-danger btn-sm">
+                                                    <i class="bi bi-x-lg"></i> Reject
+                                                </button>
+                                            </td>
+                                        </tr>
                                     @endforeach
-                                </b>
-                                <div class="mt-2">
-                                    <button wire:click="approve({{ $request->id }}, 'Unsuccessful')" class="btn btn-success btn-sm">
-                                        <i class="bi bi-check-lg"></i> Approve
-                                    </button>
-                                    <button wire:click="reject({{ $request->id }}, 'Unsuccessful')" class="btn btn-danger btn-sm">
-                                        <i class="bi bi-x-lg"></i> Reject
-                                    </button>
-                                </div>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
-                    @empty
+                    @else
                         <p class="text-muted">No pending unsuccessful transactions.</p>
-                    @endforelse
+                    @endif
                 </div>
 
                 {{-- ✅ Edit Requests --}}
                 <div class="tab-pane fade" id="edits" role="tabpanel">
-                    @forelse($pendingEdits as $edit)
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <p>Edit request for:</p>
-                                @foreach($edit->addProduct->products as $product)
-                                    <b>{{ $product->name }} (x{{ $product->pivot->quantity }})</b><br>
-                                @endforeach
-
-                                <pre class="bg-light p-2 rounded mt-2">{{ json_encode($edit->changes, JSON_PRETTY_PRINT) }}</pre>
-
-                                <div class="mt-2">
-                                    <button wire:click="approve({{ $edit->id }}, 'Edit')" class="btn btn-success btn-sm">
-                                        <i class="bi bi-check-lg"></i> Approve
-                                    </button>
-                                    <button wire:click="reject({{ $edit->id }}, 'Edit')" class="btn btn-danger btn-sm">
-                                        <i class="bi bi-x-lg"></i> Reject
-                                    </button>
-                                </div>
-                            </div>
+                    @if($pendingEdits->isNotEmpty())
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-secondary">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Products</th>
+                                        <th>Requested Changes</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($pendingEdits as $edit)
+                                        <tr>
+                                            <td>{{ $edit->created_at->format('Y-m-d') }}</td>
+                                            <td>
+                                                @foreach($edit->addProduct->products as $product)
+                                                    {{ $product->name }} (x{{ $product->pivot->quantity }})<br>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                <pre class="bg-light p-2 rounded small mb-0">{{ json_encode($edit->changes, JSON_PRETTY_PRINT) }}</pre>
+                                            </td>
+                                            <td>
+                                                <button wire:click="approve({{ $edit->id }}, 'Edit')" class="btn btn-success btn-sm">
+                                                    <i class="bi bi-check-lg"></i> Approve
+                                                </button>
+                                                <button wire:click="reject({{ $edit->id }}, 'Edit')" class="btn btn-danger btn-sm">
+                                                    <i class="bi bi-x-lg"></i> Reject
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
-                    @empty
+                    @else
                         <p class="text-muted">No pending edit requests.</p>
-                    @endforelse
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
+<!-- i need to make this a component becuase i sitll have to do this with return -->
