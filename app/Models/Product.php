@@ -83,7 +83,7 @@ function invoices()
 
 function unsuccessful_transactions()
 {
-    return $this->belongsToMany(AddProduct::class, 'unsuccessful_transactions_to_list')->withPivot(['quantity'])->withTimestamps();;
+    return $this->belongsToMany(UnsuccessfulTransaction::class, 'unsuccessful_transactions_to_list')->withPivot(['quantity'])->withTimestamps();;
 }
 
 function getTotalPurchaseCountAttribute()
@@ -133,11 +133,20 @@ foreach ($this->returns as $return) {
 return $amount;
 }
 
+public function getTotalUnsuccessfulTransactionCountAttribute()
+{
+    $amount = 0;
+    foreach ($this->unsuccessful_transactions()->where('status', 'approved')->get() as $unsuccessful) {
+        $amount += ($unsuccessful->pivot->quantity);
+    }
+        return $amount;
+}
 function getInventoryBalanceAttribute()
 {
 return max(
     $this->total_purchase_count
     + $this->total_add_product_count
+    + $this->total_unsuccessful_transaction_count
     + $this->total_returns_count   // ✅ include restocked returns
     - $this->total_sales_count
     - $this->total_orders_count,

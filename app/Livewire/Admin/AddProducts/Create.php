@@ -147,7 +147,6 @@ function save()
 
     public function render()
     {
-               $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
 
 
         return view(

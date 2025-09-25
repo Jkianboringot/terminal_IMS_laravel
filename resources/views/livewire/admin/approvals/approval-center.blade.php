@@ -59,10 +59,10 @@
                                     @endforeach
                                 </b>
                                 <div class="mt-2">
-                                    <button wire:click="approve({{ $request->id }}, 'UnsuccessfulTransaction')" class="btn btn-success btn-sm">
+                                    <button wire:click="approve({{ $request->id }}, 'Unsuccessful')" class="btn btn-success btn-sm">
                                         <i class="bi bi-check-lg"></i> Approve
                                     </button>
-                                    <button wire:click="reject({{ $request->id }}, 'UnsuccessfulTransaction')" class="btn btn-danger btn-sm">
+                                    <button wire:click="reject({{ $request->id }}, 'Unsuccessful')" class="btn btn-danger btn-sm">
                                         <i class="bi bi-x-lg"></i> Reject
                                     </button>
                                 </div>

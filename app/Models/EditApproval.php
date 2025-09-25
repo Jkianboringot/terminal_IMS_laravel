@@ -24,6 +24,10 @@ class EditApproval extends Model
         return $this->belongsTo(AddProduct::class);
     }
 
+     public function unsuccessfulTransaction()
+    {
+        return $this->belongsTo(UnsuccessfulTransaction::class);
+    }
     public function user()
     {
         return $this->belongsTo(User::class);
