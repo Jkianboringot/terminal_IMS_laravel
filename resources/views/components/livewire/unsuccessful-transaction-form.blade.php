@@ -1,4 +1,4 @@
-@props(['supplierSearch','suppliers','productSearch','products','productList','addProduct','selectedProductId'])
+@props(['productSearch','products','productList','addProduct','selectedProductId'])
 
 <div tabindex="0" wire:keydown.escape="cancel">
     <x-slot:header>Add Product</x-slot:header>
@@ -21,24 +21,7 @@
                             @enderror
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Supplier Search</label>
-                            <input type="text" wire:model.live="supplierSearch" class="form-control" />
-                            @error('addProduct.supplier_id')
-                                <small class="form-text text-danger">{{ $message }}</small>
-                            @enderror
-                            <ul class="list-group mt-2 w-100">
-                                @if ($supplierSearch != '')
-                                    @forelse ($suppliers as $supplier)
-                                        <x-add-product-supplier-list-item
-                                            :supplier="$supplier"
-                                            :addProduct="$addProduct" />
-                                    @empty
-                                        <p>No Supplier yet.</p>
-                                    @endforelse
-                                @endif
-                            </ul>
-                        </div>
+                      
                     </div>
                 </div>
 

@@ -147,10 +147,13 @@ function save()
 
     public function render()
     {
-      
+               $products = Product::where('name', 'like', '%' . $this->productSearch . '%')->get();
+
+
         return view(
-            'livewire.admin.add-products.create'
-            
+            'livewire.admin.add-products.create',
+            ['products' => $this->productSearch(),
+            ]
         );
     }
 }

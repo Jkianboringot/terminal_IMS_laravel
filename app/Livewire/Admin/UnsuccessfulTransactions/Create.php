@@ -150,7 +150,10 @@ function save()
     {
       
         return view(
-            'livewire.admin.unsuccessful-transactions.create'
+            'livewire.admin.unsuccessful-transactions.create',[
+                'products'=>$this->ProductSearch()
+
+            ]
         );
     }
 }

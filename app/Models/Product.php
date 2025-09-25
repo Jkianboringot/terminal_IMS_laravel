@@ -81,6 +81,11 @@ function invoices()
     return $this->belongsToMany(Invoice::class, 'invoice_product')->withPivot(['quantity', 'unit_price']);
 }
 
+function unsuccessful_transactions()
+{
+    return $this->belongsToMany(AddProduct::class, 'unsuccessful_transactions_to_list')->withPivot(['quantity'])->withTimestamps();;
+}
+
 function getTotalPurchaseCountAttribute()
 {
     $amount = 0;

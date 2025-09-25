@@ -8,12 +8,12 @@ class UnsuccessfulTransaction extends Model
 {
     
    
-      protected $fillable = [ 'add_product_date', 'status'];
+      protected $fillable = [ 'unsuccessful_transactions_date', 'status'];
 
 
     function products()
     {
-        return $this->belongsToMany(Product::class, 'add_products_to_list')
+        return $this->belongsToMany(Product::class, 'unsuccessful_transactions_to_list')
         ->withPivot(['quantity'])->withTimestamps();;
     }
 

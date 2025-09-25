@@ -1,10 +1,8 @@
-<x-livewire.add-products-form 
-                        :supplierSearch='$supplierSearch' 
-                        :suppliers='$suppliers'
+<x-livewire.unsuccessful-transaction-form 
                         :productSearch='$productSearch' 
                         :products='$products'
                         :productList='$productList'
-                        :addProduct="$addProduct"
+                        :unsuccessfulTransaction="$unsuccessfulTransaction"
                         :selectedProductId="$selectedProductId"
                         />
 

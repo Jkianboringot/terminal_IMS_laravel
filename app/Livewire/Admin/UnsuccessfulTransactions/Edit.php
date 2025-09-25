@@ -142,7 +142,9 @@ function save()
      
 
         return view(
-            'livewire.admin.unsuccessful-transactions.edit',
+            'livewire.admin.unsuccessful-transactions.edit',[
+                'products'=>$this->ProductSearch()
+            ]
          
         );
     }

@@ -143,7 +143,9 @@ function save()
      
 
         return view(
-            'livewire.admin.add-products.edit',
+            'livewire.admin.add-products.edit',[
+                'products'=>$this->ProductSearch()
+            ]
           
         );
     }
