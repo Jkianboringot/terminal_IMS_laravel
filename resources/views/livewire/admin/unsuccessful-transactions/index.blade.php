@@ -21,7 +21,6 @@
                             <th>Product Added Date</th>
                             <th>Product</th>
 
-                            <th>Supplier</th>
                             <th>Quantity Added</th>
 
 
@@ -36,33 +35,32 @@
                     </thead>
                     <tbody>
 
-                        @foreach ($addProducts as $addProduct)
+                        @foreach ($unsuccessfulTransactions as $unsuccessfulTransaction)
                         <tr>
 
                             <td>
-                                <h6>{{ \Carbon\Carbon::parse($addProduct->add_product_date)->format('jS F, Y') }}</h6>
+                                <h6>{{ \Carbon\Carbon::parse($unsuccessfulTransaction->add_product_date)->format('jS F, Y') }}</h6>
                             </td>
                             <td>
                                 <p>Products:
-                                    @foreach($addProduct->products as $product)
+                                    @foreach($unsuccessfulTransaction->products as $product)
                                     {{ $product->name }}@if(!$loop->last), @endif
                                     @endforeach
                                 </p>
                             </td>
-                            <td>{{ $addProduct->supplier->name }}</td>
-                            <td><small>{{ number_format($addProduct->total_quantity, 2) }}</small></td>
+                            <td><small>{{ number_format($unsuccessfulTransaction->total_quantity, 2) }}</small></td>
 
 
 
                             <td>
-                                <a wire:navigate href="{{ route('admin.add-products.edit', $addProduct->id) }}"
+                                <a wire:navigate href="{{ route('admin.add-products.edit', $unsuccessfulTransaction->id) }}"
                                     class="btn btn-secondary">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
 
                                 <button
                                     onclick="confirm('Are you sure you wish to DELETE this Purchase?')||event.stopImmediatePropagation()"
-                                    class="btn btn-danger" wire:click='delete({{ $addProduct->id }})'>
+                                    class="btn btn-danger" wire:click='delete({{ $unsuccessfulTransaction->id }})'>
                                     <i class="bi bi-trash-fill"></i>
                                 </button>
 
@@ -75,8 +73,8 @@
                             <td></td>
                             <td></td>
 
-                            <td><strong>{{ number_format($addProducts->sum(function($addProduct){
-                                return $addProduct->total_quantity;})) }}</strong></td>
+                            <td><strong>{{ number_format($unsuccessfulTransactions->sum(function($unsuccessfulTransaction){
+                                return $unsuccessfulTransaction->total_quantity;})) }}</strong></td>
 
                         </tr>
                     </tbody>

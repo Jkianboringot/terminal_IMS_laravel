@@ -30,7 +30,7 @@ class Edit extends Component
     function rules()
     {
         return [
-         'unsuccessfulTransaction.add_product_date'=>'required|date',
+         'unsuccessfulTransaction.unsuccessful_transactions_date'=>'required|date',
         ];
     }
 

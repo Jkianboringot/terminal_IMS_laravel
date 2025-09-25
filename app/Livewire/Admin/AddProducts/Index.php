@@ -32,28 +32,26 @@
                 //throw $th;
                 $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
             }
-        }
-       public function render()
+        }public function render()
 {
     $search = trim($this->search);
 
     $addProducts = AddProduct::select('add_products.*')
-        ->join('suppliers', 'add_products.supplier_id', '=', 'suppliers.id')    
-        ->when($search, fn ($query) =>
-            $query->where(function ($sub) use ($search) {
+        ->when($search, fn($query) =>
+            $query->where(function($sub) use ($search) {
                 $sub->where('add_products.add_product_date', 'like', "%$search%")
-                    ->orWhere('suppliers.name', 'like', "%$search%");
+                    ->orWhere('add_products.name', 'like', "%$search%");
             })
         )
-        ->with(['supplier:id,name']) // Only load needed fields
         ->orderBy('add_products.add_product_date', 'desc')
         ->paginate(10);
 
-
     return view('livewire.admin.add-products.index', [
         'addProducts' => $addProducts,
-
     ]);
 }
 
+
     }
+
+

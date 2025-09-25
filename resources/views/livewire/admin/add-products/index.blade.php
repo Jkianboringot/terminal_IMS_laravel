@@ -21,7 +21,6 @@
                             <th>Product Added Date</th>
                             <th>Product</th>
 
-                            <th>Supplier</th>
                             <th>Quantity Added</th>
 
 
@@ -49,7 +48,6 @@
                                     @endforeach
                                 </p>
                             </td>
-                            <td>{{ $addProduct->supplier->name }}</td>
                             <td><small>{{ number_format($addProduct->total_quantity, 2) }}</small></td>
 
 

@@ -32,26 +32,22 @@
                 //throw $th;
                 $this->dispatch('done', error: "Something went wrong: " . $th->getMessage());
             }
-        }
-       public function render()
+        } public function render()
 {
     $search = trim($this->search);
 
-    $addProducts = UnsuccessfulTransaction::select('unsuccessful_transaction.*')
-        ->join('suppliers', 'unsuccessful_transaction.supplier_id', '=', 'suppliers.id')    
-        ->when($search, fn ($query) =>
-            $query->where(function ($sub) use ($search) {
-                $sub->where('unsuccessful_transaction.add_product_date', 'like', "%$search%")
-                    ->orWhere('suppliers.name', 'like', "%$search%");
-            })
-        )
-        ->with(['supplier:id,name']) // Only load needed fields
-        ->orderBy('unsuccessful_transaction.add_product_date', 'desc')
+    $unsuccessfulTransactions = UnsuccessfulTransaction::select('unsuccessful_transactions.*')
+    ->when($search,fn($query)=>
+    $query->where(function($sub) use ($search){
+       $sub->where('unsuccessful_transactions.add_product_date', 'like', "%$search%")
+          ->orWhere('unsuccessful_transactions.name', 'like', "%$search%");
+    }))
+        ->orderBy('unsuccessful_transactions.add_product_date', 'desc')
         ->paginate(10);
 
 
-    return view('livewire.admin.unsuccessful-transactions.index', [
-        'addProducts' => $addProducts,
+return view('livewire.admin.unsuccessful-transactions.index', [
+        'unsuccessfulTransactions' => $unsuccessfulTransactions,
 
     ]);
 }
