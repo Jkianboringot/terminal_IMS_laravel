@@ -1,7 +1,7 @@
-@props(['productSearch','products','productList','addProduct','selectedProductId'])
+@props(['productSearch','products','productList','unsuccessfulTransaction','selectedProductId'])
 
 <div tabindex="0" wire:keydown.escape="cancel">
-    <x-slot:header>Add Product</x-slot:header>
+    <x-slot:header>Unsuccessfull Transaction</x-slot:header>
     <div class="row justify-content-center">
         {{-- LEFT SIDE --}}
         <div class="col-md-4 col-6">
@@ -15,8 +15,8 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label class="form-label">Date of Purchase</label>
-                            <input wire:model.live="addProduct.add_product_date" type="date" class="form-control" />
-                            @error('addProduct.add_product_date')
+                            <input wire:model.live="unsuccessfulTransaction.unsuccessful_transactions_date" type="date" class="form-control" />
+                            @error('unsuccessfulTransaction.add_product_date')
                                 <small class="form-text text-danger">{{ $message }} </small>
                             @enderror
                         </div>
@@ -28,7 +28,7 @@
                 {{-- Card: Add Product to List --}}
                 <div class="card mt-2">
                     <div class="card-header bg-inv-primary text-inv-secondary border-0">
-                        <h6>Add Product to List</h6>
+                        <h6>Add Unsuccessfull Transactions to List</h6>
                     </div>
                     <div class="card-body">
                         <div class="mb-3">
@@ -66,7 +66,7 @@
         <div class="col-md-8 col-6">
             <div class="card shadow">
                 <div class="card-header bg-inv-secondary text-inv-primary border-0">
-                    <h5 class="text-center text-uppercase">To be Added to Product List</h5>
+                    <h5 class="text-center text-uppercase">Unsuccessfull Transactions List</h5>
                 </div>
 
                 <div class="card-body" >

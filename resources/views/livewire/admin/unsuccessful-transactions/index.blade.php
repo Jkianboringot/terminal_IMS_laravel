@@ -53,7 +53,7 @@
 
 
                             <td>
-                                <a wire:navigate href="{{ route('admin.add-products.edit', $unsuccessfulTransaction->id) }}"
+                                <a wire:navigate href="{{ route('admin.unsuccessful-transactions.edit', $unsuccessfulTransaction->id) }}"
                                     class="btn btn-secondary">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
