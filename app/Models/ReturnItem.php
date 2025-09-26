@@ -13,7 +13,7 @@ class ReturnItem extends Model
   public function products()
 {
     return $this->belongsToMany(Product::class, 'product_return')
-        ->withPivot(['quantity', 'unit_price', 'restock']);
+        ->withPivot(['quantity', 'unit_price']);
 }
 
 

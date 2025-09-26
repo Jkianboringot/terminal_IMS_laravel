@@ -23,11 +23,11 @@ return new class extends Migration
             // Short foreign key names
             $table->foreign('product_id', 'utl_product_fk')
                   ->references('id')->on('products')
-                  ->onDelete('cascade');
+                  ;
 
             $table->foreign('unsuccessful_transaction_id', 'utl_txn_fk')
                   ->references('id')->on('unsuccessful_transactions')
-                  ->onDelete('cascade');
+                  ;
         });
     }
 

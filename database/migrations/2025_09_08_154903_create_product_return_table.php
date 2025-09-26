@@ -17,7 +17,6 @@ return new class extends Migration
     $table->foreignId('return_item_id')->constrained('return_items')->onDelete('cascade');
     $table->integer('quantity');
     $table->decimal('unit_price', 10, 2);
-    $table->boolean('restock')->default(false); // true if product goes back to inventory
     $table->timestamps();
 });
 

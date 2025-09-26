@@ -64,11 +64,6 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" wire:model="restock" class="form-check-input" id="restockCheck">
-                        <label class="form-check-label" for="restockCheck">Restock this item</label>
-                    </div>
-
                     <button onclick="confirm('Are you sure you want to add this item to return list?')||event.stopImmediatePropagation()"
                         wire:click='addToList' class="btn btn-dark text-inv-secondary">
                         Add To List
@@ -92,7 +87,6 @@
                                     <th>Quantity</th>
                                     <th>Unit Price</th>
                                     <th>Total</th>
-                                    <th>Restock?</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -104,13 +98,7 @@
                                         <td>{{ $listItem['quantity'] }}</td>
                                         <td>PISO {{ number_format($listItem['price'], 2) }}</td>
                                         <td>PISO {{ number_format($listItem['quantity'] * $listItem['price'], 2) }}</td>
-                                        <td>
-                                            @if($listItem['restock'])
-                                                <span class="badge bg-success">Yes</span>
-                                            @else
-                                                <span class="badge bg-danger">No</span>
-                                            @endif
-                                        </td>
+                                     
                                         <td class="text-center">
                                             <button onclick="confirm('Are you sure?')||event.stopImmediatePropagation()"
                                                 wire:click='deleteCartItem({{ $key }})'

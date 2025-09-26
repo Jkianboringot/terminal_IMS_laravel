@@ -125,10 +125,10 @@ function getTotalOrdersCountAttribute()
 function getTotalReturnsCountAttribute()
 {
 $amount = 0;
-foreach ($this->returns as $return) {
-    if ($return->pivot->restock) { // only count if restock
-        $amount += $return->pivot->quantity;
-    }
+
+
+    foreach ($this->returns()->where('status', 'approved')->get() as $returns) {
+        $amount += ($returns->pivot->quantity);
 }
 return $amount;
 }

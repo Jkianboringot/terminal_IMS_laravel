@@ -16,7 +16,6 @@ class Edit extends Component
     public $selectedProductId;
     public $quantity;
     public $price;
-    public $restock = true;
 
     public ReturnItem $return;
     public $productList = [];
@@ -36,7 +35,6 @@ class Edit extends Component
                 'product_id' => $product->id,
                 'quantity' => $product->pivot->quantity,
                 'price' => $product->pivot->unit_price,
-                'restock' => $product->pivot->restock
             ];
         })->toArray();
     }
@@ -69,7 +67,6 @@ class Edit extends Component
             'product_id' => $this->selectedProductId,
             'quantity' => $this->quantity,
             'price' => $this->price,
-            'restock' => $this->restock
         ]);
 
         $this->reset([
@@ -77,7 +74,6 @@ class Edit extends Component
             'returnSearch',
             'quantity',
             'price',
-            'restock'
         ]);
     }
 
@@ -99,7 +95,6 @@ class Edit extends Component
                 $this->return->products()->attach($item['product_id'], [
                     'quantity' => $item['quantity'],
                     'unit_price' => $item['price'],
-                    'restock' => $item['restock']
                 ]);
         }
 
